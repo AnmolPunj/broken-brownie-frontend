@@ -1,455 +1,244 @@
 /* =================================================================
-   BROKEN BROWNIE - MASTER STYLESHEET (FULL EXPANDED VERSION)
+   BROKEN BROWNIE - MASTER STYLESHEET (FIXED V4)
    ================================================================= */
 
 /* -----------------------------------------------------------------
-   1. CORE SETUP & VARIABLES
+   1. CORE SETUP
    ----------------------------------------------------------------- */
-html { 
-    scroll-behavior: smooth; 
-}
+html { scroll-behavior: smooth; }
 
 :root {
-    /* --- DEFAULT THEME: MIDNIGHT BLUE --- */
+    /* DEFAULT THEME: MIDNIGHT */
     --bg-primary: #153448; 
     --bg-secondary: #0a1f2e; 
     --accent: #DFD0B8;       
-    --glass: rgba(21, 52, 72, 0.6); 
-    --glass-border: rgba(223, 208, 184, 0.15);
+    --glass: rgba(21, 52, 72, 0.9); /* Darker glass for better readability */
+    --glass-border: rgba(223, 208, 184, 0.2);
     --text-main: #ffffff; 
     --text-muted: #94A3B8;
     --card-gradient: linear-gradient(135deg, #1e4b66, #0f2636);
     --glow: 0 0 20px rgba(60, 91, 111, 0.5);
     
-    /* --- NOTIFICATION COLORS --- */
-    --success: #2ecc71;  /* Green for success */
-    --error: #e74c3c;    /* Red for errors */
-    --analytics: #27ae60; /* Green for Analytics Button */
+    /* COLORS */
+    --success: #2ecc71;
+    --error: #e74c3c;
+    --analytics: #27ae60;
 }
 
-/* -----------------------------------------------------------------
-   2. THEME DEFINITIONS
-   ----------------------------------------------------------------- */
-
-/* THEME: ESPRESSO NOIR */
+/* THEME: ESPRESSO */
 body.theme-espresso {
-    --bg-primary: #2C1A1D; 
-    --bg-secondary: #1a0f11; 
-    --accent: #D4AF37;
-    --glass: rgba(44, 26, 29, 0.6); 
-    --glass-border: rgba(212, 175, 55, 0.15);
-    --text-main: #EADDCD; 
-    --text-muted: #8D7B6F;
+    --bg-primary: #2C1A1D; --bg-secondary: #1a0f11; --accent: #D4AF37;
+    --glass: rgba(44, 26, 29, 0.9); --glass-border: rgba(212, 175, 55, 0.2);
+    --text-main: #EADDCD; --text-muted: #8D7B6F;
     --card-gradient: linear-gradient(135deg, #4a2c31, #1a0f11);
-    --glow: 0 0 20px rgba(74, 44, 49, 0.5);
 }
 
-/* THEME: ROYAL VELVET */
+/* THEME: VELVET */
 body.theme-velvet {
-    --bg-primary: #240046; 
-    --bg-secondary: #10002b; 
-    --accent: #e0aaff;
-    --glass: rgba(36, 0, 70, 0.6); 
-    --glass-border: rgba(224, 170, 255, 0.15);
-    --text-main: #fcf6bd; 
-    --text-muted: #c77dff;
+    --bg-primary: #240046; --bg-secondary: #10002b; --accent: #e0aaff;
+    --glass: rgba(36, 0, 70, 0.9); --glass-border: rgba(224, 170, 255, 0.2);
+    --text-main: #fcf6bd; --text-muted: #c77dff;
     --card-gradient: linear-gradient(135deg, #3c096c, #10002b);
-    --glow: 0 0 20px rgba(123, 44, 191, 0.5);
 }
 
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background-color: var(--bg-primary); color: var(--text-main); font-family: 'Jost', sans-serif; overflow-x: hidden; }
+
+/* TYPOGRAPHY */
+h1, h2, h3, .palette-label, .logo-text, .tag, .tab-btn, .admin-badge { font-family: 'Cinzel', serif; }
+
 /* -----------------------------------------------------------------
-   3. BASE STYLES & CURSOR
+   2. BACKGROUND
    ----------------------------------------------------------------- */
-* { 
-    margin: 0; 
-    padding: 0; 
-    box-sizing: border-box; 
-    cursor: none; /* Custom cursor for desktop */
-}
-
-/* IMPORTANT: Restore default mouse on mobile/touch screens */
-@media (pointer: coarse) { 
-    * { cursor: auto !important; } 
-}
-
-body {
-    background-color: var(--bg-primary); 
-    color: var(--text-main);
-    font-family: 'Jost', sans-serif; 
-    overflow-x: hidden;
-    transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-/* Typography Defaults */
-h1, h2, h3, .palette-label, .logo-text, .tag, .tab-btn, .admin-badge { 
-    font-family: 'Cinzel', serif; 
-}
-
-/* Cinematic Background */
-.cinema-bg { 
-    position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -1; 
-}
-#bg-video { 
-    width: 100%; height: 100%; object-fit: cover; opacity: 0.5; 
-    filter: contrast(1.1) brightness(0.8); 
-}
-.cinema-overlay { 
-    position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-    background: radial-gradient(circle at center, transparent 0%, var(--bg-secondary) 100%); 
-    backdrop-filter: blur(2px); 
-}
-
-/* Custom Cursor Elements */
-.cursor-dot { 
-    width: 6px; height: 6px; background: var(--accent); border-radius: 50%; 
-    position: fixed; pointer-events: none; z-index: 9999; 
-}
-.cursor-ring { 
-    width: 40px; height: 40px; border: 1px solid var(--accent); border-radius: 50%; 
-    position: fixed; pointer-events: none; z-index: 9998; 
-    transition: transform 0.2s, border-color 0.3s; 
-}
-body.hovering .cursor-ring { 
-    transform: scale(1.5); 
-    background: rgba(255,255,255,0.05); 
-    border-color: transparent; 
-    backdrop-filter: invert(1); 
-}
+.cinema-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -1; }
+#bg-video { width: 100%; height: 100%; object-fit: cover; opacity: 0.5; filter: contrast(1.1) brightness(0.8); }
+.cinema-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at center, transparent 0%, var(--bg-secondary) 100%); }
 
 /* -----------------------------------------------------------------
-   4. TOAST NOTIFICATIONS (New Alert System)
-   ----------------------------------------------------------------- */
-#toast-container { 
-    position: fixed; bottom: 30px; right: 30px; z-index: 10000; 
-    display: flex; flex-direction: column; gap: 10px; 
-}
-
-.toast { 
-    background: var(--glass); border: 1px solid var(--accent); 
-    color: var(--text-main); padding: 15px 25px; border-radius: 4px; 
-    backdrop-filter: blur(10px); box-shadow: 0 5px 15px rgba(0,0,0,0.3); 
-    font-family: 'Jost'; animation: slideInRight 0.3s ease forwards; 
-    min-width: 250px; 
-}
-
-.toast.success { border-left: 4px solid var(--success); }
-.toast.error { border-left: 4px solid var(--error); }
-
-@keyframes slideInRight { 
-    from { transform: translateX(100%); opacity: 0; } 
-    to { transform: translateX(0); opacity: 1; } 
-}
-
-/* -----------------------------------------------------------------
-   5. NAVIGATION BAR & SEARCH
+   3. NAVIGATION
    ----------------------------------------------------------------- */
 .glass-nav { 
     display: flex; justify-content: space-between; align-items: center; 
-    padding: 20px 5%; position: fixed; top: 0; width: 100%; z-index: 50; 
-    transition: 0.4s; 
-}
-.glass-nav.scrolled { 
-    background: var(--glass); backdrop-filter: blur(15px); 
-    border-bottom: 1px solid var(--glass-border); 
+    padding: 15px 5%; position: fixed; top: 0; width: 100%; z-index: 100; 
+    background: var(--glass); backdrop-filter: blur(10px); border-bottom: 1px solid var(--glass-border);
 }
 
-.nav-logo-area { display: flex; align-items: center; gap: 15px; }
-.logo-img { height: 50px; border-radius: 50%; border: 1px solid var(--accent); }
+.nav-logo-area { display: flex; align-items: center; gap: 10px; }
+.logo-img { height: 45px; border-radius: 50%; border: 1px solid var(--accent); }
 .logo-text { display: flex; flex-direction: column; line-height: 1; }
-.logo-text .top { font-size: 0.8rem; letter-spacing: 3px; }
-.logo-text .bot { font-size: 1rem; font-weight: 700; color: var(--accent); }
+.logo-text .top { font-size: 0.7rem; letter-spacing: 2px; }
+.logo-text .bot { font-size: 0.9rem; font-weight: 700; color: var(--accent); }
 
-/* Search Bar Styling */
-.search-container { position: relative; margin-right: 20px; }
+/* SEARCH BAR */
+.search-container { position: relative; margin: 0 20px; flex-grow: 1; max-width: 400px; }
 #spotlight-search { 
-    background: rgba(255, 255, 255, 0.1); border: 1px solid var(--glass-border); 
-    padding: 8px 35px 8px 15px; border-radius: 20px; color: var(--text-main); 
-    font-family: 'Jost'; width: 200px; transition: 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); 
+    width: 100%; background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border); 
+    padding: 8px 35px 8px 15px; border-radius: 20px; color: var(--text-main); font-family: 'Jost'; 
 }
-#spotlight-search:focus { 
-    width: 300px; background: rgba(0, 0, 0, 0.8); border-color: var(--accent); 
-    outline: none; box-shadow: 0 0 15px var(--accent); 
-}
-.search-icon { 
-    position: absolute; right: 10px; top: 50%; transform: translateY(-50%); 
-    font-size: 0.8rem; opacity: 0.6; 
-}
+.search-icon { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); font-size: 0.8rem; opacity: 0.7; }
 
-/* Menu Links */
-.nav-menu { display: flex; gap: 40px; list-style: none; }
-.nav-menu a { 
-    text-decoration: none; color: var(--text-main); font-size: 0.8rem; 
-    text-transform: uppercase; letter-spacing: 2px; transition: 0.3s; 
-}
-.nav-menu a:hover { color: var(--accent); text-shadow: var(--glow); }
-
-.social-link { 
-    text-decoration: none; color: var(--accent); font-size: 0.7rem; 
-    border: 1px solid var(--accent); padding: 8px 15px; border-radius: 20px; 
-    transition: 0.3s; 
-}
-.social-link:hover { background: var(--accent); color: var(--bg-primary); }
+.nav-menu { display: flex; gap: 30px; list-style: none; }
+.nav-menu a { text-decoration: none; color: var(--text-main); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; }
+.social-link { text-decoration: none; color: var(--accent); font-size: 0.7rem; border: 1px solid var(--accent); padding: 6px 15px; border-radius: 20px; white-space: nowrap; }
 
 /* -----------------------------------------------------------------
-   6. HERO SECTION
+   4. HERO & MARQUEE
    ----------------------------------------------------------------- */
-.hero { 
-    height: 100vh; display: flex; align-items: center; justify-content: center; 
-    text-align: center; perspective: 1000px; 
-}
-.pre-title { color: var(--accent); letter-spacing: 5px; font-size: 0.8rem; margin-bottom: 20px; opacity: 0.8; }
-.hero-title { 
-    font-size: 5rem; line-height: 1.1; margin-bottom: 30px; 
-    text-shadow: 0 10px 30px rgba(0,0,0,0.5); 
-}
-.gold-text { color: var(--accent); font-style: italic; font-family: 'Cinzel', serif; }
-.hero-sub { color: var(--text-muted); font-size: 1.1rem; margin-bottom: 40px; }
+.hero { height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; padding-top: 60px; }
+.hero-title { font-size: 4rem; line-height: 1.1; margin-bottom: 20px; }
+.gold-text { color: var(--accent); font-style: italic; }
+.hero-sub { color: var(--text-muted); font-size: 1rem; margin-bottom: 30px; max-width: 600px; margin-left: auto; margin-right: auto; }
 
 .btn-liquid { 
-    position: relative; padding: 18px 50px; text-decoration: none; 
-    color: var(--accent); border: 1px solid var(--accent); 
-    text-transform: uppercase; letter-spacing: 3px; font-size: 0.9rem; 
-    overflow: hidden; display: inline-block; transition: 0.4s; 
+    display: inline-block; padding: 15px 40px; text-decoration: none; 
+    color: var(--accent); border: 1px solid var(--accent); text-transform: uppercase; 
+    letter-spacing: 2px; font-size: 0.9rem; transition: 0.3s; 
 }
-.btn-liquid:hover { 
-    background: var(--accent); color: var(--bg-primary); box-shadow: var(--glow); 
-}
+.btn-liquid:hover { background: var(--accent); color: var(--bg-primary); }
 
-/* Marquee Bar */
-.marquee-lux { 
-    background: var(--glass); padding: 20px 0; border-top: 1px solid var(--glass-border); 
-    border-bottom: 1px solid var(--glass-border); overflow: hidden; backdrop-filter: blur(5px); 
-}
+.marquee-lux { background: var(--glass); padding: 15px 0; border-top: 1px solid var(--glass-border); border-bottom: 1px solid var(--glass-border); overflow: hidden; }
 .track { display: flex; white-space: nowrap; animation: scroll 20s linear infinite; }
-.track span { margin: 0 30px; font-family: 'Cinzel'; font-size: 1.2rem; color: var(--text-main); } 
-.star { color: var(--accent); margin: 0 10px; }
-
-/* -----------------------------------------------------------------
-   7. MENU GRID & CARDS
-   ----------------------------------------------------------------- */
-.gallery-section { padding: 100px 8%; min-height: 100vh; }
-.section-head { text-align: center; margin-bottom: 60px; }
-.section-title { font-size: 3rem; margin-bottom: 10px; }
-.gold-bar { width: 2px; height: 60px; background: var(--accent); margin: 0 auto; }
-
-/* Filter Tabs */
-.filter-tabs { display: flex; justify-content: center; gap: 15px; margin-top: 40px; flex-wrap: wrap; }
-.tab-btn {
-    background: transparent; border: 1px solid var(--glass-border); color: var(--text-muted);
-    padding: 10px 30px; border-radius: 30px; cursor: none; transition: 0.3s;
-    min-width: 130px; white-space: nowrap; /* Fixes text cutting off */
-}
-.tab-btn:hover, .tab-btn.active { background: var(--accent); color: var(--bg-primary); }
-
-/* Card Grid */
-.card-container { 
-    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
-    gap: 40px; margin-top: 50px; justify-items: center; 
-}
-
-/* Individual Card */
-.tilt-card { 
-    background: var(--card-gradient); border: 1px solid var(--glass-border); 
-    border-radius: 4px; padding: 10px; transition: transform 0.1s, opacity 0.3s; 
-    position: relative; overflow: hidden; display: block; 
-    width: 100%; max-width: 320px; 
-}
-.tilt-card:hover { border-color: var(--accent); box-shadow: var(--glow); }
-
-.card-visual { 
-    height: 250px; width: 100%; background-size: cover; background-position: center; 
-    border-radius: 2px; 
-}
-.badge { 
-    position: absolute; top: 15px; right: 15px; background: var(--accent); 
-    color: var(--bg-primary); padding: 5px 10px; font-size: 0.7rem; 
-    font-weight: bold; font-family: 'Jost'; z-index: 5; 
-}
-
-.card-content { padding: 25px 15px; text-align: center; }
-.card-content h3 { font-size: 1.3rem; margin-bottom: 5px; color: var(--accent); font-family: 'Cinzel'; }
-.card-content p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px; }
-.ingredients-preview { color: var(--accent); font-size: 0.8rem; font-style: italic; margin-bottom: 20px; opacity: 0.7; }
-
-.action-btn { 
-    background: transparent; border: 1px solid var(--text-muted); color: var(--text-main); 
-    padding: 8px 20px; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; 
-}
-.action-btn:hover { border-color: var(--accent); color: var(--accent); }
-
-/* -----------------------------------------------------------------
-   8. ADMIN CONTROLS (Updated with Analytics)
-   ----------------------------------------------------------------- */
-.admin-panel {
-    background: rgba(0, 0, 0, 0.6); border: 1px solid var(--accent);
-    padding: 20px; margin: 20px auto; max-width: 600px; border-radius: 8px;
-    display: flex; justify-content: space-between; align-items: center;
-    backdrop-filter: blur(15px); gap: 15px; flex-wrap: wrap; 
-}
-.hidden { display: none !important; }
-.admin-badge { color: var(--accent); font-weight: bold; letter-spacing: 2px; text-align: center; }
-
-.admin-actions { display: flex; gap: 10px; }
-
-/* Admin Buttons (Add, Logout, Analytics) */
-.admin-add-btn, .admin-logout-btn, .admin-analytics-btn {
-    border: none; padding: 10px 20px; cursor: pointer; font-weight: bold;
-    border-radius: 4px; font-family: 'Jost'; text-transform: uppercase;
-    font-size: 0.8rem;
-}
-.admin-add-btn { background: var(--accent); color: var(--bg-primary); }
-.admin-logout-btn { background: #ff4757; color: white; }
-.admin-analytics-btn { background: var(--analytics); color: white; } /* NEW: Green Analytics Button */
-
-/* Floating Edit Buttons on Cards */
-.admin-btn-group { 
-    position: absolute; top: 10px; left: 10px; z-index: 20; display: none; gap: 5px; 
-}
-body.admin-active .admin-btn-group { display: flex; }
-.delete-btn, .edit-btn { 
-    border: none; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; 
-    font-weight: bold; display: flex; align-items: center; justify-content: center; 
-}
-.delete-btn { background: #ff4757; color: white; }
-.edit-btn { background: var(--accent); color: var(--bg-primary); }
-
-/* -----------------------------------------------------------------
-   9. MODALS, CART & FORMS
-   ----------------------------------------------------------------- */
-.modal-overlay { 
-    position: fixed; top: 0; left: 0; width: 100%; height: 100vh; 
-    background: rgba(0,0,0,0.9); z-index: 2000; 
-    display: flex; justify-content: center; align-items: center; backdrop-filter: blur(8px); 
-}
-.modal-box { 
-    background: var(--bg-secondary); border: 1px solid var(--accent); 
-    padding: 30px; border-radius: 8px; width: 300px; text-align: center; 
-    box-shadow: 0 0 50px rgba(0,0,0,0.8); position: relative; 
-    max-height: 90vh; overflow-y: auto; 
-}
-.modal-box.large { width: 450px; text-align: left; }
-
-.input-group { margin-bottom: 20px; }
-.input-group label { display: block; color: var(--text-muted); font-size: 0.9rem; margin-bottom: 8px; font-weight: 500; }
-.modal-box input, .modal-box select { 
-    width: 100%; padding: 12px; background: #000000; border: 1px solid var(--accent); 
-    color: #ffffff !important; border-radius: 4px; font-family: 'Jost'; outline: none; 
-}
-.modal-box select option { background-color: #000000; color: #ffffff; padding: 10px; }
-
-.modal-actions { margin-top: 30px; display: flex; justify-content: space-between; gap: 10px; }
-.confirm-btn { background: var(--accent); color: var(--bg-primary); padding: 10px 20px; border: none; cursor: pointer; border-radius: 4px; width: 100%; }
-.cancel-btn { background: transparent; color: var(--text-muted); padding: 10px 20px; border: 1px solid var(--text-muted); cursor: pointer; border-radius: 4px; width: 100%; }
-
-/* Product View & Cart List */
-.product-view { width: 800px; max-width: 90%; background: #1a1a1a; padding: 0; overflow: hidden; }
-.product-layout { display: flex; flex-wrap: wrap; }
-.prod-img-col { flex: 1; height: 400px; background-color: #000; }
-.prod-img-col img { width: 100%; height: 100%; object-fit: cover; }
-.prod-info-col { flex: 1; padding: 40px; display: flex; flex-direction: column; justify-content: center; text-align: left; }
-.ingredients-text { color: var(--text-muted); font-style: italic; margin-bottom: 30px; border-top: 1px solid var(--glass-border); padding-top: 20px; }
-.close-modal-x { position: absolute; top: 15px; right: 20px; background: none; border: none; color: white; font-size: 2rem; cursor: pointer; z-index: 10; }
-
-/* Floating Cart */
-.floating-cart { position: fixed; bottom: 30px; right: 30px; z-index: 900; width: 300px; animation: slideUp 0.5s ease; }
-@keyframes slideUp { from { transform: translateY(100px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-.cart-glass { background: #000000; border: 1px solid var(--accent); border-radius: 12px; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
-.cart-count { color: var(--accent); font-weight: bold; font-family: 'Cinzel'; }
-.cart-remove-btn { background: transparent; border: 1px solid #ff4757; color: #ff4757; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; }
-.cart-remove-btn:hover { background: #ff4757; color: white; }
-
-/* -----------------------------------------------------------------
-   10. FOOTER & THEME PALETTE
-   ----------------------------------------------------------------- */
-.palette-dock { 
-    position: fixed; left: 30px; bottom: 30px; z-index: 100; background: var(--glass); 
-    padding: 10px 20px; border-radius: 50px; border: 1px solid var(--glass-border); 
-    display: flex; align-items: center; gap: 15px; 
-}
-.theme-btn { width: 20px; height: 20px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.2); cursor: none; transition: 0.3s; }
-.midnight { background: #153448; } .espresso { background: #2C1A1D; } .velvet { background: #240046; }
-
-footer { padding: 80px 5%; background: var(--bg-secondary); }
-.footer-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; align-items: center; }
-.center { text-align: center; } .right { text-align: right; }
-.footer-logo { height: 60px; border-radius: 50%; margin-bottom: 15px; border: 1px solid var(--accent); }
-.f-col h4 { color: var(--accent); margin-bottom: 20px; letter-spacing: 2px; }
-.f-col a { display: block; color: var(--text-muted); text-decoration: none; margin-bottom: 10px; transition: 0.3s; }
-.f-col a:hover { color: var(--accent); }
-
+.track span { margin: 0 30px; font-family: 'Cinzel'; font-size: 1rem; }
 @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
 /* -----------------------------------------------------------------
-   11. MOBILE RESPONSIVENESS (FIXED HEADER & ADMIN)
+   5. MENU & ADMIN PANEL (CRITICAL FIXES)
+   ----------------------------------------------------------------- */
+.gallery-section { padding: 80px 5%; min-height: 100vh; }
+.section-head { text-align: center; margin-bottom: 40px; }
+.section-title { font-size: 2.5rem; margin-bottom: 10px; }
+.gold-bar { width: 3px; height: 50px; background: var(--accent); margin: 0 auto 30px auto; }
+
+/* TABS */
+.filter-tabs { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 40px; }
+.tab-btn {
+    background: transparent; border: 1px solid var(--glass-border); color: var(--text-muted);
+    padding: 10px 25px; border-radius: 30px; cursor: pointer; transition: 0.3s;
+    font-size: 0.9rem;
+}
+.tab-btn.active, .tab-btn:hover { background: var(--accent); color: var(--bg-primary); }
+
+/* ADMIN PANEL - DESKTOP */
+.admin-panel {
+    background: rgba(0, 0, 0, 0.8); border: 1px solid var(--accent);
+    padding: 20px; margin: 0 auto 40px auto; max-width: 800px; border-radius: 8px;
+    display: flex; justify-content: space-between; align-items: center;
+}
+.admin-badge { color: var(--accent); font-weight: bold; letter-spacing: 2px; }
+.admin-actions { display: flex; gap: 10px; align-items: center; }
+
+/* ADMIN BUTTONS */
+.admin-add-btn, .admin-logout-btn, .admin-analytics-btn {
+    border: none; padding: 10px 20px; cursor: pointer; font-weight: bold;
+    border-radius: 4px; font-family: 'Jost'; text-transform: uppercase; font-size: 0.8rem;
+    display: inline-flex; align-items: center; justify-content: center; height: 40px;
+}
+.admin-add-btn { background: var(--accent); color: var(--bg-primary); }
+.admin-logout-btn { background: #ff4757; color: white; }
+.admin-analytics-btn { background: var(--analytics); color: white; }
+
+/* MENU GRID */
+.card-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; }
+.tilt-card { 
+    background: var(--card-gradient); border: 1px solid var(--glass-border); 
+    border-radius: 8px; overflow: hidden; position: relative; transition: 0.3s;
+}
+.card-visual { height: 250px; background-size: cover; background-position: center; }
+.card-content { padding: 20px; text-align: center; }
+.card-content h3 { color: var(--accent); margin-bottom: 5px; font-size: 1.2rem; }
+.card-content p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px; }
+.action-btn { background: transparent; border: 1px solid var(--text-muted); color: var(--text-main); padding: 8px 20px; }
+
+/* ADMIN EDIT BUTTONS ON CARD */
+.admin-btn-group { position: absolute; top: 10px; left: 10px; display: none; gap: 5px; z-index: 10; }
+body.admin-active .admin-btn-group { display: flex; }
+.edit-btn, .delete-btn { width: 30px; height: 30px; border-radius: 50%; border: none; font-weight: bold; cursor: pointer; }
+.edit-btn { background: var(--accent); color: var(--bg-primary); }
+.delete-btn { background: #ff4757; color: white; }
+.badge { position: absolute; top: 10px; right: 10px; background: var(--accent); color: var(--bg-primary); padding: 5px 10px; font-weight: bold; font-size: 0.7rem; border-radius: 4px; }
+
+/* -----------------------------------------------------------------
+   6. UI ELEMENTS (Toast, Palette, Modals)
+   ----------------------------------------------------------------- */
+#toast-container { position: fixed; bottom: 20px; right: 20px; z-index: 10000; display: flex; flex-direction: column; gap: 10px; }
+.toast { background: rgba(0,0,0,0.9); border-left: 4px solid var(--accent); color: #fff; padding: 15px 20px; border-radius: 4px; animation: slideIn 0.3s ease; }
+.toast.success { border-color: var(--success); }
+.toast.error { border-color: var(--error); }
+@keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
+
+.palette-dock { position: fixed; bottom: 30px; left: 30px; background: rgba(0,0,0,0.8); padding: 10px 20px; border-radius: 50px; display: flex; gap: 15px; z-index: 900; border: 1px solid var(--glass-border); }
+.theme-btn { width: 20px; height: 20px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.3); cursor: pointer; }
+.midnight { background: #153448; } .espresso { background: #2C1A1D; } .velvet { background: #240046; }
+
+/* MODALS */
+.modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 2000; display: flex; justify-content: center; align-items: center; }
+.modal-box { background: var(--bg-secondary); border: 1px solid var(--accent); padding: 30px; width: 90%; max-width: 500px; border-radius: 8px; max-height: 90vh; overflow-y: auto; position: relative; }
+.close-modal-x { position: absolute; top: 10px; right: 15px; background: none; border: none; color: #fff; font-size: 1.5rem; cursor: pointer; }
+.input-group { margin-bottom: 15px; }
+.input-group label { display: block; margin-bottom: 5px; color: var(--accent); }
+.input-group input, .input-group select { width: 100%; padding: 10px; background: #000; border: 1px solid #444; color: #fff; border-radius: 4px; }
+.modal-actions { display: flex; gap: 10px; margin-top: 20px; }
+.confirm-btn, .cancel-btn { flex: 1; padding: 12px; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; }
+.confirm-btn { background: var(--accent); color: var(--bg-primary); }
+.cancel-btn { background: transparent; border: 1px solid var(--text-muted); color: var(--text-muted); }
+
+.hidden { display: none !important; }
+
+/* FLOATING CART */
+.floating-cart { position: fixed; bottom: 30px; right: 30px; background: #000; border: 1px solid var(--accent); padding: 15px 25px; border-radius: 50px; z-index: 950; display: flex; align-items: center; gap: 15px; cursor: pointer; }
+.cart-count { color: var(--accent); font-weight: bold; }
+
+/* FOOTER */
+footer { padding: 60px 5%; background: var(--bg-secondary); text-align: center; margin-top: 50px; }
+.footer-logo { height: 50px; margin-bottom: 20px; }
+.f-copy { color: var(--text-muted); font-size: 0.8rem; }
+
+/* -----------------------------------------------------------------
+   7. MOBILE RESPONSIVENESS (THE CRITICAL FIX)
    ----------------------------------------------------------------- */
 @media (max-width: 768px) {
-    /* --- Layout Adjustments --- */
-    .artist-layout { flex-direction: column; }
-    .footer-grid { grid-template-columns: 1fr; text-align: center; gap: 40px; }
-    .right { text-align: center; }
-    .hero-title { font-size: 3rem; }
-    .nav-menu { display: none; }
-    .cursor-dot, .cursor-ring { display: none; }
-    
-    /* --- HEADER FIXES (Prevent Crashing) --- */
-    .glass-nav { 
-        padding: 10px 15px !important; 
-        gap: 10px !important; 
-        justify-content: space-between;
-        flex-wrap: nowrap !important;
-    }
-
-    /* Force Hide "BROKEN BROWNIE" text on mobile */
+    /* 1. HEADER FIX: Hide logo text, expand search */
     .logo-text { display: none !important; }
+    .glass-nav { flex-wrap: nowrap !important; gap: 10px !important; padding: 10px 15px !important; }
+    .search-container { margin: 0 !important; width: 100% !important; max-width: none !important; }
+    #spotlight-search { padding: 8px 15px !important; width: 100% !important; }
+    .nav-menu { display: none !important; } /* Hide desktop links */
     
-    /* Make Search Bar Flexible & Fill Space */
-    .search-container { 
-        display: block !important; 
-        flex-grow: 1; 
-        margin: 0 !important; 
-        width: auto !important;
-    }
-    #spotlight-search { 
-        width: 100% !important; 
-        padding: 8px 12px !important;
-        font-size: 0.8rem !important;
-    }
-    
-    /* Adjust Instagram Button */
-    .nav-extra { flex-shrink: 0; }
-    .social-link { 
-        padding: 8px 10px !important; 
-        font-size: 0.65rem !important; 
-    }
-
-    /* --- ADMIN PANEL FIX (Stacking Buttons) --- */
+    /* 2. ADMIN PANEL FIX: STACK BUTTONS */
     .admin-panel {
         flex-direction: column !important;
+        align-items: stretch !important;
         height: auto !important;
         padding: 20px !important;
-        gap: 15px;
-        align-items: stretch !important;
+        gap: 15px !important;
     }
-    .admin-badge { text-align: center; margin-bottom: 5px; }
     .admin-actions {
-        display: flex;
         flex-direction: column !important;
+        width: 100% !important;
         gap: 10px !important;
-        width: 100%;
     }
-    /* Stack Add, Analytics, and Logout buttons */
     .admin-add-btn, .admin-logout-btn, .admin-analytics-btn {
         width: 100% !important;
+        display: flex !important;
+        justify-content: center !important;
         margin: 0 !important;
-        justify-content: center;
         padding: 12px !important;
-        display: flex;
+    }
+    .admin-badge { text-align: center; margin-bottom: 5px; }
+
+    /* 3. TAB BUTTONS FIX: Make them touch-friendly */
+    .filter-tabs { gap: 8px !important; }
+    .tab-btn {
+        flex: 1 1 auto; /* Grow to fill space */
+        text-align: center;
+        padding: 10px 15px !important;
+        font-size: 0.8rem !important;
     }
 
-    /* --- Other Mobile Adjustments --- */
-    .product-view { width: 95%; height: 80vh; overflow-y: scroll; }
-    .product-layout { flex-direction: column; }
-    .prod-img-col { height: 250px; }
-    .floating-cart { width: 90%; left: 5%; bottom: 20px; }
-    .cart-box { width: 95%; } 
+    /* 4. LAYOUT ADJUSTMENTS */
+    .hero-title { font-size: 2.5rem !important; }
+    .card-container { grid-template-columns: 1fr !important; } /* 1 column on mobile */
+    .palette-dock { display: none; } /* Hide theme switcher on mobile to save space */
+    .footer-grid { grid-template-columns: 1fr; }
+    .floating-cart { width: 90%; right: 5%; bottom: 20px; justify-content: space-between; border-radius: 10px; }
 }
