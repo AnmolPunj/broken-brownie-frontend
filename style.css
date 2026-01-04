@@ -1,75 +1,64 @@
 /* =================================================================
-   BROKEN BROWNIE - MASTER STYLESHEET (FIXED V4)
+   BROKEN BROWNIE - FINAL PRODUCTION STYLESHEET
    ================================================================= */
 
-/* -----------------------------------------------------------------
-   1. CORE SETUP
-   ----------------------------------------------------------------- */
-html { scroll-behavior: smooth; }
-
+/* --- 1. CORE VARIABLES & THEMES --- */
 :root {
     /* DEFAULT THEME: MIDNIGHT */
     --bg-primary: #153448; 
     --bg-secondary: #0a1f2e; 
     --accent: #DFD0B8;       
-    --glass: rgba(21, 52, 72, 0.9); /* Darker glass for better readability */
-    --glass-border: rgba(223, 208, 184, 0.2);
+    --glass: rgba(21, 52, 72, 0.95); /* High opacity for readability */
+    --glass-border: rgba(223, 208, 184, 0.3);
     --text-main: #ffffff; 
     --text-muted: #94A3B8;
     --card-gradient: linear-gradient(135deg, #1e4b66, #0f2636);
     --glow: 0 0 20px rgba(60, 91, 111, 0.5);
     
-    /* COLORS */
+    /* SYSTEM COLORS */
     --success: #2ecc71;
     --error: #e74c3c;
-    --analytics: #27ae60;
+    --analytics: #27ae60; /* Green for analytics */
 }
 
-/* THEME: ESPRESSO */
 body.theme-espresso {
     --bg-primary: #2C1A1D; --bg-secondary: #1a0f11; --accent: #D4AF37;
-    --glass: rgba(44, 26, 29, 0.9); --glass-border: rgba(212, 175, 55, 0.2);
+    --glass: rgba(44, 26, 29, 0.95); --glass-border: rgba(212, 175, 55, 0.3);
     --text-main: #EADDCD; --text-muted: #8D7B6F;
     --card-gradient: linear-gradient(135deg, #4a2c31, #1a0f11);
 }
 
-/* THEME: VELVET */
 body.theme-velvet {
     --bg-primary: #240046; --bg-secondary: #10002b; --accent: #e0aaff;
-    --glass: rgba(36, 0, 70, 0.9); --glass-border: rgba(224, 170, 255, 0.2);
+    --glass: rgba(36, 0, 70, 0.95); --glass-border: rgba(224, 170, 255, 0.3);
     --text-main: #fcf6bd; --text-muted: #c77dff;
     --card-gradient: linear-gradient(135deg, #3c096c, #10002b);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { background-color: var(--bg-primary); color: var(--text-main); font-family: 'Jost', sans-serif; overflow-x: hidden; }
+html { scroll-behavior: smooth; }
+body { background-color: var(--bg-primary); color: var(--text-main); font-family: 'Jost', sans-serif; overflow-x: hidden; width: 100%; }
 
-/* TYPOGRAPHY */
 h1, h2, h3, .palette-label, .logo-text, .tag, .tab-btn, .admin-badge { font-family: 'Cinzel', serif; }
 
-/* -----------------------------------------------------------------
-   2. BACKGROUND
-   ----------------------------------------------------------------- */
+/* --- 2. BACKGROUND --- */
 .cinema-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -1; }
 #bg-video { width: 100%; height: 100%; object-fit: cover; opacity: 0.5; filter: contrast(1.1) brightness(0.8); }
 .cinema-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at center, transparent 0%, var(--bg-secondary) 100%); }
 
-/* -----------------------------------------------------------------
-   3. NAVIGATION
-   ----------------------------------------------------------------- */
+/* --- 3. NAVIGATION (DESKTOP) --- */
 .glass-nav { 
     display: flex; justify-content: space-between; align-items: center; 
-    padding: 15px 5%; position: fixed; top: 0; width: 100%; z-index: 100; 
+    padding: 15px 5%; position: fixed; top: 0; width: 100%; z-index: 1000; 
     background: var(--glass); backdrop-filter: blur(10px); border-bottom: 1px solid var(--glass-border);
 }
 
-.nav-logo-area { display: flex; align-items: center; gap: 10px; }
+.nav-logo-area { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
 .logo-img { height: 45px; border-radius: 50%; border: 1px solid var(--accent); }
 .logo-text { display: flex; flex-direction: column; line-height: 1; }
 .logo-text .top { font-size: 0.7rem; letter-spacing: 2px; }
 .logo-text .bot { font-size: 0.9rem; font-weight: 700; color: var(--accent); }
 
-/* SEARCH BAR */
 .search-container { position: relative; margin: 0 20px; flex-grow: 1; max-width: 400px; }
 #spotlight-search { 
     width: 100%; background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border); 
@@ -79,21 +68,15 @@ h1, h2, h3, .palette-label, .logo-text, .tag, .tab-btn, .admin-badge { font-fami
 
 .nav-menu { display: flex; gap: 30px; list-style: none; }
 .nav-menu a { text-decoration: none; color: var(--text-main); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; }
+.nav-extra { flex-shrink: 0; }
 .social-link { text-decoration: none; color: var(--accent); font-size: 0.7rem; border: 1px solid var(--accent); padding: 6px 15px; border-radius: 20px; white-space: nowrap; }
 
-/* -----------------------------------------------------------------
-   4. HERO & MARQUEE
-   ----------------------------------------------------------------- */
+/* --- 4. HERO SECTION --- */
 .hero { height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; padding-top: 60px; }
 .hero-title { font-size: 4rem; line-height: 1.1; margin-bottom: 20px; }
 .gold-text { color: var(--accent); font-style: italic; }
 .hero-sub { color: var(--text-muted); font-size: 1rem; margin-bottom: 30px; max-width: 600px; margin-left: auto; margin-right: auto; }
-
-.btn-liquid { 
-    display: inline-block; padding: 15px 40px; text-decoration: none; 
-    color: var(--accent); border: 1px solid var(--accent); text-transform: uppercase; 
-    letter-spacing: 2px; font-size: 0.9rem; transition: 0.3s; 
-}
+.btn-liquid { display: inline-block; padding: 15px 40px; text-decoration: none; color: var(--accent); border: 1px solid var(--accent); text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; transition: 0.3s; }
 .btn-liquid:hover { background: var(--accent); color: var(--bg-primary); }
 
 .marquee-lux { background: var(--glass); padding: 15px 0; border-top: 1px solid var(--glass-border); border-bottom: 1px solid var(--glass-border); overflow: hidden; }
@@ -101,67 +84,54 @@ h1, h2, h3, .palette-label, .logo-text, .tag, .tab-btn, .admin-badge { font-fami
 .track span { margin: 0 30px; font-family: 'Cinzel'; font-size: 1rem; }
 @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-/* -----------------------------------------------------------------
-   5. MENU & ADMIN PANEL (CRITICAL FIXES)
-   ----------------------------------------------------------------- */
+/* --- 5. MENU & ADMIN PANEL (DESKTOP) --- */
 .gallery-section { padding: 80px 5%; min-height: 100vh; }
 .section-head { text-align: center; margin-bottom: 40px; }
 .section-title { font-size: 2.5rem; margin-bottom: 10px; }
 .gold-bar { width: 3px; height: 50px; background: var(--accent); margin: 0 auto 30px auto; }
 
-/* TABS */
 .filter-tabs { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 40px; }
-.tab-btn {
-    background: transparent; border: 1px solid var(--glass-border); color: var(--text-muted);
-    padding: 10px 25px; border-radius: 30px; cursor: pointer; transition: 0.3s;
-    font-size: 0.9rem;
-}
+.tab-btn { background: transparent; border: 1px solid var(--glass-border); color: var(--text-muted); padding: 10px 25px; border-radius: 30px; cursor: pointer; transition: 0.3s; font-size: 0.9rem; white-space: nowrap; }
 .tab-btn.active, .tab-btn:hover { background: var(--accent); color: var(--bg-primary); }
 
-/* ADMIN PANEL - DESKTOP */
+/* --- ADMIN PANEL DEFAULT (DESKTOP) --- */
 .admin-panel {
-    background: rgba(0, 0, 0, 0.8); border: 1px solid var(--accent);
+    background: rgba(0, 0, 0, 0.85); border: 1px solid var(--accent);
     padding: 20px; margin: 0 auto 40px auto; max-width: 800px; border-radius: 8px;
-    display: flex; justify-content: space-between; align-items: center;
+    display: flex; justify-content: space-between; align-items: center; gap: 20px;
 }
-.admin-badge { color: var(--accent); font-weight: bold; letter-spacing: 2px; }
+.admin-badge { color: var(--accent); font-weight: bold; letter-spacing: 2px; white-space: nowrap; }
 .admin-actions { display: flex; gap: 10px; align-items: center; }
-
-/* ADMIN BUTTONS */
 .admin-add-btn, .admin-logout-btn, .admin-analytics-btn {
-    border: none; padding: 10px 20px; cursor: pointer; font-weight: bold;
+    border: none; padding: 0 20px; height: 40px; cursor: pointer; font-weight: bold;
     border-radius: 4px; font-family: 'Jost'; text-transform: uppercase; font-size: 0.8rem;
-    display: inline-flex; align-items: center; justify-content: center; height: 40px;
+    display: flex; align-items: center; justify-content: center; white-space: nowrap;
 }
 .admin-add-btn { background: var(--accent); color: var(--bg-primary); }
 .admin-logout-btn { background: #ff4757; color: white; }
 .admin-analytics-btn { background: var(--analytics); color: white; }
 
-/* MENU GRID */
+/* MENU CARDS */
 .card-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; }
-.tilt-card { 
-    background: var(--card-gradient); border: 1px solid var(--glass-border); 
-    border-radius: 8px; overflow: hidden; position: relative; transition: 0.3s;
-}
+.tilt-card { background: var(--card-gradient); border: 1px solid var(--glass-border); border-radius: 8px; overflow: hidden; position: relative; transition: 0.3s; }
 .card-visual { height: 250px; background-size: cover; background-position: center; }
+.badge { position: absolute; top: 10px; right: 10px; background: var(--accent); color: var(--bg-primary); padding: 5px 10px; font-weight: bold; font-size: 0.7rem; border-radius: 4px; z-index: 10; }
 .card-content { padding: 20px; text-align: center; }
 .card-content h3 { color: var(--accent); margin-bottom: 5px; font-size: 1.2rem; }
-.card-content p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px; }
-.action-btn { background: transparent; border: 1px solid var(--text-muted); color: var(--text-main); padding: 8px 20px; }
+.ingredients-preview { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 10px; font-style: italic; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.action-btn { background: transparent; border: 1px solid var(--text-muted); color: var(--text-main); padding: 8px 20px; text-transform: uppercase; cursor: pointer; transition: 0.3s; }
+.action-btn:hover { border-color: var(--accent); color: var(--accent); }
 
-/* ADMIN EDIT BUTTONS ON CARD */
-.admin-btn-group { position: absolute; top: 10px; left: 10px; display: none; gap: 5px; z-index: 10; }
+/* ADMIN CARD BUTTONS */
+.admin-btn-group { position: absolute; top: 10px; left: 10px; display: none; gap: 5px; z-index: 20; }
 body.admin-active .admin-btn-group { display: flex; }
-.edit-btn, .delete-btn { width: 30px; height: 30px; border-radius: 50%; border: none; font-weight: bold; cursor: pointer; }
+.edit-btn, .delete-btn { width: 30px; height: 30px; border-radius: 50%; border: none; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; }
 .edit-btn { background: var(--accent); color: var(--bg-primary); }
 .delete-btn { background: #ff4757; color: white; }
-.badge { position: absolute; top: 10px; right: 10px; background: var(--accent); color: var(--bg-primary); padding: 5px 10px; font-weight: bold; font-size: 0.7rem; border-radius: 4px; }
 
-/* -----------------------------------------------------------------
-   6. UI ELEMENTS (Toast, Palette, Modals)
-   ----------------------------------------------------------------- */
+/* --- 6. UI EXTRAS --- */
 #toast-container { position: fixed; bottom: 20px; right: 20px; z-index: 10000; display: flex; flex-direction: column; gap: 10px; }
-.toast { background: rgba(0,0,0,0.9); border-left: 4px solid var(--accent); color: #fff; padding: 15px 20px; border-radius: 4px; animation: slideIn 0.3s ease; }
+.toast { background: rgba(0,0,0,0.95); border-left: 4px solid var(--accent); color: #fff; padding: 15px 20px; border-radius: 4px; animation: slideIn 0.3s ease; box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
 .toast.success { border-color: var(--success); }
 .toast.error { border-color: var(--error); }
 @keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
@@ -173,19 +143,19 @@ body.admin-active .admin-btn-group { display: flex; }
 /* MODALS */
 .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 2000; display: flex; justify-content: center; align-items: center; }
 .modal-box { background: var(--bg-secondary); border: 1px solid var(--accent); padding: 30px; width: 90%; max-width: 500px; border-radius: 8px; max-height: 90vh; overflow-y: auto; position: relative; }
+.modal-box.large { max-width: 600px; }
 .close-modal-x { position: absolute; top: 10px; right: 15px; background: none; border: none; color: #fff; font-size: 1.5rem; cursor: pointer; }
-.input-group { margin-bottom: 15px; }
-.input-group label { display: block; margin-bottom: 5px; color: var(--accent); }
-.input-group input, .input-group select { width: 100%; padding: 10px; background: #000; border: 1px solid #444; color: #fff; border-radius: 4px; }
+.input-group { margin-bottom: 15px; text-align: left; }
+.input-group label { display: block; margin-bottom: 5px; color: var(--accent); font-size: 0.9rem; }
+.input-group input, .input-group select { width: 100%; padding: 10px; background: #000; border: 1px solid #444; color: #fff; border-radius: 4px; outline: none; }
 .modal-actions { display: flex; gap: 10px; margin-top: 20px; }
 .confirm-btn, .cancel-btn { flex: 1; padding: 12px; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; }
 .confirm-btn { background: var(--accent); color: var(--bg-primary); }
 .cancel-btn { background: transparent; border: 1px solid var(--text-muted); color: var(--text-muted); }
-
 .hidden { display: none !important; }
 
 /* FLOATING CART */
-.floating-cart { position: fixed; bottom: 30px; right: 30px; background: #000; border: 1px solid var(--accent); padding: 15px 25px; border-radius: 50px; z-index: 950; display: flex; align-items: center; gap: 15px; cursor: pointer; }
+.floating-cart { position: fixed; bottom: 30px; right: 30px; background: #000; border: 1px solid var(--accent); padding: 15px 25px; border-radius: 50px; z-index: 950; display: flex; align-items: center; gap: 15px; cursor: pointer; box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
 .cart-count { color: var(--accent); font-weight: bold; }
 
 /* FOOTER */
@@ -193,52 +163,101 @@ footer { padding: 60px 5%; background: var(--bg-secondary); text-align: center; 
 .footer-logo { height: 50px; margin-bottom: 20px; }
 .f-copy { color: var(--text-muted); font-size: 0.8rem; }
 
-/* -----------------------------------------------------------------
-   7. MOBILE RESPONSIVENESS (THE CRITICAL FIX)
-   ----------------------------------------------------------------- */
+/* =================================================================
+   7. MOBILE RESPONSIVENESS (THE NUCLEAR FIX)
+   ================================================================= */
 @media (max-width: 768px) {
-    /* 1. HEADER FIX: Hide logo text, expand search */
-    .logo-text { display: none !important; }
-    .glass-nav { flex-wrap: nowrap !important; gap: 10px !important; padding: 10px 15px !important; }
-    .search-container { margin: 0 !important; width: 100% !important; max-width: none !important; }
-    #spotlight-search { padding: 8px 15px !important; width: 100% !important; }
-    .nav-menu { display: none !important; } /* Hide desktop links */
+    /* --- HEADER FIX --- */
+    .glass-nav {
+        padding: 10px 15px !important;
+        gap: 10px !important;
+        flex-wrap: nowrap !important;
+        justify-content: space-between !important;
+    }
     
-    /* 2. ADMIN PANEL FIX: STACK BUTTONS */
+    /* Force hide the text */
+    .logo-text { display: none !important; }
+    
+    /* Expand Search */
+    .search-container {
+        margin: 0 !important;
+        flex-grow: 1 !important;
+        width: auto !important;
+        max-width: none !important;
+    }
+    #spotlight-search {
+        width: 100% !important;
+        padding: 8px 15px !important;
+    }
+    .nav-menu { display: none !important; }
+    .cursor-dot, .cursor-ring { display: none !important; }
+
+    /* --- ADMIN PANEL FIX (THE OVERLAP FIX) --- */
     .admin-panel {
         flex-direction: column !important;
         align-items: stretch !important;
         height: auto !important;
         padding: 20px !important;
+        margin: 0 auto 30px auto !important;
         gap: 15px !important;
+        width: 100% !important;
     }
+    
+    .admin-badge { 
+        text-align: center !important; 
+        margin-bottom: 5px !important; 
+        display: block !important;
+    }
+    
     .admin-actions {
-        flex-direction: column !important;
+        display: flex !important;
+        flex-direction: column !important; /* Stack vertically */
         width: 100% !important;
         gap: 10px !important;
     }
+    
+    /* Make buttons full width blocks */
     .admin-add-btn, .admin-logout-btn, .admin-analytics-btn {
         width: 100% !important;
+        margin: 0 !important;
         display: flex !important;
         justify-content: center !important;
-        margin: 0 !important;
-        padding: 12px !important;
+        height: 45px !important; /* Taller touch targets */
     }
-    .admin-badge { text-align: center; margin-bottom: 5px; }
 
-    /* 3. TAB BUTTONS FIX: Make them touch-friendly */
-    .filter-tabs { gap: 8px !important; }
+    /* --- COLLECTION TABS FIX --- */
+    .filter-tabs {
+        gap: 8px !important;
+        justify-content: center !important;
+    }
     .tab-btn {
-        flex: 1 1 auto; /* Grow to fill space */
-        text-align: center;
         padding: 10px 15px !important;
         font-size: 0.8rem !important;
+        flex: 1 1 auto !important; /* Grow to fill rows */
+        text-align: center !important;
     }
 
-    /* 4. LAYOUT ADJUSTMENTS */
-    .hero-title { font-size: 2.5rem !important; }
-    .card-container { grid-template-columns: 1fr !important; } /* 1 column on mobile */
-    .palette-dock { display: none; } /* Hide theme switcher on mobile to save space */
-    .footer-grid { grid-template-columns: 1fr; }
-    .floating-cart { width: 90%; right: 5%; bottom: 20px; justify-content: space-between; border-radius: 10px; }
+    /* --- GENERAL MOBILE LAYOUT --- */
+    .hero-title { font-size: 2.8rem !important; }
+    .card-container { grid-template-columns: 1fr !important; }
+    .palette-dock { display: none !important; }
+    
+    /* Fix floating cart */
+    .floating-cart {
+        width: 90% !important;
+        right: 5% !important;
+        bottom: 20px !important;
+        justify-content: space-between !important;
+    }
+    
+    /* Fix Product Modal scrolling on mobile */
+    .product-view {
+        width: 95% !important;
+        max-height: 85vh !important;
+        overflow-y: scroll !important;
+        display: flex !important;
+        flex-direction: column !important;
+    }
+    .prod-img-col { height: 200px !important; flex: none !important; }
+    .prod-info-col { padding: 20px !important; }
 }
