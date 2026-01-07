@@ -821,7 +821,8 @@ async function trackVisitor() {
 
 // 1. API CONFIGURATION
 // TODO: When you get your Render URL, change this line!
-const API_BASE_URL = 'http://localhost:5000'; 
+// --- CONFIGURATION ---
+const API_BASE_URL = 'https://broken-brownie-api.onrender.com'; 
 // Future Example: const API_BASE_URL = 'https://broken-brownie-api.onrender.com';
 
 async function trackVisitor() {
