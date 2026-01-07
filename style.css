@@ -1334,7 +1334,7 @@ footer {
     .search-container {
         margin: 0;                 /* Removes weird spacing */
         margin-right: auto;        /* Pushes it slightly left, near logo */
-        margin-left: 30px;         /* Adds space between Logo and Search */
+        margin-left: 80px;         /* Adds space between Logo and Search */
         max-width: 250px;          /* Makes it narrower (not so wide) */
     }
 
