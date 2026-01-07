@@ -285,7 +285,7 @@ function renderMenu() {
         // The CSS 'body.admin-active .admin-btn-group' handles visibility
         const adminBtns = `
             <div class="admin-btn-group">
-                <button class="edit-btn" onclick="openEditModal(${index})" title="Edit Item">✎</button>
+                <button class="edit-btn" onclick="openEditModal(${index})" title="Edit Item"></button>
                 <button class="delete-btn" onclick="deleteItem(${index})" title="Delete Item">X</button>
             </div>
         `;
@@ -442,9 +442,9 @@ function checkLogin() {
         
         closeModal('login-modal');
         passField.value = ''; // Clear password field
-        showToast("Welcome back, Owner! 👨‍🍳");
+        showToast("Welcome back, Owner!");
     } else {
-        showToast("Incorrect Passcode ❌");
+        showToast("Invalid Passcode ");
         passField.classList.add('shake-error'); // Add visual shake logic if CSS exists
         setTimeout(() => passField.classList.remove('shake-error'), 500);
     }
@@ -529,7 +529,7 @@ function saveEditedItem() {
     localStorage.setItem('brokenBrownieMenu', JSON.stringify(menuData));
     renderMenu();
     closeModal('edit-modal');
-    showToast("Item Updated Successfully! ✅");
+    showToast("Item Updated Successfully!");
 }
 
 function deleteItem(index) {
@@ -642,7 +642,7 @@ function checkoutWhatsApp() {
     
     // Format the list neatly
     const orderList = cart.map((item, index) => `• ${item}`).join('\n');
-    const msg = `*NEW ORDER REQUEST* 🍪\n------------------\n${orderList}\n------------------\n\nIs this available for delivery?`;
+    const msg = `*NEW ORDER REQUEST* 🍪\n------------------\n${orderList}\n------------------\n\nI want to customize my order`;
     
     // Open WhatsApp API
     window.open(`https://wa.me/919789028598?text=${encodeURIComponent(msg)}`, '_blank');
