@@ -1364,3 +1364,50 @@ footer {
         bottom: 30px;
     }
 }
+
+/* ... specific styles inside the Desktop Section ... */
+    #checkout-btn {
+        width: 90%;
+        margin: 20px auto 0;
+        display: block;
+    }
+} /* <--- This is the END of your Desktop Code. Paste BELOW this. */
+
+
+/* =========================================
+   ADD TO MENU MODAL FIXES (Blue Circle)
+   ========================================= */
+.modal-box label {
+  display: block;       
+  margin-bottom: 10px; 
+  font-weight: 600;    
+  letter-spacing: 0.5px; 
+}
+
+.modal-box .form-group {
+  margin-bottom: 25px; 
+}
+
+/* <--- PASTE THE NEW CODE BELOW HERE ---> */
+
+/* =========================================
+   FIX "ADD TO BAG" BUTTON VISIBILITY
+   ========================================= */
+.modal-box button, 
+#add-to-cart-btn {
+    background-color: #DFD0B8 !important;  /* Gold Background */
+    color: #0f172a !important;             /* Dark Text */
+    border: 1px solid #DFD0B8 !important;
+    font-weight: 700 !important;
+    opacity: 1 !important;
+    padding: 15px 30px;
+    transition: 0.3s ease;
+}
+
+.modal-box button:hover, 
+#add-to-cart-btn:hover {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    transform: scale(1.02);
+    cursor: pointer;
+}
