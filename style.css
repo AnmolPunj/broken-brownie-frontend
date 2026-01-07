@@ -1202,6 +1202,27 @@ footer {
     .cursor-dot, .cursor-ring { display: none !important; }
     * { cursor: auto !important; }
 
+    /* 2. Fix Mood Switcher for Mobile (Add this!) */
+    .theme-switch {
+        display: flex !important;       /* Force it to appear */
+        position: fixed;                /* Stick to the screen */
+        bottom: 30px;                   /* Distance from bottom */
+        left: 50%;                      /* Center horizontal */
+        transform: translateX(-50%);    /* Perfect centering */
+        background: rgba(15, 23, 42, 0.95); /* Dark background */
+        padding: 10px 25px;
+        border-radius: 50px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        z-index: 9999;                  /* Ensure it is on top */
+        width: max-content;
+    }
+
+    /* Adjust the text size inside the button */
+    .theme-switch span {
+        font-size: 0.85rem;
+    }
+}
+
     /* 2. Layout Stacking */
     .artist-layout { flex-direction: column; text-align: center; }
     .product-layout { flex-direction: column; }
