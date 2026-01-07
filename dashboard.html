@@ -3,204 +3,158 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Broken Brownie | Command Center</title>
+    <title>Owner Dashboard | Broken Brownie</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Jost:wght@400;600&display=swap" rel="stylesheet">
     
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
-        /* --- 1. GLOBAL VARIABLES & RESET --- */
-        :root {
-            --bg-dark: #020617;
-            --card-bg: #1e293b;
-            --accent: #3b82f6; /* Tech Blue */
-            --gold: #DFD0B8;   /* Brand Gold */
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --border: rgba(255, 255, 255, 0.1);
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        /* --- DASHBOARD STYLING --- */
+        :root { --bg: #0f172a; --card: #1e293b; --text: #f8fafc; --accent: #DFD0B8; --muted: #64748b; }
         
-        body { 
-            background-color: var(--bg-dark); 
-            color: var(--text-main); 
-            font-family: 'Jost', sans-serif;
-            min-height: 100vh;
-        }
-
-        /* --- 2. LOGIN SCREEN (The Gate) --- */
-        .login-overlay {
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background: var(--bg); color: var(--text); font-family: 'Jost', sans-serif; height: 100vh; overflow: hidden; }
+        
+        /* LOGIN OVERLAY */
+        #login-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--bg-dark); z-index: 9999;
-            display: flex; justify-content: center; align-items: center;
-            background-image: radial-gradient(circle at center, #1e293b 0%, #020617 70%);
+            background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(10px);
+            display: flex; justify-content: center; align-items: center; z-index: 1000;
+            transition: opacity 0.5s ease;
         }
         .login-box {
-            text-align: center; width: 320px;
-            padding: 40px; background: rgba(30, 41, 59, 0.5);
-            border: 1px solid var(--border); border-radius: 16px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            background: var(--card); padding: 40px; border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.1); text-align: center; width: 350px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
-        .login-box h2 { font-weight: 300; letter-spacing: 2px; margin-bottom: 20px; color: var(--gold); }
-        .login-input {
-            width: 100%; padding: 12px; margin-bottom: 15px;
-            background: #0f172a; border: 1px solid var(--border);
-            color: white; border-radius: 8px; outline: none; text-align: center;
+        .login-box h2 { font-family: 'Cinzel', serif; color: var(--accent); margin-bottom: 20px; }
+        .login-box input {
+            width: 100%; padding: 12px; margin-bottom: 15px; background: #0f172a;
+            border: 1px solid #334155; color: white; border-radius: 5px; text-align: center;
+        }
+        .login-btn {
+            width: 100%; padding: 12px; background: var(--accent); color: #0f172a;
+            border: none; font-weight: bold; cursor: pointer; border-radius: 5px;
             transition: 0.3s;
         }
-        .login-input:focus { border-color: var(--accent); }
-        .login-btn {
-            width: 100%; padding: 12px; background: var(--accent);
-            color: white; border: none; border-radius: 8px; font-weight: 600;
-            cursor: pointer; transition: 0.3s;
-        }
-        .login-btn:hover { background: #2563eb; box-shadow: 0 0 15px rgba(59, 130, 246, 0.5); }
+        .login-btn:hover { opacity: 0.9; transform: scale(0.98); }
+        #login-msg { color: #ef4444; font-size: 0.9rem; margin-top: 10px; display: none; }
 
-        /* --- 3. DASHBOARD LAYOUT --- */
-        .dashboard-container { display: none; padding: 40px; max-width: 1400px; margin: 0 auto; }
-        
-        /* Header */
-        header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
-        .brand-area h1 { font-size: 1.8rem; font-weight: 600; letter-spacing: 1px; }
-        .brand-area span { color: var(--gold); }
-        .status-badge { 
-            background: rgba(34, 197, 94, 0.1); color: #22c55e; 
-            padding: 6px 15px; border-radius: 20px; font-size: 0.85rem; font-weight: 600;
-            display: flex; align-items: center; gap: 8px; border: 1px solid rgba(34, 197, 94, 0.2);
+        /* DASHBOARD LAYOUT */
+        #dashboard { display: none; padding: 30px; height: 100vh; overflow-y: auto; }
+        header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        header h1 { font-family: 'Cinzel', serif; color: var(--accent); }
+        .refresh-btn { 
+            background: transparent; border: 1px solid var(--muted); color: var(--muted); 
+            padding: 8px 20px; border-radius: 20px; cursor: pointer; transition: 0.3s; 
         }
-        .pulse { width: 8px; height: 8px; background: #22c55e; border-radius: 50%; box-shadow: 0 0 10px #22c55e; animation: pulse 2s infinite; }
+        .refresh-btn:hover { border-color: var(--accent); color: var(--accent); }
 
-        /* KPI Grid */
-        .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-bottom: 30px; }
-        .kpi-card {
-            background: var(--card-bg); padding: 25px; border-radius: 12px;
-            border: 1px solid var(--border); position: relative; overflow: hidden;
-        }
-        .kpi-label { color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; display: block; }
-        .kpi-value { font-size: 2.5rem; font-weight: 600; color: white; }
-        .kpi-sub { font-size: 0.8rem; color: var(--accent); margin-top: 5px; display: block; }
-        .kpi-card::after {
-            content: ''; position: absolute; top: 0; right: 0; width: 100px; height: 100px;
-            background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
-        }
+        /* KPI GRIDS */
+        .grid-kpi { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .card { background: var(--card); padding: 20px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); }
+        .card h3 { color: var(--muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
+        .big-num { font-size: 2rem; font-weight: bold; color: white; }
+        .sub-text { font-size: 0.8rem; color: var(--muted); margin-top: 5px; }
 
-        /* Charts Section */
-        .charts-row { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; margin-bottom: 30px; }
-        .chart-box {
-            background: var(--card-bg); padding: 25px; border-radius: 12px;
-            border: 1px solid var(--border); height: 350px;
-        }
+        /* CHARTS SECTION */
+        .grid-charts { display: grid; grid-template-columns: 1fr 2fr; gap: 20px; margin-bottom: 30px; height: 300px; }
+        .chart-container { position: relative; height: 100%; padding-bottom: 40px; }
 
-        /* Recent Activity Table */
-        .table-box { background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border); overflow: hidden; }
-        .table-header { padding: 20px 25px; border-bottom: 1px solid var(--border); font-weight: 600; color: var(--gold); }
+        /* DATA TABLE */
+        .table-wrapper { background: var(--card); border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05); }
         table { width: 100%; border-collapse: collapse; }
-        th { text-align: left; padding: 15px 25px; background: rgba(0,0,0,0.2); color: var(--text-muted); font-weight: 500; font-size: 0.9rem; }
-        td { padding: 15px 25px; border-bottom: 1px solid var(--border); font-size: 0.95rem; }
-        tr:last-child td { border-bottom: none; }
+        th { background: #0f172a; color: var(--accent); padding: 15px; text-align: left; font-family: 'Cinzel', serif; font-size: 0.9rem; }
+        td { padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.9rem; color: var(--muted); }
         tr:hover { background: rgba(255,255,255,0.02); }
+        
+        .ip-tag { background: #0f172a; padding: 4px 8px; border-radius: 4px; font-family: monospace; font-size: 0.8rem; }
+        .device-tag { color: white; font-weight: 500; }
 
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
-
-        @media (max-width: 1024px) {
-            .charts-row { grid-template-columns: 1fr; height: auto; }
-            .chart-box { height: 300px; }
+        /* MOBILE RESPONSIVE */
+        @media (max-width: 900px) {
+            .grid-charts { grid-template-columns: 1fr; height: auto; }
+            .chart-container { height: 250px; margin-bottom: 20px; }
         }
     </style>
 </head>
 <body>
 
-    <div id="login-overlay" class="login-overlay">
+    <div id="login-overlay">
         <div class="login-box">
-            <h2>OWNER ACCESS</h2>
-            <input type="password" id="admin-pass" class="login-input" placeholder="Enter Passcode">
-            <button onclick="login()" class="login-btn">Initialize System</button>
-            <p id="login-msg" style="margin-top: 15px; font-size: 0.8rem; color: #ef4444; display: none;"></p>
+            <h2>Access Control</h2>
+            <input type="password" id="admin-pass" placeholder="Enter Passcode">
+            <button class="login-btn" onclick="login()">INITIALIZE SYSTEM</button>
+            <p id="login-msg">Access Denied</p>
         </div>
     </div>
 
-    <div id="dashboard" class="dashboard-container">
-        
+    <div id="dashboard">
         <header>
-            <div class="brand-area">
-                <h1>Broken Brownie <span>Analytics</span></h1>
-                <small style="color: var(--text-muted);">Real-time Visitor Insights</small>
-            </div>
-            <div class="status-badge">
-                <div class="pulse"></div> SYSTEM LIVE
-                <button onclick="location.reload()" style="background:none; border:none; color:#ef4444; cursor:pointer; margin-left:15px; font-weight:bold;">LOGOUT</button>
-            </div>
+            <h1>Mission Control</h1>
+            <button class="refresh-btn" onclick="location.reload()">⟳ Refresh Data</button>
         </header>
 
-        <div class="kpi-grid">
-            <div class="kpi-card">
-                <span class="kpi-label">Total Traffic</span>
-                <span class="kpi-value" id="val-total">0</span>
-                <span class="kpi-sub">All-time hits</span>
+        <div class="grid-kpi">
+            <div class="card">
+                <h3>Total Hits</h3>
+                <div class="big-num" id="val-total">0</div>
+                <div class="sub-text" id="val-peak">Peak: --</div>
             </div>
-            <div class="kpi-card">
-                <span class="kpi-label">Top Location</span>
-                <span class="kpi-value" id="val-city" style="font-size: 1.8rem;">--</span>
-                <span class="kpi-sub" id="val-country">Waiting for data...</span>
+            <div class="card">
+                <h3>Device Split</h3>
+                <div class="big-num" id="val-mobile">0%</div>
+                <div class="sub-text" id="val-desktop">--% Desktop</div>
             </div>
-            <div class="kpi-card">
-                <span class="kpi-label">Peak Activity</span>
-                <span class="kpi-value" id="val-peak">--</span>
-                <span class="kpi-sub">Most active hour</span>
-            </div>
-            <div class="kpi-card">
-                <span class="kpi-label">Mobile Users</span>
-                <span class="kpi-value" id="val-mobile">0%</span>
-                <span class="kpi-sub" id="val-desktop">0% Desktop</span>
+            <div class="card">
+                <h3>Top Location</h3>
+                <div class="big-num" id="val-city">--</div>
+                <div class="sub-text" id="val-country">Waiting for data...</div>
             </div>
         </div>
 
-        <div class="charts-row">
-            <div class="chart-box">
-                <h3 style="margin-bottom: 20px; font-weight: 400; color: var(--text-muted);">Visitor Trend (Last 50 Hits)</h3>
-                <canvas id="trendChart"></canvas>
-            </div>
-            <div class="chart-box">
-                <h3 style="margin-bottom: 20px; font-weight: 400; color: var(--text-muted);">Device Breakdown</h3>
+        <div class="grid-charts">
+            <div class="card chart-container">
+                <h3>User Devices</h3>
                 <canvas id="deviceChart"></canvas>
             </div>
+            <div class="card chart-container">
+                <h3>Live Traffic Trend</h3>
+                <canvas id="trendChart"></canvas>
+            </div>
         </div>
 
-        <div class="table-box">
-            <div class="table-header">Raw Access Logs (Live)</div>
+        <div class="table-wrapper">
             <table>
                 <thead>
                     <tr>
                         <th>Time</th>
-                        <th>Origin</th>
-                        <th>Device</th>
-                        <th>Status</th>
+                        <th>Location</th>
+                        <th>IP Address</th>
+                        <th>Browser / OS</th>
+                        <th>Type</th>
                     </tr>
                 </thead>
                 <tbody id="table-body">
                     </tbody>
             </table>
         </div>
-
     </div>
 
     <script>
-        // --- CONFIGURATION ---
-        // Switch this URL when you deploy!
-        // Localhost: 'http://localhost:5000/api/admin/stats'
-        // Render: 'https://broken-brownie-api.onrender.com/api/admin/stats'
-       const API_URL = 'http://localhost:5000/api/admin/stats';
+        // --- API CONFIGURATION ---
+        // Your correct Render URL is already set here!
+        const API_URL = 'https://broken-brownie-api.onrender.com/api/admin/stats'; 
 
-        // --- LOGIN LOGIC ---
+        // --- LOGIN HANDLER ---
         async function login() {
             const pass = document.getElementById('admin-pass').value;
             const btn = document.querySelector('.login-btn');
             const msg = document.getElementById('login-msg');
 
-            btn.innerText = "Authenticating...";
+            btn.innerText = "AUTHENTICATING...";
+            btn.style.opacity = "0.7";
             msg.style.display = 'none';
 
             try {
@@ -212,43 +166,49 @@
 
                 if (res.status === 200) {
                     const data = await res.json();
-                    document.getElementById('login-overlay').style.display = 'none';
-                    document.getElementById('dashboard').style.display = 'block';
+                    
+                    // Transition Effect
+                    document.getElementById('login-overlay').style.opacity = '0';
+                    setTimeout(() => {
+                        document.getElementById('login-overlay').style.display = 'none';
+                        document.getElementById('dashboard').style.display = 'block';
+                    }, 500);
+                    
                     processAndRender(data);
                 } else {
-                    throw new Error("Invalid Password");
+                    throw new Error("Access Denied: Invalid Passcode");
                 }
             } catch (err) {
-                btn.innerText = "Initialize System";
-                msg.innerText = "Error: " + (err.message || "Server Offline");
+                btn.innerText = "INITIALIZE SYSTEM";
+                btn.style.opacity = "1";
+                msg.innerText = err.message || "Server Unreachable";
                 msg.style.display = 'block';
             }
         }
 
-        // --- DATA PROCESSING & RENDERING ---
+        // --- DATA VISUALIZATION ENGINE ---
         function processAndRender(data) {
-            // 1. Basic Stats
-            document.getElementById('val-total').innerText = data.total;
+            // 1. KPI Updates
+            document.getElementById('val-total').innerText = data.total.toLocaleString();
             
-            // Calculate Mobile %
             const mobPercent = Math.round((data.mobile / data.total) * 100) || 0;
             document.getElementById('val-mobile').innerText = mobPercent + "%";
             document.getElementById('val-desktop').innerText = (100 - mobPercent) + "% Desktop";
 
-            // 2. Derive Top Location (Client-side math)
+            // 2. City Logic
             const cities = {};
             data.recent.forEach(v => {
                 const loc = v.city === 'Unknown' ? 'Localhost' : v.city;
                 cities[loc] = (cities[loc] || 0) + 1;
             });
-            const topCity = Object.keys(cities).reduce((a, b) => cities[a] > cities[b] ? a : b, "--");
+            const topCity = Object.keys(cities).reduce((a, b) => cities[a] > cities[b] ? a : b, "N/A");
             document.getElementById('val-city').innerText = topCity;
             
-            // Find Country for top city
+            // Country Logic
             const topRecord = data.recent.find(r => r.city === topCity);
-            document.getElementById('val-country').innerText = topRecord ? topRecord.country : "N/A";
+            document.getElementById('val-country').innerText = topRecord ? topRecord.country : "waiting...";
 
-            // 3. Derive Peak Hour
+            // 3. Peak Hour Logic
             const hours = {};
             data.recent.forEach(v => {
                 const h = new Date(v.timestamp).getHours();
@@ -262,25 +222,31 @@
             // 4. Render Table
             const tbody = document.getElementById('table-body');
             tbody.innerHTML = '';
-            data.recent.slice(0, 10).forEach(visit => {
+            
+            data.recent.slice(0, 50).forEach(visit => {
                 const time = new Date(visit.timestamp).toLocaleTimeString();
-                const loc = visit.city === 'Unknown' ? 'Localhost / Unknown' : `${visit.city}, ${visit.country}`;
+                const loc = visit.city === 'Unknown' ? 'Unknown Location' : `${visit.city}, ${visit.country}`;
+                const ip = visit.ip || '---';
+                const devName = visit.deviceName || 'Generic Device';
                 
-                const row = `<tr>
-                    <td style="color:var(--accent);">${time}</td>
-                    <td>${loc}</td>
-                    <td>${visit.device}</td>
-                    <td><span style="color:#22c55e;">● Verified</span></td>
-                </tr>`;
+                const row = `
+                    <tr>
+                        <td style="color:var(--accent); font-family:monospace;">${time}</td>
+                        <td style="color:white;">${loc}</td>
+                        <td><span class="ip-tag">${ip}</span></td>
+                        <td class="device-tag">${devName}</td>
+                        <td>${visit.deviceType || 'Desktop'}</td>
+                    </tr>
+                `;
                 tbody.innerHTML += row;
             });
 
-            // 5. Render Charts (Chart.js)
+            // 5. Render Charts
             renderCharts(data);
         }
 
         function renderCharts(data) {
-            // A. Device Doughnut
+            // Doughnut Chart (Device Split)
             new Chart(document.getElementById('deviceChart'), {
                 type: 'doughnut',
                 data: {
@@ -288,21 +254,23 @@
                     datasets: [{
                         data: [data.mobile, data.desktop],
                         backgroundColor: ['#3b82f6', '#DFD0B8'],
-                        borderWidth: 0
+                        borderWidth: 0,
+                        hoverOffset: 10
                     }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: { legend: { position: 'bottom', labels: { color: '#94a3b8' } } }
+                    plugins: { 
+                        legend: { position: 'bottom', labels: { color: '#94a3b8', padding: 20 } } 
+                    },
+                    cutout: '70%'
                 }
             });
 
-            // B. Trend Line (Mocking time buckets for visual)
-            const recentVisits = data.recent.slice(0, 20).reverse(); // Last 20
-            const labels = recentVisits.map(v => new Date(v.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}));
-            // Just for visual trend, we map simply 1s as events. 
-            // In a real advanced app, we'd bucket by hour.
+            // Line Chart (Trend)
+            const recentVisits = data.recent.slice(0, 20).reverse();
+            const labels = recentVisits.map(v => new Date(v.timestamp).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}));
             const points = recentVisits.map(() => 1); 
 
             new Chart(document.getElementById('trendChart'), {
@@ -310,12 +278,17 @@
                 data: {
                     labels: labels,
                     datasets: [{
-                        label: 'Hits',
-                        data: points.map((_, i) => i + Math.random() * 2), // Simulated 'Cumulative' feel for visual
+                        label: 'Live Hits',
+                        data: points.map((_, i) => i + Math.random() * 2),
                         borderColor: '#22c55e',
                         backgroundColor: 'rgba(34, 197, 94, 0.1)',
                         fill: true,
-                        tension: 0.4
+                        tension: 0.4,
+                        borderWidth: 2,
+                        pointRadius: 4,
+                        pointBackgroundColor: '#020617',
+                        pointBorderColor: '#22c55e',
+                        pointBorderWidth: 2
                     }]
                 },
                 options: {
@@ -323,8 +296,15 @@
                     maintainAspectRatio: false,
                     plugins: { legend: { display: false } },
                     scales: {
-                        x: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+                        x: { 
+                            ticks: { color: '#94a3b8' }, 
+                            grid: { color: 'rgba(255,255,255,0.05)' } 
+                        },
                         y: { display: false }
+                    },
+                    interaction: {
+                        intersect: false,
+                        mode: 'index',
                     }
                 }
             });

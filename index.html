@@ -4,205 +4,188 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>Broken Brownie | Premium Handcrafted Brownies & Cakes in Chennai</title>
-    <meta name="description" content="Chennai's finest artisanal brownies, jar cakes, and bento cakes. 70% Belgian Cocoa, 100% Eggless options available. Order the famous Crinkle Top now.">
-    <meta name="keywords" content="brownies chennai, bento cakes chennai, jar cakes, custom cakes, broken brownie, eggless bakery chennai, online cake delivery">
-    <meta name="robots" content="index, follow">
-    <meta name="theme-color" content="#153448">
+    <title>Broken Brownie | Premium Handcrafted Desserts in Chennai</title>
+    <link rel="canonical" href="https://brokenbrownie.in">
+    <meta name="description" content="Order the best Fudgy Brownies, Jar Cakes, and Cheesecakes in Chennai. Handcrafted with 70% Belgian Chocolate and zero preservatives. Freshly baked daily.">
+    <meta name="keywords" content="brownies chennai, best brownies, jar cakes, broken brownie, cheesecake delivery, bento cakes, dessert chennai, chocolate gift">
+    <meta name="author" content="Broken Brownie Co.">
+    <meta name="theme-color" content="#153448"> <meta property="og:title" content="Broken Brownie | Redefining The Crinkle">
+    <meta property="og:description" content="Premium handcrafted desserts. 70% Belgian Chocolate. Zero Preservatives. Taste the art of baking.">
+    
+    <meta property="og:image" content="logo.png">
+    
+    <meta property="og:image:width" content="500">
+    <meta property="og:image:height" content="500">
+    
+    <meta property="og:url" content="https://brokenbrownie.in">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://brokenbrownie.in/">
-    <meta property="og:title" content="Broken Brownie | Luxury You Can Eat">
-    <meta property="og:description" content="Premium artisanal brownies and cakes in Chennai. Tap to order the masterpiece.">
-    <meta property="og:image" content="https://broken-brownie-official.netlify.app/logo.jpg">
 
-    <link rel="icon" type="image/jpg" href="logo.jpg">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;800&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=2">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <link rel="icon" type="image/jpeg" href="logo.jpg">
+    
+    <link rel="stylesheet" href="style.css">
 </head>
 <body class="theme-midnight">
 
-    <div id="toast-container"></div>
-
     <div class="cinema-bg">
-        <div class="cinema-overlay"></div>
-        <video autoplay muted loop playsinline id="bg-video">
-            <source src="https://assets.mixkit.co/videos/preview/mixkit-ink-swirling-in-water-263-large.mp4" type="video/mp4">
+        <video id="bg-video" autoplay muted loop playsinline>
+            <source src="https://cdn.coverr.co/videos/coverr-pouring-chocolate-sauce-on-brownie-5390/1080p.mp4" type="video/mp4">
         </video>
+        <div class="cinema-overlay"></div>
     </div>
 
     <div class="cursor-dot"></div>
     <div class="cursor-ring"></div>
 
-    <div class="palette-dock hover-trigger">
-        <div class="palette-label">MOOD</div>
+    <div class="palette-dock">
+        <span class="palette-label">MOOD</span>
         <div class="palette-btns">
-            <button class="theme-btn midnight" onclick="setTheme('midnight')" title="Midnight Blue"></button>
-            <button class="theme-btn espresso" onclick="setTheme('espresso')" title="Espresso Noir"></button>
-            <button class="theme-btn velvet" onclick="setTheme('velvet')" title="Royal Velvet"></button>
+            <div class="theme-btn midnight" onclick="setTheme('midnight')" title="Midnight Blue"></div>
+            <div class="theme-btn espresso" onclick="setTheme('espresso')" title="Espresso Noir"></div>
+            <div class="theme-btn velvet" onclick="setTheme('velvet')" title="Royal Velvet"></div>
         </div>
     </div>
 
     <nav class="glass-nav">
-        <div class="nav-logo-area hover-trigger">
-            <img src="logo.jpg" alt="Logo" class="logo-img">
-            <div class="logo-text">
-                <span class="top">BROKEN</span>
-                <span class="bot">BROWNIE</span>
-            </div>
-        </div>
-        
+      <div class="nav-logo-area" onclick="window.scrollTo(0,0)">
+    <img src="logo.jpg" alt="Logo" class="logo-img">
+    <div class="logo-text">
+        <span class="top">BROKEN</span>
+        <span class="bot">BROWNIE</span>
+    </div>
+</div>
+
         <div class="search-container">
             <input type="text" id="spotlight-search" placeholder="Search for 'Red Velvet'..." onkeyup="filterSearch()">
             <span class="search-icon">🔍</span>
         </div>
-        
+
         <ul class="nav-menu">
-            <li><a href="#menu" class="hover-trigger">Menu</a></li>
-            <li><a href="#story" class="hover-trigger">The Artist</a></li>
-            <li><a href="#reviews" class="hover-trigger">Feedback</a></li>
+            <li><a href="#menu">The Menu</a></li>
+            <li><a href="#artist">The Artist</a></li>
+            <li><a href="#reviews">Feedback</a></li>
         </ul>
 
-        <div class="nav-extra">
-            <a href="https://www.instagram.com/broken.brownies/" target="_blank" class="social-link hover-trigger">INSTAGRAM ↗</a>
-        </div>
+        <a href="Https://www.instagram.com/broken.brownies?igsh=MXdyZmExYm9yN3ExNQ==" target="_blank" class="social-link">INSTAGRAM ↗</a>
     </nav>
 
-    <header class="hero">
+    <section class="hero">
         <div class="hero-inner">
-            <p class="pre-title hover-trigger">EST. 2025 &bull; CHENNAI</p>
-            <h1 class="hero-title">
-                <span class="line-1">Redefining</span>
-                <span class="line-2">The <span class="gold-text">Crinkle.</span></span>
-            </h1>
-            <p class="hero-sub">
-                A symphony of 70% Belgian Cocoa and artistic imperfection. 
-                <br>Welcome to the gallery of taste.
-            </p>
-            <div class="cta-wrapper hover-trigger">
-                <a href="#menu" class="btn-liquid">
-                    <span class="inner-text">Acquire The Batch</span>
-                </a>
-            </div>
+            <p class="pre-title">EST. 2025 · CHENNAI</p>
+            <h1 class="hero-title">REDEFINING THE <span class="gold-text">CRINKLE.</span></h1>
+            <p class="hero-sub">A symphony of 70% Belgian Cocoa and artistic imperfection. Welcome to the gallery of taste.</p>
+            <a href="#menu" class="btn-liquid">ACQUIRE THE BATCH</a>
         </div>
-    </header>
+    </section>
 
     <div class="marquee-lux">
         <div class="track">
-            <span>ARTISTIC BAKING</span> <span class="star">✦</span>
-            <span>PREMIUM COCOA</span> <span class="star">✦</span>
-            <span>LIMITED BATCHES</span> <span class="star">✦</span>
-            <span>NO PRESERVATIVES</span> <span class="star">✦</span>
+            <span>PREMIUM INGREDIENTS <b class="star">✦</b> HANDCRAFTED DAILY <b class="star">✦</b> BELGIAN CHOCOLATE <b class="star">✦</b> ZERO PRESERVATIVES <b class="star">✦</b> BROKEN BROWNIE CO. <b class="star">✦</b></span>
+            <span>PREMIUM INGREDIENTS <b class="star">✦</b> HANDCRAFTED DAILY <b class="star">✦</b> BELGIAN CHOCOLATE <b class="star">✦</b> ZERO PRESERVATIVES <b class="star">✦</b> BROKEN BROWNIE CO. <b class="star">✦</b></span>
         </div>
     </div>
 
     <section id="menu" class="gallery-section">
         <div class="section-head">
-            <h2 class="section-title">The Collection</h2>
+            <h2 class="section-title">THE COLLECTION</h2>
             <div class="gold-bar"></div>
-            
-          <div id="admin-controls" class="admin-panel hidden">
-    <span class="admin-badge">ADMIN MODE ACTIVE</span>
-    <div class="admin-actions">
-        <button class="admin-add-btn" onclick="openAddModal()">+ Add Item</button>
-        <a href="dashboard.html" class="admin-add-btn" style="text-decoration:none; background:#2ecc71;">📊 Analytics</a>
-        <button class="admin-logout-btn" onclick="adminLogout()">Logout</button>
-    </div>
-</div>
-            <div class="filter-tabs">
-                <button class="tab-btn active" onclick="filterMenu('brownie')">Brownies</button>
-                <button class="tab-btn" onclick="filterMenu('jar')">Jar Cakes</button>
-                <button class="tab-btn" onclick="filterMenu('cheesecake')">Cheesecakes</button>
-                <button class="tab-btn" onclick="filterMenu('bento')">Bento Cakes</button>
-                <button class="tab-btn" onclick="filterMenu('tea')">Tea Cakes</button>
-                <button class="tab-btn" onclick="filterMenu('drink')">Beverages</button>
+        </div>
+
+        <div id="admin-controls" class="admin-panel hidden">
+            <div class="admin-badge">OWNER MODE ACTIVE</div>
+            <div class="admin-actions">
+                <button class="admin-add-btn" onclick="openAddModal()">+ Add New Item</button>
+                <button class="admin-analytics-btn" onclick="window.open('dashboard.html', '_blank')">Live Dashboard</button>
+                <button class="admin-logout-btn" onclick="adminLogout()">Logout</button>
             </div>
         </div>
 
-        <div class="card-container" id="menu-grid">
+        <div class="filter-tabs">
+            <button class="tab-btn active" onclick="filterMenu('brownie')">Brownies</button>
+            <button class="tab-btn" onclick="filterMenu('jar')">Jar Cakes</button>
+            <button class="tab-btn" onclick="filterMenu('cheesecake')">Cheesecakes</button>
+            <button class="tab-btn" onclick="filterMenu('bento')">Bento Cakes</button>
+            <button class="tab-btn" onclick="filterMenu('tea')">Tea Cakes</button>
+            <button class="tab-btn" onclick="filterMenu('drink')">Beverages</button>
+        </div>
+
+        <div id="menu-grid" class="card-container">
             </div>
     </section>
 
-    <section id="story" class="artist-section">
+    <section id="artist" class="artist-section">
         <div class="artist-layout">
-            <div class="artist-img-box hover-trigger">
-                <img src="owner.jpg" alt="The Baker" class="artist-img">
-                <div class="floating-frame"></div>
-            </div>
+            <div class="artist-img-box">
+    <div class="floating-frame"></div>
+    <img src="owner.jpg" class="artist-img" alt="The Baker">
+</div>
             <div class="artist-bio">
                 <span class="tag">THE CREATOR</span>
-                <h2>Edible Artistry</h2>
-                <p>"Broken Brownie is my canvas. I don't just bake; I construct experiences."</p>
+                <h2>EDIBLE ARTISTRY</h2>
+                <p>"Broken Brownie is my canvas. I don't just bake; I construct experiences. Every crack on the crust is intentional, every gram of sugar is calculated."</p>
                 <div class="signature">Broken Brownie Co.</div>
             </div>
         </div>
     </section>
 
     <section id="reviews" class="reviews-section">
-        <div class="section-head">
-            <h2 class="section-title">Client Love</h2>
-            <div class="gold-bar"></div>
-            <button class="btn-liquid small" onclick="openReviewModal()"><span class="inner-text">Write Feedback ✎</span></button>
-        </div>
-        <div class="reviews-wrapper" id="reviews-grid"></div>
+        <h2 class="section-title">FEEDBACK</h2>
+        <p class="review-sub">Stories from the indulgers.</p>
+        <button class="action-btn" onclick="openReviewModal()">Write a Review</button>
+        
+        <div id="reviews-grid" class="reviews-wrapper">
+            </div>
     </section>
 
-    <footer id="contact">
-        <div class="footer-grid">
-            <div class="f-col">
-                <h4>Connect</h4>
-                <a href="mailto:brokenbrownie.in@gmail.com">brokenbrownie.in@gmail.com</a>
-                <a href="tel:+919789028598">+91 97890 28598</a>
-                <p class="loc">Chennai, India</p>
-            </div>
-            <div class="f-col center">
-                <img src="logo.jpg" class="footer-logo">
-                <p class="f-tag">Luxury you can eat.</p>
-            </div>
-            <div class="f-col right">
-                <h4>Admin Access</h4>
-                <button onclick="openAdminLogin()" class="footer-admin-link">Owner Login 🔒</button>
-            </div>
-        </div>
-        <div class="f-copy">&copy; 2025 Broken Brownie.</div>
-    </footer>
+ <footer>
+    <div class="footer-grid">
+       <div class="f-col center">
+            <h4>Connect</h4>
+            
+           <a href="https://mail.google.com/mail/?view=cm&fs=1&to=brokenbrownie.in@gmail.com" target="_blank" style="display:block; margin-bottom:12px; cursor: pointer; position: relative; z-index: 20; color:var(--text-muted); transition:0.3s; text-decoration:none;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text-muted)'">
+                brokenbrownie.in@gmail.com
+            </a>
 
-    <div id="smart-bag" class="floating-cart hidden" onclick="openCartModal()">
-        <div class="cart-glass">
+            <a href="https://wa.me/919789028598" target="_blank" style="display:block; margin-bottom:12px; cursor: pointer; position: relative; z-index: 10; color:var(--text-muted); transition:0.3s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text-muted)'">
+                +91 97890 28598
+            </a>
+
+            <a href="https://www.google.com/maps/search/?api=1&query=No.18+Bala+Subramaniyan+St,+Chennai" target="_blank" style="display:block; cursor: pointer; position: relative; z-index: 10; color:var(--text-muted); text-decoration: none; font-size: 0.9rem; transition:0.3s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text-muted)'">
+                No.18 Bala Subramaniyan St, Chennai 📍
+            </a>
+        </div>
+        <div class="f-col center">
+            <img src="logo.jpg" class="footer-logo" alt="Footer Logo">
+            <p class="f-copy">© 2026 Broken Brownie. The Art of Baking.</p>
+        </div>
+
+        <div class="f-col right">
+            <h4>Admin Access</h4>
+            <button class="footer-admin-link" onclick="openAdminLogin()">Owner Login 🔒</button>
+        </div>
+    </div>
+</footer>
+    <div id="smart-bag" class="floating-cart hidden">
+        <div class="cart-glass" onclick="openCartModal()">
             <div class="cart-info">
-                <span class="cart-count">0 Items</span>
-                <span class="cart-total">View Bag</span>
+                <span class="cart-count">0 ITEMS</span>
+                <span class="cart-total">Review & WhatsApp</span>
             </div>
-            <button class="checkout-btn">Open <span class="arrow">↑</span></button>
+            <button class="checkout-btn">Review Order -></button>
         </div>
     </div>
 
     <div id="cart-modal" class="modal-overlay hidden">
-        <div class="modal-box large cart-box">
-            <h3>Your Selection</h3>
-            <div id="cart-items-list">
+        <div class="modal-box">
+            <h3 style="border-bottom: 1px solid var(--accent); padding-bottom: 15px; margin-bottom: 20px;">
+                Your Order Review 🧾
+            </h3>
+            <div id="cart-items-list" style="max-height: 300px; overflow-y: auto; margin-bottom: 25px; text-align: left;">
                 </div>
-            <div class="modal-actions cart-actions">
-                <button onclick="closeModal('cart-modal')" class="cancel-btn">Keep Browsing</button>
-                <button onclick="proceedToWhatsApp()" class="confirm-btn whatsapp-btn">Proceed to WhatsApp ↗</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="product-modal" class="modal-overlay hidden">
-        <div class="modal-box product-view">
-            <button class="close-modal-x" onclick="closeModal('product-modal')">×</button>
-            <div class="product-layout">
-                <div class="prod-img-col"><img id="view-img" src="" alt="Cake"></div>
-                <div class="prod-info-col">
-                    <span class="badge" id="view-badge">FRESH</span>
-                    <h2 id="view-name">Product Name</h2>
-                    <p id="view-desc">Description.</p>
-                    <p id="view-ing" class="ingredients-text">Ingredients...</p> <div class="modal-actions">
-                        <button id="view-add-btn" class="confirm-btn">Add to Bag +</button>
-                    </div>
-                </div>
+            <div class="modal-actions">
+                <button class="confirm-btn" onclick="checkoutWhatsApp()">Confirm & Send 🚀</button>
+                <button class="cancel-btn" onclick="closeModal('cart-modal')">Add More</button>
             </div>
         </div>
     </div>
@@ -210,22 +193,26 @@
     <div id="login-modal" class="modal-overlay hidden">
         <div class="modal-box">
             <h3>Owner Access</h3>
-            <input type="password" id="admin-pass" placeholder="Enter Passcode">
+            <div class="input-group">
+                <label>Passcode</label>
+                <input type="password" id="admin-pass" placeholder="Enter code">
+            </div>
             <div class="modal-actions">
-                <button onclick="closeModal('login-modal')" class="cancel-btn">Cancel</button>
-                <button onclick="checkLogin()" class="confirm-btn">Login</button>
+                <button class="confirm-btn" onclick="checkLogin()">Login</button>
+                <button class="cancel-btn" onclick="closeModal('login-modal')">Cancel</button>
             </div>
         </div>
     </div>
 
     <div id="add-modal" class="modal-overlay hidden">
         <div class="modal-box large">
-            <h3>Add Masterpiece</h3>
-            <div class="input-group"><label>Name</label><input type="text" id="new-name"></div>
-            <div class="input-group"><label>Desc</label><input type="text" id="new-desc"></div>
-            <div class="input-group"><label>Ingredients</label><input type="text" id="new-ing"></div> <div class="input-group"><label>Image URL</label><input type="text" id="new-img"></div>
+            <h3>Add To Menu</h3>
+            <div class="input-group"><label>Name *</label><input type="text" id="new-name"></div>
+            <div class="input-group"><label>Description *</label><input type="text" id="new-desc"></div>
+            <div class="input-group"><label>Ingredients</label><input type="text" id="new-ing" placeholder="Comma separated list"></div>
+            <div class="input-group"><label>Image URL</label><input type="text" id="new-img" placeholder="https://..."></div>
             <div class="input-group">
-                <label>Category</label>
+                <label>Category *</label>
                 <select id="new-cat">
                     <option value="brownie">Brownie</option>
                     <option value="jar">Jar Cake</option>
@@ -235,27 +222,20 @@
                     <option value="drink">Beverage</option>
                 </select>
             </div>
-             <div class="input-group">
-                <label>Badge</label>
-                <select id="new-badge">
-                    <option value="">None</option>
-                    <option value="MUST TRY">MUST TRY</option>
-                    <option value="NEW">NEW</option>
-                    <option value="BESTSELLER">BESTSELLER</option>
-                </select>
-            </div>
+            <div class="input-group"><label>Badge (Optional)</label><input type="text" id="new-badge" placeholder="e.g. BESTSELLER"></div>
             <div class="modal-actions">
-                <button onclick="closeModal('add-modal')" class="cancel-btn">Cancel</button>
-                <button onclick="saveNewItem()" class="confirm-btn">Save</button>
+                <button class="confirm-btn" onclick="saveNewItem()">Save Item</button>
+                <button class="cancel-btn" onclick="closeModal('add-modal')">Cancel</button>
             </div>
         </div>
     </div>
 
     <div id="edit-modal" class="modal-overlay hidden">
         <div class="modal-box large">
-            <h3>Edit Masterpiece</h3>
-            <input type="hidden" id="edit-index"> <div class="input-group"><label>Name</label><input type="text" id="edit-name"></div>
-            <div class="input-group"><label>Desc</label><input type="text" id="edit-desc"></div>
+            <h3>Edit Item</h3>
+            <input type="hidden" id="edit-index">
+            <div class="input-group"><label>Name</label><input type="text" id="edit-name"></div>
+            <div class="input-group"><label>Description</label><input type="text" id="edit-desc"></div>
             <div class="input-group"><label>Ingredients</label><input type="text" id="edit-ing"></div>
             <div class="input-group"><label>Image URL</label><input type="text" id="edit-img"></div>
             <div class="input-group">
@@ -269,41 +249,53 @@
                     <option value="drink">Beverage</option>
                 </select>
             </div>
-             <div class="input-group">
-                <label>Badge</label>
-                <select id="edit-badge">
-                    <option value="">None</option>
-                    <option value="MUST TRY">MUST TRY</option>
-                    <option value="NEW">NEW</option>
-                    <option value="BESTSELLER">BESTSELLER</option>
-                </select>
-            </div>
+            <div class="input-group"><label>Badge</label><input type="text" id="edit-badge"></div>
             <div class="modal-actions">
-                <button onclick="closeModal('edit-modal')" class="cancel-btn">Cancel</button>
-                <button onclick="saveEditedItem()" class="confirm-btn">Update Item</button>
+                <button class="confirm-btn" onclick="saveEditedItem()">Update Item</button>
+                <button class="cancel-btn" onclick="closeModal('edit-modal')">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="product-modal" class="modal-overlay hidden" style="z-index: 3000;">
+        <div class="product-view">
+            <button class="close-modal-x" onclick="closeModal('product-modal')">&times;</button>
+            <div class="product-layout">
+                <div class="prod-img-col">
+                    <img id="view-img" src="" alt="Product Image">
+                </div>
+                <div class="prod-info-col">
+                    <span id="view-badge" class="tag">FRESH</span>
+                    <h2 id="view-name">Product Name</h2>
+                    <p id="view-desc" style="color:var(--text-muted); margin-bottom:20px;">Description goes here...</p>
+                    <p class="ingredients-text-view" style="font-style:italic; color:#888; margin-bottom:30px;"></p>
+                    <button id="view-add-btn" class="btn-liquid">ADD TO BAG</button>
+                </div>
             </div>
         </div>
     </div>
 
     <div id="review-modal" class="modal-overlay hidden">
         <div class="modal-box">
-            <h3>Leave Feedback</h3>
-            <div class="input-group"><label>Name</label><input type="text" id="review-name"></div>
-            <div class="input-group"><label>Review</label><input type="text" id="review-text"></div>
+            <h3>Write a Review</h3>
+            <div class="input-group"><label>Your Name</label><input type="text" id="review-name"></div>
+            <div class="input-group"><label>Experience</label><input type="text" id="review-text"></div>
             <div class="input-group">
                 <label>Rating</label>
                 <select id="review-rating">
-                    <option value="5">★★★★★</option>
-                    <option value="4">★★★★☆</option>
-                    <option value="3">★★★☆☆</option>
+                    <option value="5">★★★★★ (Excellent)</option>
+                    <option value="4">★★★★ (Good)</option>
+                    <option value="3">★★★ (Okay)</option>
                 </select>
             </div>
             <div class="modal-actions">
-                <button onclick="closeModal('review-modal')" class="cancel-btn">Cancel</button>
-                <button onclick="submitReview()" class="confirm-btn">Post</button>
+                <button class="confirm-btn" onclick="submitReview()">Submit</button>
+                <button class="cancel-btn" onclick="closeModal('review-modal')">Cancel</button>
             </div>
         </div>
     </div>
+
+    <div id="toast-container"></div>
 
     <script src="script.js"></script>
 </body>
