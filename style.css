@@ -1202,26 +1202,23 @@ footer {
     .cursor-dot, .cursor-ring { display: none !important; }
     * { cursor: auto !important; }
 
-    /* 2. Fix Mood Switcher for Mobile (Add this!) */
+    /* 2. Fix Mood Switcher for Mobile */
     .theme-switch {
-        display: flex !important;       /* Force it to appear */
-        position: fixed;                /* Stick to the screen */
-        bottom: 30px;                   /* Distance from bottom */
-        left: 50%;                      /* Center horizontal */
-        transform: translateX(-50%);    /* Perfect centering */
-        background: rgba(15, 23, 42, 0.95); /* Dark background */
+        display: flex !important;
+        position: fixed;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(15, 23, 42, 0.95);
         padding: 10px 25px;
         border-radius: 50px;
         border: 1px solid rgba(255, 255, 255, 0.1);
-        z-index: 9999;                  /* Ensure it is on top */
+        z-index: 9999;
         width: max-content;
     }
-
-    /* Adjust the text size inside the button */
     .theme-switch span {
         font-size: 0.85rem;
     }
-}
 
     /* 2. Layout Stacking */
     .artist-layout { flex-direction: column; text-align: center; }
@@ -1293,20 +1290,59 @@ footer {
         overflow-y: auto; 
         display: block; 
     }
-}
+
+} /* <--- THIS IS THE CORRECT CLOSING BRACKET FOR MOBILE */
+
 
 /* C. SMALL MOBILE (Max Width 480px) */
 @media (max-width: 480px) {
     .hero-title { font-size: 2.5rem; }
     .btn-liquid { padding: 15px 30px; font-size: 0.8rem; }
-    
-    /* Force Single Column Grids */
     .card-container { grid-template-columns: 1fr; } 
-    
-    /* Hide non-essentials */
     .palette-dock { display: none; } 
-    
     .tilt-card { max-width: 100%; }
-    
     .modal-box { padding: 25px; }
+}
+
+
+/* D. DESKTOP FIXES (The New Code for Laptops) */
+@media (min-width: 769px) {
+    /* 1. Fix the Giant Search Bar */
+    .search-container {
+        max-width: 500px;
+        margin: 0 auto 30px auto;
+    }
+
+    .search-container input {
+        padding: 15px 25px;
+        font-size: 1rem;
+    }
+
+    /* 2. Fix the Giant "Add to Cart" Buttons */
+    .product-card button {
+        width: auto;
+        min-width: 150px;
+        padding: 10px 25px;
+        margin-top: 15px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /* 3. Fix the Cart Modal */
+    .cart-modal {
+        width: 400px;
+        left: auto;
+        right: 20px;
+        bottom: 20px;
+        top: auto;
+        border-radius: 15px;
+        max-height: 80vh;
+    }
+
+    #checkout-btn {
+        width: 90%;
+        margin: 20px auto 0;
+        display: block;
+    }
 }
