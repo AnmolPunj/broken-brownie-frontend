@@ -1196,6 +1196,19 @@ footer {
     .prod-info-col h2 { font-size: 2.5rem; }
 }
 
+/* --------------------------------------------------------------------------
+   15. MOBILE RESPONSIVENESS (3-LAYER SHIELD)
+   -------------------------------------------------------------------------- */
+
+/* A. TABLET (Max Width 1024px) */
+@media (max-width: 1024px) {
+    .gallery-section { padding: 80px 4%; }
+    .card-visual { height: 200px; }
+    .hero-title { font-size: 4rem; }
+    .artist-layout { gap: 30px; }
+    .prod-info-col h2 { font-size: 2.5rem; }
+}
+
 /* B. MOBILE (Max Width 768px) */
 @media (max-width: 768px) {
     /* 1. Reset Cursor for Touch */
@@ -1291,7 +1304,7 @@ footer {
         display: block; 
     }
 
-} /* <--- THIS IS THE CORRECT CLOSING BRACKET FOR MOBILE */
+} /* <--- THIS CLOSING BRACKET STOPS THE LEAK */
 
 
 /* C. SMALL MOBILE (Max Width 480px) */
@@ -1307,42 +1320,47 @@ footer {
 
 /* D. DESKTOP FIXES (The New Code for Laptops) */
 @media (min-width: 769px) {
-    /* 1. Fix the Giant Search Bar */
+
+    /* 1. NAVBAR LAYOUT - Fixes the crowding */
+    .glass-nav {
+        display: flex;
+        align-items: center;       /* Centers everything vertically */
+        justify-content: space-between; /* Spreads items out nicely */
+        padding: 15px 40px;        /* Adds breathing room on sides */
+        gap: 20px;                 /* meaningful gap between logo/search/menu */
+    }
+
+    /* 2. SEARCH BAR (Green Circle Fix) */
     .search-container {
-        max-width: 500px;
-        margin: 0 auto 30px auto;
+        margin: 0;                 /* Removes weird spacing */
+        margin-right: auto;        /* Pushes it slightly left, near logo */
+        margin-left: 30px;         /* Adds space between Logo and Search */
+        max-width: 250px;          /* Makes it narrower (not so wide) */
     }
 
     .search-container input {
-        padding: 15px 25px;
-        font-size: 1rem;
+        padding: 8px 20px;         /* SLIMMER: Reduced top/bottom padding */
+        font-size: 0.9rem;         /* Smaller text size */
+        height: auto;              /* Lets padding control the height */
     }
 
-    /* 2. Fix the Giant "Add to Cart" Buttons */
-    .product-card button {
-        width: auto;
-        min-width: 150px;
-        padding: 10px 25px;
-        margin-top: 15px;
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
+    /* 3. MENU & INSTAGRAM BUTTON (White Circle Fix) */
+    .nav-menu {
+        display: flex;
+        align-items: center;
+        gap: 40px;                 /* Adds BIG space between links (Menu, Artist, Feedback) */
     }
 
-    /* 3. Fix the Cart Modal */
+    /* Specifically targets the Instagram Button to push it apart */
+    .nav-menu a:last-child, 
+    .btn-liquid {
+        margin-left: 20px;         /* Extra shove to the right */
+    }
+
+    /* 4. OTHER DESKTOP ADJUSTMENTS */
     .cart-modal {
-        width: 400px;
-        left: auto;
-        right: 20px;
-        bottom: 20px;
-        top: auto;
-        border-radius: 15px;
-        max-height: 80vh;
-    }
-
-    #checkout-btn {
-        width: 90%;
-        margin: 20px auto 0;
-        display: block;
+        width: 350px;
+        right: 30px;
+        bottom: 30px;
     }
 }
