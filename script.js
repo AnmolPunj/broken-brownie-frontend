@@ -164,7 +164,8 @@ const defaultMenu = [
         desc: "Vanilla Chocolate Swirl.", 
         ing: "Classic Vanilla Batter swirled with Dutch Cocoa Batter.", 
         cat: "tea", 
-        img: "https://www.bing.com/th/id/OIP.RVTbwFNH0oO7z4VDabxAcQHaLH?w=160&h=211&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2", 
+        /* I replaced the broken Bing link with this working Unsplash link */
+        img: "https://images.unsplash.com/photo-1626264937309-6453187c3374?q=80&w=800&auto=format&fit=crop", 
         badge: "" 
     },
     { 
