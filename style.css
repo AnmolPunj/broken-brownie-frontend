@@ -1411,3 +1411,53 @@ footer {
     transform: scale(1.02);
     cursor: pointer;
 }
+
+/* =========================================
+   FORCE MOOD SWITCHER VISIBILITY (Mobile Only)
+   ========================================= */
+@media (max-width: 768px) {
+    .theme-switch {
+        display: flex !important;       /* Force it to exist */
+        visibility: visible !important; /* Force it to be seen */
+        opacity: 1 !important;          /* Force it to be solid */
+        
+        position: fixed !important;     /* Stick to the screen */
+        bottom: 20px !important;        /* Floating at the bottom */
+        left: 50% !important;           /* Center horizontal */
+        transform: translateX(-50%) !important; /* Perfect centering */
+        
+        z-index: 2147483647 !important; /* Max Z-Index possible in a browser */
+        
+        background-color: #0f172a !important; /* Dark background */
+        border: 2px solid #DFD0B8 !important; /* Gold border to make it POP */
+        border-radius: 50px !important;
+        padding: 8px 20px !important;
+        width: auto !important;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.5) !important;
+    }
+
+    /* Force the text inside to be visible */
+    .theme-switch span {
+        color: #ffffff !important;
+        font-size: 0.8rem !important;
+        display: inline-block !important;
+    }
+}
+
+/* =========================================
+   UNIVERSAL PENCIL ICON CLASS
+   ========================================= */
+.add-pencil {
+    position: relative !important;
+    display: inline-flex !important;
+    justify-content: center;
+    align-items: center;
+}
+
+.add-pencil::after {
+    content: "\f303";               /* The Pencil Code */
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    font-size: 14px;                /* Adjust size if needed */
+    color: #0f172a;                 /* Dark Color (Blue/Black) */
+}
