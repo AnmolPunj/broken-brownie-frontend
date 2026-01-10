@@ -1413,34 +1413,51 @@ footer {
 }
 
 /* =========================================
-   FORCE MOOD SWITCHER VISIBILITY (Mobile Only)
+   FIX FOR .palette-dock (Mobile Mood Switcher)
    ========================================= */
 @media (max-width: 768px) {
-    .theme-switch {
-        display: flex !important;       /* Force it to exist */
-        visibility: visible !important; /* Force it to be seen */
-        opacity: 1 !important;          /* Force it to be solid */
+    /* 1. Unhide the dock and position it */
+    .palette-dock {
+        display: flex !important;       /* Force it to show */
+        visibility: visible !important;
+        opacity: 1 !important;
         
-        position: fixed !important;     /* Stick to the screen */
-        bottom: 20px !important;        /* Floating at the bottom */
-        left: 50% !important;           /* Center horizontal */
-        transform: translateX(-50%) !important; /* Perfect centering */
+        position: fixed !important;     /* Stick to screen */
+        bottom: 30px !important;        /* Distance from bottom */
+        left: 20px !important;          /* Distance from left */
         
-        z-index: 2147483647 !important; /* Max Z-Index possible in a browser */
-        
-        background-color: #0f172a !important; /* Dark background */
-        border: 2px solid #DFD0B8 !important; /* Gold border to make it POP */
-        border-radius: 50px !important;
-        padding: 8px 20px !important;
-        width: auto !important;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.5) !important;
+        z-index: 9999 !important;       /* On top of everything */
+        background: rgba(15, 23, 42, 0.95); /* Dark background */
+        border: 1px solid #DFD0B8;      /* Gold border */
+        padding: 8px 15px;
+        border-radius: 50px;
+        gap: 10px;
+        align-items: center;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.5);
     }
 
-    /* Force the text inside to be visible */
-    .theme-switch span {
+    /* 2. Make the "MOOD" text visible and white */
+    .palette-label {
+        display: block !important;
         color: #ffffff !important;
-        font-size: 0.8rem !important;
-        display: inline-block !important;
+        font-size: 0.75rem !important;
+        font-weight: bold;
+        letter-spacing: 1px;
+    }
+
+    /* 3. Ensure the buttons inside are laid out horizontally */
+    .palette-btns {
+        display: flex !important;
+        gap: 8px;
+    }
+    
+    /* 4. Size the color circles for touch */
+    .theme-btn {
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        cursor: pointer;
+        border: 1px solid rgba(255,255,255,0.3);
     }
 }
 
