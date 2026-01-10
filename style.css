@@ -1560,3 +1560,58 @@ html body .modal-box button:hover {
     border: 2px solid var(--accent) !important;
     transform: none !important; /* Forces it to stay still */
 }
+
+/* =========================================
+   MOBILE INSTAGRAM ICON FIX
+   ========================================= */
+
+/* 1. Default State (Desktop): Hide the icon, Show the text button */
+.mobile-insta-icon {
+    display: none; /* Hidden on laptop */
+}
+
+.desktop-only {
+    display: inline-block; /* Visible on laptop */
+}
+
+/* 2. Mobile State: Switch them! */
+@media (max-width: 768px) {
+    
+    /* Hide the big text button at the bottom */
+    .desktop-only {
+        display: none !important;
+    }
+
+    /* Show the Icon next to the logo */
+    .mobile-insta-icon {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        margin-left: 15px; /* Space between "BROWNIE" text and Icon */
+        color: var(--accent); /* Gold color */
+        transition: transform 0.3s ease;
+        padding: 5px;
+        border: 1px solid var(--glass-border);
+        border-radius: 8px;
+        background: rgba(255,255,255,0.05);
+    }
+
+    .mobile-insta-icon:active {
+        transform: scale(0.9);
+        color: #fff;
+    }
+
+    /* Ensure the logo area allows the icon to sit side-by-side */
+    .nav-logo-area {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        justify-content: center; /* Center the whole group on mobile */
+        position: relative;
+    }
+    
+    /* Small tweak to ensure the icon doesn't stick to the text */
+    .logo-text {
+        margin-right: 5px;
+    }
+}
