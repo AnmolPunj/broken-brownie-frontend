@@ -1,3 +1,4 @@
+
 /* ==========================================================================
    BROKEN BROWNIE - CLIENT SIDE LOGIC ENGINE
    Version: 8.0 (Uncompressed Master Build)
@@ -165,7 +166,7 @@ const defaultMenu = [
         ing: "Classic Vanilla Batter swirled with Dutch Cocoa Batter.", 
         cat: "tea", 
         /* I replaced the broken Bing link with this working Unsplash link */
-        img: "https://images.unsplash.com/photo-1626264937309-6453187c3374?q=80&w=800&auto=format&fit=crop", 
+        img: "https://media.istockphoto.com/id/507312791/photo/chocolate-glazed-marble-loaf-cake.webp?a=1&b=1&s=612x612&w=0&k=20&c=VdfDmKobIz9ue2cs_kCF26F2uOLCB7ahXN40U_j2DqU=",
         badge: "" 
     },
     { 
@@ -533,12 +534,27 @@ function saveEditedItem() {
     showToast("Item Updated Successfully!");
 }
 
+/* --- NEW CODE (PASTE THIS) --- */
+
+// Variable to track which item we want to delete
+let pendingDeleteIndex = null; 
+
+// 1. This runs when you click the red "X"
 function deleteItem(index) {
-    if (confirm("Are you sure you want to permanently delete this item?")) {
-        menuData.splice(index, 1); // Remove from array
+    pendingDeleteIndex = index; 
+    document.getElementById('confirm-modal').classList.remove('hidden'); // Shows the dark modal
+}
+
+// 2. This runs when you click "Yes" inside the modal
+function executeDelete() {
+    if (pendingDeleteIndex !== null) {
+        menuData.splice(pendingDeleteIndex, 1);
         localStorage.setItem('brokenBrownieMenu', JSON.stringify(menuData));
         renderMenu();
-        showToast("Item Deleted.");
+
+        closeModal('confirm-modal');
+        showToast("Item Deleted Successfully! 🗑️");
+        pendingDeleteIndex = null;
     }
 }
 
@@ -693,22 +709,52 @@ function filterMenu(cat) {
     renderMenu();
 }
 
-// Live Search Filter
-function filterSearch() {
-    const input = document.getElementById('spotlight-search').value.toLowerCase();
-    const cards = document.querySelectorAll('.tilt-card');
-    
-    cards.forEach(card => {
-        const title = card.querySelector('h3').innerText.toLowerCase();
-        
-        if (title.includes(input)) {
-            card.style.display = 'block';
-        } else {
-            card.style.display = 'none';
-        }
-    });
+/* --- NEW SMART SEARCH LOGIC --- */
+
+// 1. Listen for Enter Key
+function handleSearch(event) {
+    if (event.key === 'Enter') {
+        performSearch();
+    }
 }
 
+// 2. Find, Switch Tab, Scroll & Glow
+function performSearch() {
+    const query = document.getElementById('spotlight-search').value.toLowerCase().trim();
+    if (!query) return;
+
+    // Find the item in your data
+    const match = menuData.find(item => item.name.toLowerCase().includes(query));
+
+    if (match) {
+        // Switch tabs automatically
+        filterMenu(match.cat);
+
+        // Wait 100ms for the switch, then scroll
+        setTimeout(() => {
+            // Find the card by checking the text inside the <h3> tag
+            const cards = document.querySelectorAll('.tilt-card');
+            let targetCard = null;
+
+            cards.forEach(card => {
+                const title = card.querySelector('h3').innerText.toLowerCase();
+                if (title === match.name.toLowerCase()) {
+                    targetCard = card;
+                }
+            });
+            
+            if (targetCard) {
+                targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                targetCard.classList.add('search-highlight');
+                
+                // Remove glow after 3 seconds
+                setTimeout(() => targetCard.classList.remove('search-highlight'), 3000);
+            }
+        }, 100); 
+    } else {
+        showToast("Item not found 😔");
+    }
+}
 function closeModal(id) { 
     const modal = document.getElementById(id);
     if (modal) modal.classList.add('hidden'); 
@@ -795,27 +841,6 @@ function applyTiltEffect() {
         };
     });
 }
-
-// --- VISITOR ANALYTICS ---
-async function trackVisitor() {
-    // Determine Device Type
-    const deviceType = window.innerWidth < 768 ? 'Mobile' : 'Desktop';
-    
-    try {
-        // Send data to backend (Localhost default)
-        // Ensure your server.js is running on port 5000
-        await fetch('http://localhost:5000/api/track', { 
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ device: deviceType })
-        });
-        console.log("Visitor Tracked Successfully.");
-    } catch (err) { 
-        // Fail silently if server is offline (doesn't break the site)
-        console.warn("Tracking skipped (Server Offline)."); 
-    }
-}
-
 /* --------------------------------------------------------------------------
    SECTION 9: VISITOR TRACKING (The Bridge to Backend)
    -------------------------------------------------------------------------- */

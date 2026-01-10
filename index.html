@@ -57,7 +57,9 @@
 </div>
 
         <div class="search-container">
-            <input type="text" id="spotlight-search" placeholder="Search for 'Red Velvet'..." onkeyup="filterSearch()">
+           <input type="text" id="spotlight-search" 
+       placeholder="Type 'Red Velvet' & Hit Enter..." 
+       onkeypress="handleSearch(event)">
             <span class="search-icon">🔍</span>
         </div>
 
@@ -295,18 +297,18 @@
         </div>
     </div>
 
-    <div id="toast-container"></div>
-
-    <div class="palette-dock">
-    <span class="palette-label">MOOD</span>
-    <div class="palette-btns">
-        <div class="theme-btn midnight" onclick="setTheme('midnight')" title="Midnight Blue"></div>
-        <div class="theme-btn espresso" onclick="setTheme('espresso')" title="Espresso Noir"></div>
-        <div class="theme-btn velvet" onclick="setTheme('velvet')" title="Royal Velvet"></div>
+    <div id="confirm-modal" class="modal-overlay hidden">
+    <div class="modal-box">
+        <h3 style="color: var(--error);">⚠️ Wait a second...</h3>
+        <p style="color: white; margin-bottom: 25px;">Are you sure you want to permanently delete this item?</p>
+        <div class="modal-actions">
+            <button class="confirm-btn" onclick="executeDelete()" style="background-color: var(--error) !important; color: white !important;">Yes, Delete It</button>
+            <button class="cancel-btn" onclick="closeModal('confirm-modal')">Cancel</button>
+        </div>
     </div>
 </div>
 
-<script src="script.js?v=2.0"></script>
+    <div id="toast-container"></div>
 
     <script src="script.js"></script>
 </body>

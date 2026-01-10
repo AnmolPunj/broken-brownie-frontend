@@ -1480,26 +1480,83 @@ footer {
 }
 
 /* =========================================
-   FINAL VISIBILITY FIX (High Contrast / No Glow)
+   FIX "ADD TO BAG" & SCROLLBAR (FINAL)
    ========================================= */
 
-/* We use 'body' here to force this rule over any mood themes */
-body .modal-box p,
-body .modal-box .ingredients-text, 
-body .modal-box li {
-    color: #ffffff !important;       /* Force Solid White */
-    text-shadow: none !important;    /* KILLS THE GLOWING EFFECT */
-    font-weight: 600 !important;     /* Makes text 'darker' (thicker/bold) */
-    opacity: 1 !important;           /* 100% Solid (No fading) */
-    filter: none !important;         /* Removes any blur filters */
-    background: transparent !important; /* Ensures no weird background override */
+/* 1. FORCE THE SCROLLBAR TO VANISH */
+#cart-items-list::-webkit-scrollbar {
+    width: 0px !important;
+    height: 0px !important;
+    background: transparent !important;
 }
 
-/* If you want the specific "Ingredients:" label to be Gold but solid */
-body .modal-box .ingredients-text i,
-body .modal-box .ingredients-text em {
-    color: #DFD0B8 !important;       /* The Gold Color */
-    font-style: normal !important;   /* Removes italic if hard to read */
-    font-weight: 700 !important;     /* Extra thick */
-    text-shadow: none !important;    /* No Glow */
+#cart-items-list {
+    scrollbar-width: none !important; /* Firefox */
+    -ms-overflow-style: none !important; /* IE */
+    overflow-x: hidden !important; /* No horizontal scroll */
+}
+
+/* 2. FIX THE "ADD TO BAG" BUTTON (Correct ID: #view-add-btn) */
+html body #view-add-btn,           /* <--- CORRECTED ID */
+html body .modal-box button {
+    background: #DFD0B8 !important;   /* Solid Gold */
+    color: #000000 !important;        /* Black Text */
+    border: 1px solid #DFD0B8 !important;
+    font-weight: 900 !important;
+    opacity: 1 !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+    filter: none !important;
+    padding: 15px 30px;
+    border-radius: 6px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Hover Effect for Buttons */
+html body #view-add-btn:hover,
+html body .modal-box button:hover {
+    background: #ffffff !important;
+    color: #000000 !important;
+    transform: scale(1.02);
+}
+
+/* 3. FIX TEXT VISIBILITY IN PRODUCT VIEW */
+/* This makes the description white so you can read it on dark backgrounds */
+.product-view p,
+.product-view h3,
+.product-view .ingredients-text,
+.prod-info-col p {
+    color: #ffffff !important;
+    opacity: 1 !important;
+    text-shadow: none !important;
+}
+
+.product-view h2 {
+    color: #DFD0B8 !important; /* Gold Title */
+}
+
+/* --- SEARCH HIGHLIGHT ANIMATION (Glow Only - No Bounce) --- */
+@keyframes flash-focus {
+    0% { 
+        box-shadow: 0 0 0 transparent; 
+        border-color: transparent; 
+    }
+    50% { 
+        box-shadow: 0 0 30px var(--accent); 
+        border-color: var(--accent); 
+    }
+    100% { 
+        box-shadow: 0 0 0 transparent; 
+        border-color: transparent; 
+    }
+}
+
+.search-highlight {
+    animation: flash-focus 2s ease-in-out infinite; /* Slower, smoother glow */
+    z-index: 100;
+    position: relative;
+    border: 2px solid var(--accent) !important;
+    transform: none !important; /* Forces it to stay still */
 }
