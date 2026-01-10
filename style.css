@@ -1480,38 +1480,26 @@ footer {
 }
 
 /* =========================================
-   ULTIMATE MODAL VISIBILITY FIX (All Themes)
+   FINAL VISIBILITY FIX (High Contrast / No Glow)
    ========================================= */
 
-/* 1. Fix the "Add to Bag" Button (Make text DARKER) */
-#add-to-cart-btn,
-.modal-box button {
-    background-color: #DFD0B8 !important;  /* Force Gold Background */
-    color: #000000 !important;             /* Force PURE BLACK Text */
-    font-weight: 900 !important;           /* Extra Thick Text */
-    border: 2px solid #fff !important;     /* White border to make it pop */
-    text-transform: uppercase;
+/* We use 'body' here to force this rule over any mood themes */
+body .modal-box p,
+body .modal-box .ingredients-text, 
+body .modal-box li {
+    color: #ffffff !important;       /* Force Solid White */
+    text-shadow: none !important;    /* KILLS THE GLOWING EFFECT */
+    font-weight: 600 !important;     /* Makes text 'darker' (thicker/bold) */
+    opacity: 1 !important;           /* 100% Solid (No fading) */
+    filter: none !important;         /* Removes any blur filters */
+    background: transparent !important; /* Ensures no weird background override */
 }
 
-/* Hover State: When you touch the button */
-#add-to-cart-btn:hover,
-.modal-box button:hover {
-    background-color: #ffffff !important;  /* Turns White */
-    color: #000000 !important;             /* Text stays Black */
-    transform: scale(1.05);                /* Grows slightly */
-}
-
-/* 2. Fix the "Ingredients" & Description (Make text BRIGHTER) */
-.modal-box p,
-.ingredients-text {
-    color: #ffffff !important;             /* Force Pure White */
-    opacity: 1 !important;                 /* Remove any fading */
-    font-weight: 500;                      /* Make letters thicker */
-    text-shadow: 0 2px 4px rgba(0,0,0,0.9); /* Black shadow behind text */
-}
-
-/* 3. Fix the "Classic Brownie" Title */
-.modal-box h3 {
-    color: #DFD0B8 !important;             /* Force Gold */
-    text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+/* If you want the specific "Ingredients:" label to be Gold but solid */
+body .modal-box .ingredients-text i,
+body .modal-box .ingredients-text em {
+    color: #DFD0B8 !important;       /* The Gold Color */
+    font-style: normal !important;   /* Removes italic if hard to read */
+    font-weight: 700 !important;     /* Extra thick */
+    text-shadow: none !important;    /* No Glow */
 }
