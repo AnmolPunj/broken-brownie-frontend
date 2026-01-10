@@ -1478,3 +1478,40 @@ footer {
     font-size: 14px;                /* Adjust size if needed */
     color: #0f172a;                 /* Dark Color (Blue/Black) */
 }
+
+/* =========================================
+   ULTIMATE MODAL VISIBILITY FIX (All Themes)
+   ========================================= */
+
+/* 1. Fix the "Add to Bag" Button (Make text DARKER) */
+#add-to-cart-btn,
+.modal-box button {
+    background-color: #DFD0B8 !important;  /* Force Gold Background */
+    color: #000000 !important;             /* Force PURE BLACK Text */
+    font-weight: 900 !important;           /* Extra Thick Text */
+    border: 2px solid #fff !important;     /* White border to make it pop */
+    text-transform: uppercase;
+}
+
+/* Hover State: When you touch the button */
+#add-to-cart-btn:hover,
+.modal-box button:hover {
+    background-color: #ffffff !important;  /* Turns White */
+    color: #000000 !important;             /* Text stays Black */
+    transform: scale(1.05);                /* Grows slightly */
+}
+
+/* 2. Fix the "Ingredients" & Description (Make text BRIGHTER) */
+.modal-box p,
+.ingredients-text {
+    color: #ffffff !important;             /* Force Pure White */
+    opacity: 1 !important;                 /* Remove any fading */
+    font-weight: 500;                      /* Make letters thicker */
+    text-shadow: 0 2px 4px rgba(0,0,0,0.9); /* Black shadow behind text */
+}
+
+/* 3. Fix the "Classic Brownie" Title */
+.modal-box h3 {
+    color: #DFD0B8 !important;             /* Force Gold */
+    text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+}
