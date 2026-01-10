@@ -1601,17 +1601,42 @@ html body .modal-box button:hover {
         color: #fff;
     }
 
-    /* Ensure the logo area allows the icon to sit side-by-side */
+    /* =========================================
+   MOBILE INSTAGRAM ICON FIX (FINAL)
+   ========================================= */
+
+/* 1. Default State (Desktop): Hide the icon */
+.mobile-insta-icon {
+    display: none;
+}
+
+/* 2. Mobile State (Phones Only) */
+@media (max-width: 768px) {
+    
+    /* Hide the big "INSTAGRAM ↗" text button */
+    .desktop-only {
+        display: none !important;
+    }
+
+    /* Show the new Icon next to the logo */
+    .mobile-insta-icon {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        margin-left: 12px; /* Space from logo text */
+        color: var(--accent); /* Gold color */
+        padding: 5px;
+        border: 1px solid var(--glass-border);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    /* Adjust layout to let them sit side-by-side */
     .nav-logo-area {
         display: flex;
         align-items: center;
+        justify-content: center;
         width: 100%;
-        justify-content: center; /* Center the whole group on mobile */
-        position: relative;
-    }
-    
-    /* Small tweak to ensure the icon doesn't stick to the text */
-    .logo-text {
-        margin-right: 5px;
+        margin-bottom: 10px;
     }
 }
