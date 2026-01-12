@@ -1678,3 +1678,21 @@ html body .modal-box button:hover {
         border-bottom: 1px solid var(--accent);
     }
 }
+
+/* =========================================
+   HIDE CUSTOM CURSOR ON MOBILE
+   ========================================= */
+
+@media (max-width: 768px) {
+    .cursor-dot,
+    .cursor-ring {
+        display: none !important; /* Forces it to vanish */
+        visibility: hidden !important;
+        opacity: 0 !important;
+    }
+    
+    /* Reset default system cursor just in case */
+    * {
+        cursor: auto !important;
+    }
+}
