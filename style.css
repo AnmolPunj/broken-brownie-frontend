@@ -1209,11 +1209,6 @@ footer {
     .prod-info-col h2 { font-size: 2.5rem; }
 }
 
-/* B. MOBILE (Max Width 768px) */
-@media (max-width: 768px) {
-    /* 1. Reset Cursor for Touch */
-    .cursor-dot, .cursor-ring { display: none !important; }
-    * { cursor: auto !important; }
 
     /* 2. Fix Mood Switcher for Mobile */
     .theme-switch {
@@ -1731,4 +1726,24 @@ body.mouse-moving .cursor-ring {
 body.mouse-moving .cursor-dot,
 body.mouse-moving .cursor-ring {
     opacity: 1; /* Appears when mouse moves */
+}
+
+/* --- FIX: HIDE MOBILE MENU ON DESKTOP --- */
+@media (min-width: 769px) {
+    .mobile-center-nav {
+        display: none !important; /* Force hide on laptops/PC */
+    }
+}
+
+/* Keep cursor hidden until the first touch */
+.cursor-dot, 
+.cursor-ring {
+    opacity: 0; 
+    transition: opacity 0.2s ease;
+}
+
+/* Only show it when JS says the user is moving/touching */
+body.mouse-moving .cursor-dot,
+body.mouse-moving .cursor-ring {
+    opacity: 1;
 }

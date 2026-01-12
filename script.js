@@ -363,62 +363,82 @@ function setTheme(theme) {
 }
 
 /**
- * Handles the Custom Cursor logic.
- * Hides the cursor until the user moves their mouse (prevents stuck circle).
+ * Handles Custom Cursor for BOTH Desktop (Mouse) and Mobile (Touch).
  */
 function setupCursor() {
     const dot = document.querySelector('.cursor-dot');
     const ring = document.querySelector('.cursor-ring');
 
-    // Only run on Desktop (Mouse devices)
-    if (window.matchMedia("(pointer: fine)").matches) {
+    // Variables to track position
+    let mouseX = 0, mouseY = 0;
+    let ringX = 0, ringY = 0;
+    let isVisible = false;
+
+    // Function to make cursor visible on first move/touch
+    const activateCursor = () => {
+        if (!isVisible) {
+            document.body.classList.add('mouse-moving');
+            isVisible = true;
+        }
+    };
+
+    // 1. MOUSE INPUT (Desktop)
+    window.addEventListener('mousemove', e => {
+        activateCursor();
+        mouseX = e.clientX;
+        mouseY = e.clientY;
         
-        // 1. INVISIBLE START: Wait for the first movement
-        const showCursor = () => {
-            document.body.classList.add('mouse-moving'); // Tells CSS to show the cursor
-            window.removeEventListener('mousemove', showCursor); // Stop listening after first move
-        };
-        window.addEventListener('mousemove', showCursor);
+        // Instant update for the dot
+        if (dot) {
+            dot.style.left = `${mouseX}px`;
+            dot.style.top = `${mouseY}px`;
+        }
+    });
 
-        // 2. MOVEMENT LOGIC
-        let mouseX = 0, mouseY = 0;
-        let ringX = 0, ringY = 0;
+    // 2. TOUCH INPUT (Mobile)
+    window.addEventListener('touchmove', e => {
+        activateCursor();
+        // Get the first finger's position
+        const touch = e.touches[0];
+        mouseX = touch.clientX;
+        mouseY = touch.clientY;
 
-        window.addEventListener('mousemove', e => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-            
-            if (dot) {
-                dot.style.left = `${mouseX}px`;
-                dot.style.top = `${mouseY}px`;
-            }
-        });
+        // Instant update for the dot
+        if (dot) {
+            dot.style.left = `${mouseX}px`;
+            dot.style.top = `${mouseY}px`;
+        }
+    });
 
-        // Ring follows with delay (Lerp)
-        const animate = () => {
-            ringX += (mouseX - ringX) * 0.15;
-            ringY += (mouseY - ringY) * 0.15;
-            
-            if (ring) {
-                ring.style.left = `${ringX}px`;
-                ring.style.top = `${ringY}px`;
-            }
-            requestAnimationFrame(animate);
-        };
-        animate();
+    // 3. ANIMATION LOOP (Smooth Ring Movement)
+    const animate = () => {
+        // Smoothly follow the target coordinates
+        ringX += (mouseX - ringX) * 0.15;
+        ringY += (mouseY - ringY) * 0.15;
+        
+        if (ring) {
+            ring.style.left = `${ringX}px`;
+            ring.style.top = `${ringY}px`;
+        }
+        requestAnimationFrame(animate);
+    };
+    animate();
 
-        // Hover Effect Listener
-        document.body.addEventListener('mouseover', e => {
-            if (e.target.closest('.hover-trigger') || 
-                e.target.closest('button') || 
-                e.target.closest('a') || 
-                e.target.closest('input')) {
-                document.body.classList.add('hovering');
-            } else {
-                document.body.classList.remove('hovering');
-            }
-        });
-    }
+    // 4. HOVER EFFECTS (Links/Buttons)
+    const handleHover = (e) => {
+        if (e.target.closest('.hover-trigger') || 
+            e.target.closest('button') || 
+            e.target.closest('a') || 
+            e.target.closest('input') ||
+            e.target.closest('.dock-item')) { // Added dock-item for mobile menu
+            document.body.classList.add('hovering');
+        } else {
+            document.body.classList.remove('hovering');
+        }
+    };
+    
+    document.body.addEventListener('mouseover', handleHover);
+    document.body.addEventListener('touchstart', handleHover); // Enable hover effect on touch
 }
 
 
