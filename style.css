@@ -1642,44 +1642,39 @@ html body .modal-box button:hover {
 }
 
 /* =========================================
-   MOBILE BOTTOM DOCK NAVIGATION
+   MOBILE CENTER NAVIGATION (Gap Fix)
    ========================================= */
 
-/* 1. Hide on Desktop */
-.mobile-nav-dock {
+/* 1. Hide the new links on Desktop */
+.mobile-center-nav {
     display: none;
 }
 
-/* 2. Show only on Mobile */
+/* 2. Style for Mobile View (Max-width 768px) */
 @media (max-width: 768px) {
-    .mobile-nav-dock {
-        display: flex;
-        position: fixed;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 90%;
-        background: rgba(10, 31, 46, 0.9); /* Deep Midnight */
-        backdrop-filter: blur(15px);
-        border: 1px solid var(--glass-border);
-        border-radius: 50px;
-        z-index: 1000;
-        justify-content: space-around;
-        padding: 12px 10px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    .mobile-center-nav {
+        display: flex !important; /* Visible only on mobile */
+        justify-content: center;
+        gap: 25px;
+        width: 100%;
+        margin-top: 15px; /* Spacing below search bar */
+        margin-bottom: 5px;
     }
 
-    .dock-item {
+    .mobile-nav-item {
         text-decoration: none;
         color: var(--text-muted);
         font-family: 'Cinzel', serif;
-        font-size: 0.65rem;
-        letter-spacing: 1px;
+        font-size: 0.75rem;
+        letter-spacing: 2px;
         font-weight: bold;
         transition: 0.3s;
+        border-bottom: 1px solid transparent;
+        padding-bottom: 2px;
     }
 
-    .dock-item:active, .dock-item:hover {
+    .mobile-nav-item:active {
         color: var(--accent);
+        border-bottom: 1px solid var(--accent);
     }
 }
