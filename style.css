@@ -1696,3 +1696,39 @@ html body .modal-box button:hover {
         cursor: auto !important;
     }
 }
+
+/* =========================================
+   FIX: HIDE MOBILE MENU ON DESKTOP
+   ========================================= */
+
+/* 1. Force hide the mobile center links on big screens */
+@media (min-width: 769px) {
+    .mobile-center-nav {
+        display: none !important;
+    }
+}
+
+/* 2. Fix the Custom Cursor (Hide until moved) */
+.cursor-dot, 
+.cursor-ring {
+    opacity: 0; /* Invisible by default */
+    transition: opacity 0.3s ease; /* Fade in smoothly */
+}
+
+/* This class will be added by JavaScript when you move your mouse */
+body.mouse-moving .cursor-dot,
+body.mouse-moving .cursor-ring {
+    opacity: 1; /* Become visible */
+}
+
+/* Custom Cursor Visibility Logic */
+.cursor-dot, 
+.cursor-ring {
+    opacity: 0; /* Starts hidden */
+    transition: opacity 0.3s ease;
+}
+
+body.mouse-moving .cursor-dot,
+body.mouse-moving .cursor-ring {
+    opacity: 1; /* Appears when mouse moves */
+}

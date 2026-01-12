@@ -161,14 +161,14 @@ const defaultMenu = [
         badge: "HEALTHY" 
     },
     { 
-        name: "Marble Cake Loaf", 
-        desc: "Vanilla Chocolate Swirl.", 
-        ing: "Classic Vanilla Batter swirled with Dutch Cocoa Batter.", 
-        cat: "tea", 
-        /* I replaced the broken Bing link with this working Unsplash link */
-        img: "https://media.istockphoto.com/id/507312791/photo/chocolate-glazed-marble-loaf-cake.webp?a=1&b=1&s=612x612&w=0&k=20&c=VdfDmKobIz9ue2cs_kCF26F2uOLCB7ahXN40U_j2DqU=",
-        badge: "" 
-    },
+    name: "Marble Cake Loaf", 
+    desc: "Vanilla Chocolate Swirl.", 
+    ing: "Classic Vanilla Batter swirled with Dutch Cocoa Batter.", 
+    cat: "tea", 
+    /* Pointing to the local file in your public folder */
+    img: "broken-brownie-server/teacake.jpg", // Remove the leading "/"
+    badge: "" 
+},
     { 
         name: "Hot Chocolate Mix", 
         desc: "Belgian Cocoa Blend (200g).", 
@@ -363,15 +363,24 @@ function setTheme(theme) {
 }
 
 /**
- * Handles the Custom Cursor logic and Scroll Effects.
- * Only runs on Desktop to preserve Mobile performance.
+ * Handles the Custom Cursor logic.
+ * Hides the cursor until the user moves their mouse (prevents stuck circle).
  */
 function setupCursor() {
     const dot = document.querySelector('.cursor-dot');
     const ring = document.querySelector('.cursor-ring');
 
-    // Check if device uses a fine pointer (Mouse) vs Coarse (Touch)
+    // Only run on Desktop (Mouse devices)
     if (window.matchMedia("(pointer: fine)").matches) {
+        
+        // 1. INVISIBLE START: Wait for the first movement
+        const showCursor = () => {
+            document.body.classList.add('mouse-moving'); // Tells CSS to show the cursor
+            window.removeEventListener('mousemove', showCursor); // Stop listening after first move
+        };
+        window.addEventListener('mousemove', showCursor);
+
+        // 2. MOVEMENT LOGIC
         let mouseX = 0, mouseY = 0;
         let ringX = 0, ringY = 0;
 
@@ -379,7 +388,6 @@ function setupCursor() {
             mouseX = e.clientX;
             mouseY = e.clientY;
             
-            // Dot follows instantly
             if (dot) {
                 dot.style.left = `${mouseX}px`;
                 dot.style.top = `${mouseY}px`;
@@ -412,6 +420,7 @@ function setupCursor() {
         });
     }
 }
+
 
 function setupScrollEffects() {
     const nav = document.querySelector('.glass-nav');
