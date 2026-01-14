@@ -65,7 +65,7 @@
     </div>
 
     <div class="search-container">
-        <input type="text" id="spotlight-search" placeholder="Search for 'Red Velvet'..." onkeypress="handleSearch(event)">
+        <input type="text" id="spotlight-search" placeholder="Search for 'Red Velvet'..." oninput="handleLiveSearch()">
         <span class="search-icon" onclick="performSearch()" style="cursor: pointer;">🔍</span>
     </div>
 
@@ -185,7 +185,7 @@
                 <span class="cart-count">0 ITEMS</span>
                 <span class="cart-total">Review & WhatsApp</span>
             </div>
-            <button class="checkout-btn">Review Order -></button>
+            <button class="checkout-btn">Review Order</button>
         </div>
     </div>
 

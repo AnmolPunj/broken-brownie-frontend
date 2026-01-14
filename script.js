@@ -647,15 +647,14 @@ function openCartModal() {
                 border-bottom: 1px solid rgba(255,255,255,0.1);
             `;
             
-            // Item Row with Remove Button
+            // Item Row with Enhanced Remove Button
             row.innerHTML = `
                 <div style="display:flex; align-items:center; gap:10px;">
                     <span style="color:var(--accent); font-weight:bold;">${index + 1}.</span>
                     <span style="color:white;">${item}</span>
                 </div>
-                <button onclick="removeFromCart(${index})" 
-                        style="color: #ff6b6b; background:none; border:none; cursor:pointer; font-size:0.8rem; text-decoration:underline;">
-                    Remove
+                <button onclick="removeFromCart(${index})" class="remove-item-btn">
+                    REMOVE ✕
                 </button>
             `;
             list.appendChild(row);
@@ -742,53 +741,52 @@ function filterMenu(cat) {
 
 /* --- NEW SMART SEARCH LOGIC --- */
 
-// 1. Listen for Enter Key
-function handleSearch(event) {
-    if (event.key === 'Enter') {
-        performSearch();
-    }
-}
-
-// 2. Find, Switch Tab, Scroll & Glow
-function performSearch() {
+/* =========================================
+   LIVE SEARCH (Type -> Auto Scroll -> Glow)
+   ========================================= */
+function handleLiveSearch() {
     const query = document.getElementById('spotlight-search').value.toLowerCase().trim();
-    if (!query) return;
+    
+    // 1. If box is empty, remove glows and stop
+    if (!query) {
+        document.querySelectorAll('.tilt-card').forEach(c => c.classList.remove('search-highlight'));
+        return;
+    }
 
-    // Find the item in your data
+    // 2. Search in the Data first (so we know which category to open)
     const match = menuData.find(item => item.name.toLowerCase().includes(query));
 
     if (match) {
-        // Switch tabs automatically
+        // A. Switch to the correct Category Tab automatically
         filterMenu(match.cat);
 
-        // Wait 100ms for the switch, then scroll
+        // B. Wait 100ms for the tab to switch, then Scroll & Glow
         setTimeout(() => {
-            // Find the card by checking the text inside the <h3> tag
+            // Find the visible card in the DOM
             const cards = document.querySelectorAll('.tilt-card');
             let targetCard = null;
 
+            // Look for the specific card we just found
             cards.forEach(card => {
                 const title = card.querySelector('h3').innerText.toLowerCase();
                 if (title === match.name.toLowerCase()) {
                     targetCard = card;
                 }
             });
-            
+
+            // C. Scroll to it
             if (targetCard) {
+                // Clear old glows
+                cards.forEach(c => c.classList.remove('search-highlight'));
+
+                // Scroll
                 targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                targetCard.classList.add('search-highlight');
                 
-                // Remove glow after 3 seconds
-                setTimeout(() => targetCard.classList.remove('search-highlight'), 3000);
+                // Glow
+                targetCard.classList.add('search-highlight');
             }
-        }, 100); 
-    } else {
-        showToast("Item not found 😔");
+        }, 100);
     }
-}
-function closeModal(id) { 
-    const modal = document.getElementById(id);
-    if (modal) modal.classList.add('hidden'); 
 }
 
 /**
@@ -845,18 +843,16 @@ function submitReview() {
     }
 }
 
-// --- 3D TILT & PARALLAX IMAGE EFFECT ---
-// --- 3D TILT & PARALLAX IMAGE EFFECT ---
+// --- 3D TILT EFFECT (Product Cards Only) ---
 function applyTiltEffect() {
-    // 1. Only run on Desktop to save battery
+    // 1. Only run on Desktop
     if (window.innerWidth < 768) return; 
 
-    // 2. Target both Product Cards AND the Artist Image
-    const elements = document.querySelectorAll('.tilt-card, .artist-img-box');
+    // 2. CHANGED: Target ONLY '.tilt-card' (Removed .artist-img-box)
+    const elements = document.querySelectorAll('.tilt-card');
 
     elements.forEach(el => {
-        // Find the image inside (handles both product and artist images)
-        const visual = el.querySelector('.card-visual, .artist-img');
+        const visual = el.querySelector('.card-visual');
 
         el.onmousemove = (e) => {
             const rect = el.getBoundingClientRect();
@@ -866,22 +862,19 @@ function applyTiltEffect() {
             const centerX = rect.width / 2;
             const centerY = rect.height / 2;
 
-            // A. TILT THE CONTAINER (The Box)
+            // A. TILT THE CONTAINER
             const rotateX = ((y - centerY) / centerY) * -10; 
             const rotateY = ((x - centerX) / centerX) * 10;
             
-            // Apply rotation
             el.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
 
-            // B. MOVE THE IMAGE (The Parallax)
+            // B. MOVE THE IMAGE (Parallax)
             if (visual) {
-                // Calculate movement (opposite direction for depth)
                 const moveX = (centerX - x) / 12; 
                 const moveY = (centerY - y) / 12;
                 
-                // Scale 1.1 ensures no empty space shows when moving
                 visual.style.transform = `scale(1.1) translate(${moveX}px, ${moveY}px)`;
-                visual.style.transition = 'none'; // Instant movement (no lag)
+                visual.style.transition = 'none'; 
             }
         };
 
@@ -890,7 +883,7 @@ function applyTiltEffect() {
             el.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
             
             if (visual) {
-                visual.style.transition = 'transform 0.6s ease-out'; // Smooth reset
+                visual.style.transition = 'transform 0.6s ease-out'; 
                 visual.style.transform = 'scale(1.1) translate(0, 0)';
             }
         };
@@ -924,4 +917,18 @@ async function trackVisitor() {
         console.warn("Tracking skipped (Server Offline)."); 
     }
 }
+
+/* =========================================
+   MODAL CONTROLS (Open/Close)
+   ========================================= */
+
+function closeModal(id) { 
+    const modal = document.getElementById(id);
+    if (modal) {
+        modal.classList.add('hidden'); 
+    }
+}
+
+// Ensure global access (Fixes some browser issues)
+window.closeModal = closeModal;
 
