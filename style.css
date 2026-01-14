@@ -253,8 +253,30 @@ footer { padding: 80px 5%; background: var(--bg-secondary); border-top: 1px soli
     .right { text-align: center; }
     
     /* Center Mood Switcher */
-    .palette-dock { left: 50% !important; transform: translateX(-50%); width: max-content; bottom: 20px !important; }
-    .admin-panel { flex-direction: column !important; height: auto !important; }
+    /* --- FIX: MOOD BAR (Left Aligned & Above Cart) --- */
+    .palette-dock {
+        /* 1. Position: Left and Lifted Up */
+        left: 5% !important;            /* Aligns to left (matching cart) */
+        bottom: 95px !important;        /* Moves it ABOVE the cart buttons */
+        
+        /* 2. Remove Centering */
+        transform: none !important;     
+        right: auto !important;
+        width: auto !important;
+        
+        /* 3. Styling & Spacing */
+        display: flex !important;
+        gap: 20px !important;           /* Equal space between dots */
+        padding: 10px 20px !important;  /* Proper spacing around the bar */
+        border-radius: 50px !important; /* Pill shape */
+        z-index: 1100 !important;       /* On top of everything */
+    }
+
+    /* Optional: Make the dots easier to tap on mobile */
+    .palette-dock .theme-btn {
+        width: 25px !important;
+        height: 25px !important;
+    }
 }
 
 /* =========================================
@@ -798,3 +820,4 @@ body.hovering .cursor-ring {
     /* Ensure the corners match your card design */
     border-radius: 8px 8px 0 0; 
 }
+
