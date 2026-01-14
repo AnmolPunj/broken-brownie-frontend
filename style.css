@@ -1,1749 +1,551 @@
 /* ==========================================================================
-   BROKEN BROWNIE - ULTIMATE MASTER STYLESHEET
-   Version: 6.0 (Fully Expanded Production)
+   BROKEN BROWNIE - MASTER STYLESHEET (DESKTOP FIRST)
    ========================================================================== */
 
-/* --------------------------------------------------------------------------
-   1. CORE VARIABLES & COLOR PALETTE
-   -------------------------------------------------------------------------- */
+/* 1. CORE VARIABLES */
 :root {
-    /* --- Primary Backgrounds --- */
-    /* Deep Midnight Blue (Default) */
     --bg-primary: #153448; 
-    
-    /* Darker Shade for Cards/Modals */
     --bg-secondary: #0a1f2e; 
-    
-    /* --- Brand Identity --- */
-    /* Gold/Cream - The "Crinkle" Color */
-    --accent: #DFD0B8;       
-    
-    /* --- Glassmorphism Effects --- */
-    /* Transparent Blue Base */
+    --accent: #DFD0B8;        
     --glass: rgba(21, 52, 72, 0.6); 
-    
-    /* Subtle Gold Border */
     --glass-border: rgba(223, 208, 184, 0.15);
-    
-    /* --- Typography Colors --- */
     --text-main: #ffffff; 
     --text-muted: #94A3B8;
-    
-    /* --- Visual Effects --- */
     --card-gradient: linear-gradient(135deg, #1e4b66, #0f2636);
     --glow: 0 0 20px rgba(60, 91, 111, 0.5);
+    --success: #2ecc71; 
+    --error: #e74c3c;    
+}
+
+/* THEMES */
+body.theme-espresso { --bg-primary: #2C1A1D; --bg-secondary: #1a0f11; --accent: #D4AF37; --glass: rgba(44, 26, 29, 0.6); --glass-border: rgba(212, 175, 55, 0.15); --text-main: #EADDCD; --text-muted: #8D7B6F; --card-gradient: linear-gradient(135deg, #4a2c31, #1a0f11); --glow: 0 0 20px rgba(74, 44, 49, 0.5); }
+body.theme-velvet { --bg-primary: #240046; --bg-secondary: #10002b; --accent: #e0aaff; --glass: rgba(36, 0, 70, 0.6); --glass-border: rgba(224, 170, 255, 0.15); --text-main: #fcf6bd; --text-muted: #c77dff; --card-gradient: linear-gradient(135deg, #3c096c, #10002b); --glow: 0 0 20px rgba(123, 44, 191, 0.5); }
+
+/* 2. GLOBAL RESET */
+html { scroll-behavior: smooth; font-size: 16px; width: 100%; overflow-x: hidden; }
+* { margin: 0; padding: 0; box-sizing: border-box; cursor: auto; }
+@media (pointer: fine) { * { cursor: none !important; } }
+
+body { background-color: var(--bg-primary); color: var(--text-main); font-family: 'Jost', sans-serif; overflow-x: hidden; width: 100%; line-height: 1.6; transition: background-color 0.8s cubic-bezier(0.22, 1, 0.36, 1); }
+h1, h2, h3, h4, h5, h6, .palette-label, .logo-text, .tag, .tab-btn, .admin-badge, .cart-count { font-family: 'Cinzel', serif; }
+img, video, svg { max-width: 100%; height: auto; display: block; }
+
+/* 3. BACKGROUND & CURSOR */
+.cinema-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -1; overflow: hidden; }
+#bg-video { width: 100%; height: 100%; object-fit: cover; opacity: 0.5; filter: contrast(1.1) brightness(0.8); }
+.cinema-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at center, transparent 0%, var(--bg-secondary) 100%); backdrop-filter: blur(2px); }
+
+/* Custom Cursor (Visible by default) */
+.cursor-dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; }
+.cursor-ring { width: 40px; height: 40px; border: 1px solid var(--accent); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9998; transition: transform 0.1s, opacity 0.3s ease; }
+body.hovering .cursor-ring { transform: scale(1.5); background: rgba(255, 255, 255, 0.05); border-color: transparent; backdrop-filter: invert(1); }
+
+/* 4. NAVIGATION BAR (DESKTOP DEFAULT) */
+.glass-nav { display: flex; justify-content: space-between; align-items: center; padding: 15px 5%; position: fixed; top: 0; width: 100%; z-index: 50; transition: all 0.4s ease; border-bottom: 1px solid transparent; }
+.glass-nav.scrolled { background: var(--glass); backdrop-filter: blur(15px); border-bottom: 1px solid var(--glass-border); padding: 10px 5%; }
+
+.nav-logo-area { display: flex; align-items: center; gap: 15px; cursor: pointer; }
+.logo-img { height: 50px; border-radius: 50%; border: 1px solid var(--accent); transition: transform 0.3s ease; }
+.nav-logo-area:hover .logo-img { transform: rotate(10deg); }
+.logo-text { display: flex; flex-direction: column; line-height: 1; }
+.logo-text .top { font-size: 0.8rem; letter-spacing: 3px; }
+.logo-text .bot { font-size: 1rem; font-weight: 700; color: var(--accent); }
+
+/* Search Bar */
+.search-container { position: relative; margin-right: 20px; }
+#spotlight-search { background: rgba(255, 255, 255, 0.1); border: 1px solid var(--glass-border); padding: 8px 15px; border-radius: 20px; color: var(--text-main); font-family: 'Jost', sans-serif; width: 200px; transition: 0.4s; }
+#spotlight-search:focus { width: 250px; background: rgba(0, 0, 0, 0.8); border-color: var(--accent); outline: none; }
+.search-icon { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); font-size: 0.8rem; opacity: 0.6; pointer-events: none; }
+
+/* Desktop Menu (VISIBLE DEFAULT) */
+.nav-menu { display: flex; gap: 30px; list-style: none; }
+.nav-menu a { text-decoration: none; color: var(--text-main); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; transition: 0.3s; position: relative; }
+.nav-menu a::after { content: ''; position: absolute; width: 0; height: 1px; bottom: -5px; left: 0; background-color: var(--accent); transition: width 0.3s; }
+.nav-menu a:hover::after { width: 100%; }
+.nav-menu a:hover { color: var(--accent); text-shadow: 0 0 10px var(--accent); }
+
+.social-link { text-decoration: none; color: var(--accent); font-size: 0.7rem; border: 1px solid var(--accent); padding: 8px 20px; border-radius: 20px; transition: 0.3s; white-space: nowrap; display: inline-block; }
+.social-link:hover { background: var(--accent); color: var(--bg-primary); }
+
+/* Mobile Items (HIDDEN ON DESKTOP) */
+.mobile-insta-icon { display: none; }
+.mobile-center-nav { display: none; }
+
+/* 5. SECTIONS */
+.hero { height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 0 20px; }
+.hero-title { font-size: 5rem; line-height: 1.1; margin-bottom: 30px; text-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+.gold-text { color: var(--accent); font-style: italic; font-family: 'Cinzel'; }
+.hero-sub { color: var(--text-muted); font-size: 1.2rem; margin-bottom: 50px; max-width: 600px; margin-left: auto; margin-right: auto; }
+.btn-liquid { padding: 18px 50px; text-decoration: none; color: var(--accent); border: 1px solid var(--accent); text-transform: uppercase; letter-spacing: 3px; font-size: 0.9rem; transition: 0.4s; display: inline-block; }
+.btn-liquid:hover { background: var(--accent); color: var(--bg-primary); box-shadow: var(--glow); }
+
+.marquee-lux { background: var(--glass); padding: 20px 0; border-top: 1px solid var(--glass-border); border-bottom: 1px solid var(--glass-border); overflow: hidden; backdrop-filter: blur(5px); }
+.track { display: flex; animation: scroll 20s linear infinite; width: max-content; }
+.track span { margin: 0 40px; font-family: 'Cinzel'; font-size: 1.2rem; color: var(--text-main); letter-spacing: 2px; }
+.star { color: var(--accent); margin: 0 10px; }
+@keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+/* Grid & Cards */
+.gallery-section { padding: 100px 5%; min-height: 100vh; }
+.section-head { text-align: center; margin-bottom: 60px; }
+.section-title { font-size: 3rem; margin-bottom: 10px; }
+.gold-bar { width: 2px; height: 60px; background: var(--accent); margin: 0 auto; }
+.filter-tabs { display: flex; justify-content: center; gap: 15px; margin-top: 40px; flex-wrap: wrap; }
+.tab-btn { background: transparent; border: 1px solid var(--glass-border); color: var(--text-muted); padding: 12px 30px; border-radius: 30px; cursor: pointer; transition: 0.3s; font-size: 0.9rem; letter-spacing: 1px; }
+.tab-btn.active, .tab-btn:hover { background: var(--accent); color: var(--bg-primary); border-color: var(--accent); }
+
+.card-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 40px; margin-top: 50px; justify-items: center; }
+.tilt-card { background: var(--card-gradient); border: 1px solid var(--glass-border); border-radius: 8px; padding: 12px; transition: transform 0.1s; position: relative; overflow: hidden; width: 100%; max-width: 350px; }
+.tilt-card:hover { border-color: var(--accent); box-shadow: var(--glow); z-index: 10; }
+.card-visual { height: 250px; width: 100%; background-size: cover; background-position: center; border-radius: 4px; }
+.badge { position: absolute; top: 20px; right: 20px; background: var(--accent); color: var(--bg-primary); padding: 5px 12px; font-size: 0.75rem; font-weight: bold; border-radius: 4px; }
+.card-content { padding: 25px 15px 10px; text-align: center; }
+.card-content h3 { font-size: 1.4rem; margin-bottom: 8px; color: var(--accent); font-family: 'Cinzel'; }
+.card-content p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 20px; }
+.action-btn { background: transparent; border: 1px solid var(--text-muted); color: var(--text-main); padding: 10px 25px; text-transform: uppercase; letter-spacing: 2px; transition: 0.3s; margin-top: 15px; cursor: pointer; }
+.action-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+/* Artist & Reviews */
+.artist-section { padding: 100px 8%; margin-top: 50px; }
+.artist-layout { display: flex; align-items: center; gap: 80px; }
+.artist-img-box { flex: 1; position: relative; max-width: 500px; }
+.artist-img { width: 100%; border-radius: 4px; filter: grayscale(100%); transition: 0.8s; }
+.artist-img-box:hover .artist-img { filter: grayscale(0%); transform: scale(1.02); }
+.floating-frame { position: absolute; top: 40px; left: 40px; width: 100%; height: 100%; border: 1px solid var(--accent); z-index: -1; transition: 0.8s; }
+.artist-bio { flex: 1; }
+.artist-bio h2 { font-size: 3.5rem; margin-bottom: 30px; line-height: 1.1; }
+.signature { margin-top: 30px; font-family: 'Cinzel'; font-size: 1.8rem; color: var(--accent); opacity: 0.7; }
+
+.reviews-section { padding: 100px 8%; text-align: center; }
+.reviews-wrapper { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin-top: 50px; }
+.glass-review { background: var(--glass); border: 1px solid var(--glass-border); padding: 40px 30px; width: 100%; max-width: 350px; border-radius: 8px; }
+.stars { color: var(--accent); margin-bottom: 20px; font-size: 1.2rem; }
+
+/* 6. MODALS & ADMIN */
+.modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(0,0,0,0.9); z-index: 2000; display: flex; justify-content: center; align-items: center; backdrop-filter: blur(8px); opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+.modal-overlay:not(.hidden) { opacity: 1; pointer-events: auto; }
+.modal-box { background: var(--bg-secondary); border: 1px solid var(--accent); padding: 40px; border-radius: 12px; width: 90%; max-width: 450px; text-align: center; transform: translateY(20px); transition: transform 0.3s; }
+.modal-overlay:not(.hidden) .modal-box { transform: translateY(0); }
+.modal-box input, .modal-box select { width: 100%; padding: 12px; background: #020617; border: 1px solid var(--glass-border); color: #fff; margin-bottom: 15px; }
+.confirm-btn { background: var(--accent); color: #000; padding: 12px; border: none; cursor: pointer; width: 100%; font-weight: bold; }
+.cancel-btn { background: transparent; color: var(--text-muted); padding: 12px; border: 1px solid var(--text-muted); cursor: pointer; width: 100%; }
+
+/* Product View */
+.product-view { width: 900px; max-width: 95%; background: #1a1a1a; border: 1px solid var(--accent); display: flex; flex-direction: column; height: auto; max-height: 90vh; position: relative; }
+.product-layout { display: flex; flex-wrap: wrap; height: 100%; }
+.prod-img-col { flex: 1; min-height: 300px; }
+.prod-img-col img { width: 100%; height: 100%; object-fit: cover; }
+.prod-info-col { flex: 1; padding: 40px; display: flex; flex-direction: column; justify-content: center; overflow-y: auto; }
+.prod-info-col h2 { font-size: 3rem; color: var(--accent); margin-bottom: 20px; line-height: 1.1; }
+.prod-info-col p, .ingredients-text-view { color: #fff !important; }
+#view-add-btn { background: var(--accent); color: #000; font-weight: bold; padding: 15px; width: 100%; border: none; cursor: pointer; margin-top: 20px; }
+.close-modal-x { position: absolute; top: 15px; right: 20px; font-size: 2rem; color: #fff; background: none; border: none; cursor: pointer; z-index: 10; }
+
+/* Admin & Extras */
+.admin-panel { background: rgba(0, 0, 0, 0.6); border: 1px solid var(--accent); padding: 20px; margin: 30px auto; max-width: 700px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; }
+.hidden { display: none !important; }
+.admin-btn-group { position: absolute; top: 10px; left: 10px; display: none; gap: 5px; z-index: 20; }
+body.admin-active .admin-btn-group { display: flex; }
+.edit-btn { width: 30px; height: 30px; border-radius: 50%; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: bold; background: var(--accent); }
+.delete-btn { width: 30px; height: 30px; border-radius: 50%; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: bold; background: var(--error); color: white; }
+
+/* Footer */
+footer { padding: 80px 5%; background: var(--bg-secondary); border-top: 1px solid var(--glass-border); }
+.footer-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; align-items: center; gap: 30px; }
+.center { text-align: center; } .right { text-align: right; }
+.footer-logo { height: 70px; width: 70px; border-radius: 50%; border: 2px solid var(--accent); padding: 5px; margin: 0 auto 20px auto; object-fit: cover; }
+.f-col a { display: block; color: var(--text-muted); text-decoration: none; margin-bottom: 12px; transition: 0.3s; }
+.f-col a:hover { color: var(--accent); }
+.footer-admin-link { background: transparent; border: 1px solid var(--accent); color: var(--accent); padding: 6px 16px; border-radius: 20px; cursor: pointer; text-transform: uppercase; margin-top: 5px; }
+
+/* Mood Switcher */
+.palette-dock { position: fixed; left: 30px; bottom: 30px; z-index: 1000; background: var(--glass); padding: 10px 20px; border-radius: 50px; border: 1px solid var(--glass-border); display: flex; gap: 15px; align-items: center; }
+.palette-btns { display: flex; gap: 10px; }
+.theme-btn { width: 20px; height: 20px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.2); cursor: pointer; }
+.midnight { background: #153448; } .espresso { background: #2C1A1D; } .velvet { background: #240046; }
+
+/* Cart & Toast */
+#toast-container { position: fixed; bottom: 30px; right: 30px; z-index: 10000; display: flex; flex-direction: column; gap: 10px; }
+.toast { background: rgba(2,6,23,0.95); border-left: 4px solid var(--accent); padding: 15px 25px; color: #fff; min-width: 250px; }
+.floating-cart { position: fixed; bottom: 30px; right: 30px; z-index: 900; width: 300px; }
+.cart-glass { background: #000; border: 1px solid var(--accent); border-radius: 12px; padding: 15px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
+.checkout-btn { background: var(--accent); color: #000; padding: 8px 15px; border-radius: 6px; border: none; font-weight: bold; }
+
+/* =========================================
+   7. MOBILE VIEW OVERRIDES (ONLY FOR PHONES)
+   ========================================= */
+@media (max-width: 768px) {
+    /* Header Layout Changes */
+    .glass-nav { flex-direction: column; padding: 15px; gap: 10px; }
+    .nav-logo-area { width: 100%; justify-content: center; margin-bottom: 5px; }
     
-    /* --- System Status Colors --- */
-    --success: #2ecc71;  /* Green for Success/Online */
-    --error: #e74c3c;    /* Red for Errors/Delete */
-    --warning: #f1c40f;  /* Yellow for Warnings */
-}
-
-/* --------------------------------------------------------------------------
-   2. THEME DEFINITIONS
-   -------------------------------------------------------------------------- */
-
-/* Theme: Espresso Noir (Coffee Tones) */
-body.theme-espresso {
-    --bg-primary: #2C1A1D; 
-    --bg-secondary: #1a0f11; 
-    --accent: #D4AF37;
-    --glass: rgba(44, 26, 29, 0.6); 
-    --glass-border: rgba(212, 175, 55, 0.15);
-    --text-main: #EADDCD; 
-    --text-muted: #8D7B6F;
-    --card-gradient: linear-gradient(135deg, #4a2c31, #1a0f11);
-    --glow: 0 0 20px rgba(74, 44, 49, 0.5);
-}
-
-/* Theme: Royal Velvet (Purple Tones) */
-body.theme-velvet {
-    --bg-primary: #240046; 
-    --bg-secondary: #10002b; 
-    --accent: #e0aaff;
-    --glass: rgba(36, 0, 70, 0.6); 
-    --glass-border: rgba(224, 170, 255, 0.15);
-    --text-main: #fcf6bd; 
-    --text-muted: #c77dff;
-    --card-gradient: linear-gradient(135deg, #3c096c, #10002b);
-    --glow: 0 0 20px rgba(123, 44, 191, 0.5);
-}
-
-/* --------------------------------------------------------------------------
-   3. GLOBAL RESET & BASE SETTINGS
-   -------------------------------------------------------------------------- */
-html {
-    scroll-behavior: smooth;
-    font-size: 16px; /* Base size for REM calculations */
-    width: 100%;
-    overflow-x: hidden; /* Prevent horizontal scrollbars */
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    /* Default Cursor: Visible for Mobile compatibility */
-    cursor: auto; 
-}
-
-/* === SMART CURSOR LOGIC === */
-/* Only hide system mouse on devices with a mouse (Desktop) */
-@media (pointer: fine) {
-    * { 
-        cursor: none !important; 
-    } 
-}
-
-body {
-    background-color: var(--bg-primary); 
-    color: var(--text-main);
-    font-family: 'Jost', sans-serif; 
-    overflow-x: hidden;
-    width: 100%;
-    line-height: 1.6;
-    transition: background-color 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-/* Typography Assignments */
-h1, 
-h2, 
-h3, 
-h4, 
-h5, 
-h6, 
-.palette-label, 
-.logo-text, 
-.tag, 
-.tab-btn, 
-.admin-badge, 
-.cart-count {
-    font-family: 'Cinzel', serif;
-}
-
-/* Image & Media Safety Reset */
-img, 
-video, 
-svg {
-    max-width: 100%;
-    height: auto;
-    display: block;
-}
-
-/* --------------------------------------------------------------------------
-   4. BACKGROUND VISUALS (CINEMA EFFECT)
-   -------------------------------------------------------------------------- */
-.cinema-bg {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    z-index: -1; /* Push behind all content */
-    overflow: hidden;
-}
-
-#bg-video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0.5; /* Dim the video for readability */
-    filter: contrast(1.1) brightness(0.8);
-}
-
-.cinema-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    /* Vignette effect to focus attention on center */
-    background: radial-gradient(circle at center, transparent 0%, var(--bg-secondary) 100%);
-    backdrop-filter: blur(2px); /* Slight blur for texture */
-}
-
-/* --------------------------------------------------------------------------
-   5. CUSTOM CURSOR (INTERACTIVE)
-   -------------------------------------------------------------------------- */
-.cursor-dot {
-    width: 6px;
-    height: 6px;
-    background: var(--accent);
-    border-radius: 50%;
-    position: fixed;
-    pointer-events: none;
-    z-index: 9999;
-}
-
-.cursor-ring {
-    width: 40px;
-    height: 40px;
-    border: 1px solid var(--accent);
-    border-radius: 50%;
-    position: fixed;
-    pointer-events: none;
-    z-index: 9998;
-    transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1), 
-                border-color 0.3s ease;
-}
-
-/* Hover State: Expands and Inverts colors */
-body.hovering .cursor-ring {
-    transform: scale(1.5);
-    background: rgba(255, 255, 255, 0.05);
-    border-color: transparent;
-    backdrop-filter: invert(1);
-}
-
-/* --------------------------------------------------------------------------
-   6. NAVIGATION BAR
-   -------------------------------------------------------------------------- */
-.glass-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 5%;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 50;
-    transition: all 0.4s ease;
-    border-bottom: 1px solid transparent;
-}
-
-/* State: Scrolled (Darker Background) */
-.glass-nav.scrolled {
-    background: var(--glass);
-    backdrop-filter: blur(15px);
-    border-bottom: 1px solid var(--glass-border);
-    padding: 10px 5%;
-}
-
-.nav-logo-area {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    cursor: pointer;
-}
-
-.logo-img {
-    height: 50px;
-    border-radius: 50%;
-    border: 1px solid var(--accent);
-    transition: transform 0.3s ease;
-}
-
-.nav-logo-area:hover .logo-img {
-    transform: rotate(10deg);
-}
-
-.logo-text {
-    display: flex;
-    flex-direction: column;
-    line-height: 1;
-}
-
-.logo-text .top {
-    font-size: 0.8rem;
-    letter-spacing: 3px;
-}
-
-.logo-text .bot {
-    font-size: 1rem;
-    font-weight: 700;
-    color: var(--accent);
-}
-
-/* --- Search Bar --- */
-.search-container {
-    position: relative;
-    margin-right: 20px;
-}
-
-#spotlight-search {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid var(--glass-border);
-    padding: 10px 35px 10px 15px;
-    border-radius: 20px;
-    color: var(--text-main);
-    font-family: 'Jost', sans-serif;
-    width: 200px;
-    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-
-#spotlight-search:focus {
-    width: 300px;
-    background: rgba(0, 0, 0, 0.8);
-    border-color: var(--accent);
-    outline: none;
-    box-shadow: 0 0 15px var(--accent);
-}
-
-.search-icon {
-    position: absolute;
-    right: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 0.8rem;
-    opacity: 0.6;
-    pointer-events: none;
-}
-
-/* --- Desktop Menu --- */
-.nav-menu {
-    display: flex;
-    gap: 40px;
-    list-style: none;
-}
-
-.nav-menu a {
-    text-decoration: none;
-    color: var(--text-main);
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    transition: 0.3s;
-    position: relative;
-}
-
-.nav-menu a::after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 1px;
-    bottom: -5px;
-    left: 0;
-    background-color: var(--accent);
-    transition: width 0.3s;
-}
-
-.nav-menu a:hover::after {
-    width: 100%;
-}
-
-.nav-menu a:hover {
-    color: var(--accent);
-    text-shadow: var(--glow);
-}
-
-.social-link {
-    text-decoration: none;
-    color: var(--accent);
-    font-size: 0.7rem;
-    border: 1px solid var(--accent);
-    padding: 8px 20px;
-    border-radius: 20px;
-    transition: 0.3s;
-    white-space: nowrap;
-}
-
-.social-link:hover {
-    background: var(--accent);
-    color: var(--bg-primary);
-    box-shadow: var(--glow);
-}
-
-/* --------------------------------------------------------------------------
-   7. HERO SECTION (LANDING)
-   -------------------------------------------------------------------------- */
-.hero {
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    perspective: 1000px;
-    padding: 0 20px;
-}
-
-.pre-title {
-    color: var(--accent);
-    letter-spacing: 5px;
-    font-size: 0.9rem;
-    margin-bottom: 20px;
-    opacity: 0.8;
-}
-
-.hero-title {
-    font-size: 5rem;
-    line-height: 1.1;
-    margin-bottom: 30px;
-    text-shadow: 0 10px 30px rgba(0,0,0,0.5);
-}
-
-.gold-text {
-    color: var(--accent);
-    font-style: italic;
-    font-family: 'Cinzel', serif;
-}
-
-.hero-sub {
-    color: var(--text-muted);
-    font-size: 1.2rem;
-    margin-bottom: 50px;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-/* Liquid Button Animation */
-.btn-liquid {
-    position: relative;
-    padding: 18px 50px;
-    text-decoration: none;
-    color: var(--accent);
-    border: 1px solid var(--accent);
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    font-size: 0.9rem;
-    overflow: hidden;
-    display: inline-block;
-    transition: 0.4s;
-    z-index: 1;
-}
-
-.btn-liquid:hover {
-    background: var(--accent);
-    color: var(--bg-primary);
-    box-shadow: var(--glow);
-}
-
-.btn-liquid.small {
-    padding: 10px 30px;
-    font-size: 0.7rem;
-}
-
-/* --------------------------------------------------------------------------
-   8. MARQUEE (SCROLLING TEXT)
-   -------------------------------------------------------------------------- */
-.marquee-lux {
-    background: var(--glass);
-    padding: 20px 0;
-    border-top: 1px solid var(--glass-border);
-    border-bottom: 1px solid var(--glass-border);
-    overflow: hidden;
-    backdrop-filter: blur(5px);
-}
-
-.track {
-    display: flex;
-    animation: scroll 20s linear infinite;
-    width: max-content;
-}
-
-.track span {
-    margin: 0 40px;
-    font-family: 'Cinzel';
-    font-size: 1.2rem;
-    color: var(--text-main);
-    letter-spacing: 2px;
-}
-
-.star {
-    color: var(--accent);
-    margin: 0 10px;
-}
-
-@keyframes scroll {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-}
-
-/* --------------------------------------------------------------------------
-   9. MOOD SWITCHER (FIXED & ANIMATED)
-   -------------------------------------------------------------------------- */
-.palette-dock {
-    position: fixed; 
-    left: 30px; 
-    bottom: 30px; 
-    z-index: 1000; /* Ensures it sits above videos */
-    background: var(--glass); 
-    padding: 10px 20px; 
-    border-radius: 50px;
-    border: 1px solid var(--glass-border); 
-    backdrop-filter: blur(10px);
-    display: flex; 
-    align-items: center; 
-    gap: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    animation: slideUp 0.8s ease-out;
-}
-
-.palette-label { 
-    font-size: 0.7rem; 
-    letter-spacing: 2px; 
-    color: var(--accent); 
-    font-weight: bold;
-    font-family: 'Cinzel', serif;
-}
-
-.palette-btns {
-    display: flex;
-    gap: 10px;
-}
-
-.theme-btn { 
-    width: 20px; 
-    height: 20px; 
-    border-radius: 50%; 
-    border: 2px solid rgba(255,255,255,0.2); 
-    cursor: pointer; 
-    transition: all 0.3s ease; 
-}
-
-/* Button Specific Colors */
-.midnight { background: #153448; } 
-.espresso { background: #2C1A1D; } 
-.velvet { background: #240046; }
-
-.theme-btn:hover { 
-    transform: scale(1.3); 
-    border-color: #fff; 
-    box-shadow: 0 0 10px rgba(255,255,255,0.5);
-}
-
-/* --------------------------------------------------------------------------
-   10. MENU GRID & CARDS
-   -------------------------------------------------------------------------- */
-.gallery-section {
-    padding: 100px 5%;
-    min-height: 100vh;
-    position: relative;
-}
-
-.section-head {
-    text-align: center;
-    margin-bottom: 60px;
-}
-
-.section-title {
-    font-size: 3rem;
-    margin-bottom: 10px;
-}
-
-.gold-bar {
-    width: 2px;
-    height: 60px;
-    background: var(--accent);
-    margin: 0 auto;
-}
-
-/* Category Tabs */
-.filter-tabs {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-top: 40px;
-    flex-wrap: wrap;
-}
-
-.tab-btn {
-    background: transparent;
-    border: 1px solid var(--glass-border);
-    color: var(--text-muted);
-    padding: 12px 30px;
-    border-radius: 30px;
-    cursor: pointer;
-    transition: 0.3s;
-    font-size: 0.9rem;
-    letter-spacing: 1px;
-}
-
-.tab-btn:hover, 
-.tab-btn.active {
-    background: var(--accent);
-    color: var(--bg-primary);
-    border-color: var(--accent);
-}
-
-/* Product Grid */
-.card-container {
-    display: grid;
-    /* Auto-fit creates responsive columns */
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 40px;
-    margin-top: 50px;
-    justify-items: center;
-}
-
-/* 3D Tilt Card */
-.tilt-card {
-    background: var(--card-gradient);
-    border: 1px solid var(--glass-border);
-    border-radius: 8px;
-    padding: 12px;
-    transition: transform 0.1s ease-out, opacity 0.3s;
-    position: relative;
-    overflow: hidden;
-    display: block;
-    width: 100%;
-    max-width: 350px;
-}
-
-.tilt-card:hover {
-    border-color: var(--accent);
-    box-shadow: var(--glow);
-    z-index: 10;
-}
-
-.card-visual {
-    height: 250px;
-    width: 100%;
-    background-size: cover;
-    background-position: center;
-    border-radius: 4px;
-}
-
-.badge {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background: var(--accent);
-    color: var(--bg-primary);
-    padding: 5px 12px;
-    font-size: 0.75rem;
-    font-weight: bold;
-    font-family: 'Jost';
-    z-index: 5;
-    border-radius: 4px;
-}
-
-.card-content {
-    padding: 25px 15px 10px;
-    text-align: center;
-}
-
-.card-content h3 {
-    font-size: 1.4rem;
-    margin-bottom: 8px;
-    color: var(--accent);
-    font-family: 'Cinzel';
-}
-
-.card-content p {
-    color: var(--text-muted);
-    font-size: 0.95rem;
-    margin-bottom: 20px;
-    line-height: 1.4;
-}
-
-.ingredients-text {
-    font-size: 0.8rem;
-    color: #64748b;
-    font-style: italic;
-    border-top: 1px solid rgba(255,255,255,0.05);
-    margin-top: 10px;
-    padding-top: 10px;
-    display: block;
-}
-
-.action-btn {
-    background: transparent;
-    border: 1px solid var(--text-muted);
-    color: var(--text-main);
-    padding: 10px 25px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    transition: 0.3s;
-    margin-top: 15px;
-    cursor: pointer;
-}
-
-.action-btn:hover {
-    border-color: var(--accent);
-    color: var(--accent);
-    background: rgba(223, 208, 184, 0.05);
-}
-
-/* --------------------------------------------------------------------------
-   11. ADMIN PANEL (OWNER CONTROLS)
-   -------------------------------------------------------------------------- */
-.admin-panel {
-    background: rgba(0, 0, 0, 0.6);
-    border: 1px solid var(--accent);
-    padding: 20px 30px;
-    margin: 30px auto;
-    max-width: 700px;
-    border-radius: 8px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    backdrop-filter: blur(15px);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-}
-
-.hidden {
-    display: none !important;
-}
-
-.admin-badge {
-    color: var(--accent);
-    font-weight: bold;
-    letter-spacing: 2px;
-    font-size: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.admin-badge::before {
-    content: '●';
-    color: var(--success);
-    animation: pulse 2s infinite;
-}
-
-.admin-actions {
-    display: flex;
-    gap: 10px;
-}
-
-.admin-add-btn, 
-.admin-logout-btn, 
-.admin-analytics-btn {
-    background: var(--accent);
-    color: var(--bg-primary);
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    font-weight: bold;
-    border-radius: 4px;
-    font-family: 'Jost';
-    text-transform: uppercase;
-    font-size: 0.8rem;
-    transition: transform 0.2s;
-}
-
-.admin-add-btn:hover,
-.admin-logout-btn:hover,
-.admin-analytics-btn:hover {
-    transform: translateY(-2px);
-}
-
-.admin-logout-btn {
-    background: var(--error);
-    color: white;
-}
-
-.admin-analytics-btn {
-    background: var(--success);
-    color: white;
-}
-
-/* Hover Edit Buttons */
-.admin-btn-group {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    display: none;
-    gap: 8px;
-    z-index: 20;
-}
-
-body.admin-active .admin-btn-group {
-    display: flex;
-}
-
-.edit-btn, 
-.delete-btn {
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    border: none;
-    font-weight: bold;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: sans-serif;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    transition: transform 0.2s;
-}
-
-.edit-btn:hover, 
-.delete-btn:hover {
-    transform: scale(1.1);
-}
-
-.edit-btn { background: var(--accent); color: var(--bg-primary); }
-.delete-btn { background: var(--error); color: white; }
-
-/* --------------------------------------------------------------------------
-   12. ARTIST & REVIEWS
-   -------------------------------------------------------------------------- */
-.artist-section {
-    padding: 100px 8%;
-    margin-top: 50px;
-    position: relative;
-}
-
-.artist-layout {
-    display: flex;
-    align-items: center;
-    gap: 80px;
-}
-
-.artist-img-box {
-    flex: 1;
-    position: relative;
-    max-width: 500px;
-}
-
-.artist-img {
-    width: 100%;
-    filter: grayscale(100%) contrast(1.2);
-    transition: 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-    border-radius: 4px;
-}
-
-.artist-img-box:hover .artist-img {
-    filter: grayscale(0%);
-    transform: scale(1.02);
-}
-
-.floating-frame {
-    position: absolute;
-    top: 40px;
-    left: 40px;
-    width: 100%;
-    height: 100%;
-    border: 1px solid var(--accent);
-    z-index: -1;
-    transition: 0.8s;
-}
-
-.artist-img-box:hover .floating-frame {
-    top: -20px;
-    left: -20px;
-}
-
-.artist-bio {
-    flex: 1;
-}
-
-.tag {
-    color: var(--accent);
-    letter-spacing: 4px;
-    font-size: 0.85rem;
-    display: block;
-    margin-bottom: 20px;
-}
-
-.artist-bio h2 {
-    font-size: 3.5rem;
-    margin-bottom: 30px;
-    line-height: 1.1;
-}
-
-.artist-bio p {
-    color: var(--text-muted);
-    line-height: 1.8;
-    font-size: 1.1rem;
-    margin-bottom: 40px;
-}
-
-/* FIX: Signature Alignment (No Tilt) */
-.signature {
-    margin-top: 30px;
-    font-family: 'Cinzel';
-    font-size: 1.8rem;
-    color: var(--accent);
-    opacity: 0.7;
-    transform: none; /* Force straight */
-}
-
-/* Reviews */
-.reviews-section {
-    padding: 100px 8%;
-    text-align: center;
-}
-
-.review-sub {
-    color: var(--text-muted);
-    margin-bottom: 40px;
-    font-style: italic;
-    font-size: 1.1rem;
-}
-
-.reviews-wrapper {
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    flex-wrap: wrap;
-    margin-top: 50px;
-}
-
-.glass-review {
-    background: var(--glass);
-    border: 1px solid var(--glass-border);
-    padding: 40px 30px;
-    width: 100%;
-    max-width: 350px;
-    backdrop-filter: blur(5px);
-    border-radius: 8px;
-    transition: transform 0.3s;
-}
-
-.glass-review:hover {
-    transform: translateY(-10px);
-    border-color: var(--accent);
-}
-
-.stars {
-    color: var(--accent);
-    margin-bottom: 20px;
-    font-size: 1.2rem;
-}
-
-.glass-review p {
-    font-style: italic;
-    margin-bottom: 20px;
-    color: #e2e8f0;
-}
-
-.glass-review cite {
-    display: block;
-    margin-top: 15px;
-    color: var(--accent);
-    font-weight: bold;
-    text-transform: uppercase;
-    font-size: 0.8rem;
-    letter-spacing: 1px;
-}
-
-/* --------------------------------------------------------------------------
-   13. FOOTER (FIXED ALIGNMENT & ADMIN BUTTON)
-   -------------------------------------------------------------------------- */
-footer {
-    padding: 80px 5%;
-    background: var(--bg-secondary);
-    border-top: 1px solid var(--glass-border);
-}
-
-.footer-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    align-items: center;
-    gap: 30px;
-}
-
-.center { text-align: center; }
-.right { text-align: right; }
-
-/* --- NEW RULE FOR FOOTER LOGO --- */
-.footer-logo {
-    height: 70px; /* Set a fixed height */
-    width: 70px; /* Set the exact same width to make it a square first */
-    border-radius: 50%; /* This turns the square into a perfect circle */
-    border: 2px solid var(--accent); /* Adds the elegant gold border */
-    padding: 5px; /* Adds a little space between the image and the border */
-    margin: 0 auto 20px auto; /* Centers it horizontally */
-    display: block;
-    object-fit: cover; /* Ensures the image fills the circle without stretching */
-}
-.f-col h4 {
-    color: var(--accent);
-    margin-bottom: 25px;
-    letter-spacing: 2px;
-    font-size: 1rem;
-}
-
-.f-col a, .loc {
-    display: block;
-    color: var(--text-muted);
-    text-decoration: none;
-    margin-bottom: 12px;
-    transition: 0.3s;
-    font-size: 0.95rem;
-}
-
-.f-col a:hover {
-    color: var(--accent);
-    padding-left: 5px;
-}
-
-/* Update this specific class in Section 13 */
-.f-copy { 
-    text-align: center; 
-    margin-top: 15px; /* Reduced from 80px to keep it close to the logo */
-    color: var(--text-muted); 
-    font-size: 0.8rem; 
-    opacity: 0.6; 
-}
-
-/* FIX: Admin Button Alignment (No Tilt) */
+    /* Search Bar Full Width */
+    .search-container { width: 100%; margin: 0; }
+    #spotlight-search { width: 100%; background: rgba(0,0,0,0.3); }
+
+    /* HIDE DESKTOP MENU */
+    .nav-menu { display: none !important; }
+    .social-link.desktop-only { display: none !important; }
+
+    /* SHOW MOBILE MENU */
+    .mobile-center-nav {
+        display: flex !important; justify-content: center; gap: 20px;
+        width: 100%; margin-top: 10px; margin-bottom: 5px;
+    }
+    .mobile-nav-item {
+        text-decoration: none; color: var(--text-muted);
+        font-family: 'Cinzel', serif; font-size: 0.75rem;
+        letter-spacing: 2px; font-weight: bold;
+        border-bottom: 1px solid transparent; padding-bottom: 2px;
+    }
+    .mobile-nav-item:active { color: var(--accent); border-bottom: 1px solid var(--accent); }
+
+    /* SHOW MOBILE ICONS */
+    .mobile-insta-icon {
+        display: flex !important; align-items: center; justify-content: center;
+        margin-left: 10px; color: var(--accent); padding: 5px;
+        border: 1px solid var(--glass-border); border-radius: 8px;
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    /* Layout Stacking */
+    .hero-title { font-size: 3rem; }
+    .artist-layout { flex-direction: column; text-align: center; }
+    .product-layout { flex-direction: column; }
+    .prod-img-col { height: 250px; flex: none; }
+    .footer-grid { grid-template-columns: 1fr; text-align: center; gap: 40px; }
+    .right { text-align: center; }
+    
+    /* Center Mood Switcher */
+    .palette-dock { left: 50% !important; transform: translateX(-50%); width: max-content; bottom: 20px !important; }
+    .admin-panel { flex-direction: column !important; height: auto !important; }
+}
+
+/* =========================================
+   FOOTER ADMIN BUTTON
+   ========================================= */
 .footer-admin-link {
     background: transparent;
     border: 1px solid var(--accent);
     color: var(--accent);
-    
-    padding: 6px 16px;
-    font-size: 0.75rem;
-    
-    border-radius: 20px;
-    font-family: 'Jost', sans-serif;
-    font-weight: 600;
+    padding: 8px 20px;
+    border-radius: 30px;
+    font-family: 'Cinzel', serif;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
     cursor: pointer;
-    opacity: 0.7;
     transition: all 0.3s ease;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    display: inline-block;
-    
-    margin-top: 5px; /* Clean spacing */
+    margin-top: 15px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none; /* In case it's an anchor tag */
 }
 
 .footer-admin-link:hover {
     background: var(--accent);
     color: var(--bg-primary);
-    opacity: 1;
-    box-shadow: 0 0 10px var(--accent);
+    box-shadow: 0 0 15px rgba(223, 208, 184, 0.4); /* Glow effect */
     transform: translateY(-2px);
 }
 
-/* --------------------------------------------------------------------------
-   14. MODALS & EXTRAS
-   -------------------------------------------------------------------------- */
+/* Adjust icon size if needed */
+.footer-admin-link i {
+    font-size: 0.9rem;
+}
 
-/* Toast Notifications */
-#toast-container {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    z-index: 10000;
+/* =========================================
+   MODAL BUTTONS (LOGIN & CANCEL)
+   ========================================= */
+.modal-actions {
     display: flex;
-    flex-direction: column;
-    gap: 10px;
+    gap: 15px;
+    margin-top: 25px;
 }
 
-.toast {
-    background: rgba(2, 6, 23, 0.95);
-    border-left: 4px solid var(--accent);
-    color: #fff;
-    padding: 15px 25px;
-    border-radius: 4px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    animation: slideIn 0.3s ease forwards;
-    min-width: 250px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-@keyframes slideIn {
-    from { transform: translateX(100%); opacity: 0; }
-    to { transform: translateX(0); opacity: 1; }
-}
-
-/* Floating Cart */
-.floating-cart {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    z-index: 900;
-    width: 350px;
-    animation: slideUp 0.5s ease;
-}
-
-@keyframes slideUp {
-    from { transform: translateY(100px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-}
-
-.cart-glass {
-    background: #000000;
-    border: 1px solid var(--accent);
-    border-radius: 12px;
-    padding: 15px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-    cursor: pointer;
-    transition: transform 0.2s;
-}
-
-.cart-glass:hover {
-    transform: translateY(-5px);
-}
-
-.cart-info { display: flex; flex-direction: column; }
-.cart-count { color: var(--accent); font-weight: bold; font-family: 'Cinzel'; font-size: 1.1rem; }
-.cart-total { font-size: 0.8rem; color: #fff; opacity: 0.7; }
-
-.checkout-btn {
-    background: var(--accent);
-    color: var(--bg-primary);
-    border: none;
-    padding: 10px 20px;
+.confirm-btn, .cancel-btn {
+    flex: 1; /* Make them equal width */
+    padding: 12px 0;
     border-radius: 6px;
+    font-family: 'Cinzel', serif;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
     font-weight: bold;
     cursor: pointer;
-    font-family: 'Jost';
-}
-
-/* Modals */
-.modal-overlay {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-    background: rgba(0,0,0,0.9);
-    z-index: 2000; display: flex; justify-content: center; align-items: center;
-    backdrop-filter: blur(8px);
-    opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
-}
-
-.modal-overlay:not(.hidden) {
-    opacity: 1; pointer-events: auto;
-}
-
-.modal-box {
-    background: var(--bg-secondary); border: 1px solid var(--accent);
-    padding: 40px; border-radius: 12px; width: 90%; max-width: 450px;
-    text-align: center; box-shadow: 0 0 50px rgba(0,0,0,0.8);
-    transform: translateY(20px); transition: transform 0.3s ease;
-}
-
-.modal-overlay:not(.hidden) .modal-box {
-    transform: translateY(0);
-}
-
-.modal-box h3 {
-    color: var(--accent); margin-bottom: 30px;
-    font-family: 'Cinzel'; font-size: 1.8rem; text-align: center;
-}
-
-.modal-box input, 
-.modal-box select {
-    width: 100%; padding: 12px 15px; background: #020617;
-    border: 1px solid var(--glass-border); color: #ffffff !important;
-    border-radius: 6px; font-family: 'Jost'; outline: none;
-    transition: border-color 0.3s;
-}
-
-.modal-box input:focus { border-color: var(--accent); }
-
-.modal-actions {
-    margin-top: 30px; display: flex; justify-content: space-between; gap: 15px;
-}
-
-.confirm-btn {
-    background: var(--accent); color: var(--bg-primary); padding: 12px 25px;
-    border: none; cursor: pointer; border-radius: 6px; font-weight: bold; width: 100%;
-}
-
-.cancel-btn {
-    background: transparent; color: var(--text-muted); padding: 12px 25px;
-    border: 1px solid var(--text-muted); cursor: pointer; border-radius: 6px; width: 100%;
-}
-
-/* Product View Modal */
-.product-view {
-    width: 900px; max-width: 95%; background: #1a1a1a;
-    border: 1px solid var(--accent); padding: 0;
-    overflow: hidden; position: relative; height: auto; max-height: 90vh;
-    display: flex; flex-direction: column;
-}
-
-.close-modal-x {
-    position: absolute; top: 20px; right: 25px; background: none;
-    border: none; color: white; font-size: 2.5rem; cursor: pointer; z-index: 20;
-}
-
-.product-layout {
-    display: flex; flex-wrap: wrap; width: 100%; height: 100%;
-}
-
-.prod-img-col {
-    flex: 1; min-height: 400px; background-color: #000;
-}
-
-.prod-img-col img {
-    width: 100%; height: 100%; object-fit: cover;
-}
-
-.prod-info-col {
-    flex: 1; padding: 50px; display: flex;
-    flex-direction: column; justify-content: center; overflow-y: auto;
-}
-
-.prod-info-col h2 {
-    font-size: 3rem; color: var(--accent); margin-bottom: 20px; line-height: 1.1;
-}
-
-.apple-specs {
-    display: flex; gap: 30px; margin: 30px 0;
-    border-top: 1px solid rgba(255,255,255,0.1);
-    border-bottom: 1px solid rgba(255,255,255,0.1); padding: 20px 0;
-}
-
-.spec-item .label {
-    font-size: 0.7rem; color: #888; letter-spacing: 1px;
-    margin-bottom: 5px; text-transform: uppercase;
-}
-
-.spec-item .val {
-    font-size: 1.4rem; color: #fff; font-weight: bold;
-}
-
-/* --------------------------------------------------------------------------
-   15. MOBILE RESPONSIVENESS (3-LAYER SHIELD)
-   -------------------------------------------------------------------------- */
-
-/* A. TABLET (Max Width 1024px) */
-@media (max-width: 1024px) {
-    .gallery-section { padding: 80px 4%; }
-    .card-visual { height: 200px; }
-    .hero-title { font-size: 4rem; }
-    .artist-layout { gap: 30px; }
-    .prod-info-col h2 { font-size: 2.5rem; }
-}
-
-/* --------------------------------------------------------------------------
-   15. MOBILE RESPONSIVENESS (3-LAYER SHIELD)
-   -------------------------------------------------------------------------- */
-
-/* A. TABLET (Max Width 1024px) */
-@media (max-width: 1024px) {
-    .gallery-section { padding: 80px 4%; }
-    .card-visual { height: 200px; }
-    .hero-title { font-size: 4rem; }
-    .artist-layout { gap: 30px; }
-    .prod-info-col h2 { font-size: 2.5rem; }
-}
-
-
-    /* 2. Fix Mood Switcher for Mobile */
-    .theme-switch {
-        display: flex !important;
-        position: fixed;
-        bottom: 30px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: rgba(15, 23, 42, 0.95);
-        padding: 10px 25px;
-        border-radius: 50px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        z-index: 9999;
-        width: max-content;
-    }
-    .theme-switch span {
-        font-size: 0.85rem;
-    }
-
-    /* 2. Layout Stacking */
-    .artist-layout { flex-direction: column; text-align: center; }
-    .product-layout { flex-direction: column; }
-    .prod-img-col { height: 300px; flex: none; width: 100%; }
-    .prod-info-col { padding: 30px 20px; }
-    
-    .footer-grid { 
-        grid-template-columns: 1fr; 
-        text-align: center; 
-        gap: 50px; 
-    }
-    .right { text-align: center; }
-    
-    /* 3. Navigation (Stacked Logo & Search) */
-    .glass-nav { 
-        flex-direction: column; 
-        gap: 15px; 
-        padding: 15px;
-    }
-    .nav-logo-area { margin: 0; }
-    .nav-menu { display: none; } /* Hide Desktop Menu */
-    
-    /* FIX: Show Search Bar on Mobile */
-    .search-container { 
-        display: block !important; 
-        width: 100%; 
-        margin-right: 0; 
-    }
-    #spotlight-search {
-        width: 100%;
-        background: rgba(0, 0, 0, 0.3);
-    }
-    
-    /* 4. Typography Adjustments */
-    .hero-title { font-size: 3rem; }
-    .section-title { font-size: 2.5rem; }
-    .hero-sub { font-size: 1rem; }
-    
-    /* 5. Admin Panel Stack Fix */
-    .admin-panel {
-        flex-direction: column !important;
-        height: auto !important;
-        gap: 15px !important;
-        padding: 20px !important;
-    }
-    .admin-actions { 
-        width: 100%; 
-        display: flex; 
-        flex-direction: column; 
-        gap: 10px; 
-    }
-    .admin-add-btn, .admin-logout-btn { 
-        width: 100%; 
-        margin: 0; 
-        height: 45px; 
-    }
-    
-    /* 6. Floating Cart Fix */
-    .floating-cart { 
-        width: 90%; 
-        left: 5%; 
-        bottom: 20px; 
-    }
-    
-    /* 7. Modal Scroll Fix */
-    .product-view { 
-        height: 85vh; 
-        overflow-y: auto; 
-        display: block; 
-    }
-
-} /* <--- THIS CLOSING BRACKET STOPS THE LEAK */
-
-
-/* C. SMALL MOBILE (Max Width 480px) */
-@media (max-width: 480px) {
-    .hero-title { font-size: 2.5rem; }
-    .btn-liquid { padding: 15px 30px; font-size: 0.8rem; }
-    .card-container { grid-template-columns: 1fr; } 
-    .palette-dock { display: none; } 
-    .tilt-card { max-width: 100%; }
-    .modal-box { padding: 25px; }
-}
-
-
-/* D. DESKTOP FIXES (The New Code for Laptops) */
-@media (min-width: 769px) {
-
-    /* 1. NAVBAR LAYOUT - Fixes the crowding */
-    .glass-nav {
-        display: flex;
-        align-items: center;       /* Centers everything vertically */
-        justify-content: space-between; /* Spreads items out nicely */
-        padding: 15px 40px;        /* Adds breathing room on sides */
-        gap: 20px;                 /* meaningful gap between logo/search/menu */
-    }
-
-    /* 2. SEARCH BAR (Green Circle Fix) */
-    .search-container {
-        margin: 0;                 /* Removes weird spacing */
-        margin-right: auto;        /* Pushes it slightly left, near logo */
-        margin-left: 80px;         /* Adds space between Logo and Search */
-        max-width: 250px;          /* Makes it narrower (not so wide) */
-    }
-
-    .search-container input {
-        padding: 8px 20px;         /* SLIMMER: Reduced top/bottom padding */
-        font-size: 0.9rem;         /* Smaller text size */
-        height: auto;              /* Lets padding control the height */
-    }
-
-    /* 3. MENU & INSTAGRAM BUTTON (White Circle Fix) */
-    .nav-menu {
-        display: flex;
-        align-items: center;
-        gap: 40px;                 /* Adds BIG space between links (Menu, Artist, Feedback) */
-    }
-
-    /* Specifically targets the Instagram Button to push it apart */
-    .nav-menu a:last-child, 
-    .btn-liquid {
-        margin-left: 20px;         /* Extra shove to the right */
-    }
-
-    /* 4. OTHER DESKTOP ADJUSTMENTS */
-    .cart-modal {
-        width: 350px;
-        right: 30px;
-        bottom: 30px;
-    }
-}
-
-/* ... specific styles inside the Desktop Section ... */
-    #checkout-btn {
-        width: 90%;
-        margin: 20px auto 0;
-        display: block;
-    }
-} /* <--- This is the END of your Desktop Code. Paste BELOW this. */
-
-
-/* =========================================
-   ADD TO MENU MODAL FIXES (Blue Circle)
-   ========================================= */
-.modal-box label {
-  display: block;       
-  margin-bottom: 10px; 
-  font-weight: 600;    
-  letter-spacing: 0.5px; 
-}
-
-.modal-box .form-group {
-  margin-bottom: 25px; 
-}
-
-/* <--- PASTE THE NEW CODE BELOW HERE ---> */
-
-/* =========================================
-   FIX "ADD TO BAG" BUTTON VISIBILITY
-   ========================================= */
-.modal-box button, 
-#add-to-cart-btn {
-    background-color: #DFD0B8 !important;  /* Gold Background */
-    color: #0f172a !important;             /* Dark Text */
-    border: 1px solid #DFD0B8 !important;
-    font-weight: 700 !important;
-    opacity: 1 !important;
-    padding: 15px 30px;
-    transition: 0.3s ease;
-}
-
-.modal-box button:hover, 
-#add-to-cart-btn:hover {
-    background-color: #ffffff !important;
-    color: #000000 !important;
-    transform: scale(1.02);
-    cursor: pointer;
-}
-
-/* =========================================
-   FIX FOR .palette-dock (Mobile Mood Switcher)
-   ========================================= */
-@media (max-width: 768px) {
-    /* 1. Unhide the dock and position it */
-    .palette-dock {
-        display: flex !important;       /* Force it to show */
-        visibility: visible !important;
-        opacity: 1 !important;
-        
-        position: fixed !important;     /* Stick to screen */
-        bottom: 30px !important;        /* Distance from bottom */
-        left: 20px !important;          /* Distance from left */
-        
-        z-index: 9999 !important;       /* On top of everything */
-        background: rgba(15, 23, 42, 0.95); /* Dark background */
-        border: 1px solid #DFD0B8;      /* Gold border */
-        padding: 8px 15px;
-        border-radius: 50px;
-        gap: 10px;
-        align-items: center;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-    }
-
-    /* 2. Make the "MOOD" text visible and white */
-    .palette-label {
-        display: block !important;
-        color: #ffffff !important;
-        font-size: 0.75rem !important;
-        font-weight: bold;
-        letter-spacing: 1px;
-    }
-
-    /* 3. Ensure the buttons inside are laid out horizontally */
-    .palette-btns {
-        display: flex !important;
-        gap: 8px;
-    }
-    
-    /* 4. Size the color circles for touch */
-    .theme-btn {
-        width: 15px;
-        height: 15px;
-        border-radius: 50%;
-        cursor: pointer;
-        border: 1px solid rgba(255,255,255,0.3);
-    }
-}
-
-/* =========================================
-   UNIVERSAL PENCIL ICON CLASS
-   ========================================= */
-.add-pencil {
-    position: relative !important;
-    display: inline-flex !important;
-    justify-content: center;
-    align-items: center;
-}
-
-.add-pencil::after {
-    content: "\f303";               /* The Pencil Code */
-    font-family: "Font Awesome 6 Free";
-    font-weight: 900;
-    font-size: 14px;                /* Adjust size if needed */
-    color: #0f172a;                 /* Dark Color (Blue/Black) */
-}
-
-/* =========================================
-   FIX "ADD TO BAG" & SCROLLBAR (FINAL)
-   ========================================= */
-
-/* 1. FORCE THE SCROLLBAR TO VANISH */
-#cart-items-list::-webkit-scrollbar {
-    width: 0px !important;
-    height: 0px !important;
-    background: transparent !important;
-}
-
-#cart-items-list {
-    scrollbar-width: none !important; /* Firefox */
-    -ms-overflow-style: none !important; /* IE */
-    overflow-x: hidden !important; /* No horizontal scroll */
-}
-
-/* 2. FIX THE "ADD TO BAG" BUTTON (Correct ID: #view-add-btn) */
-html body #view-add-btn,           /* <--- CORRECTED ID */
-html body .modal-box button {
-    background: #DFD0B8 !important;   /* Solid Gold */
-    color: #000000 !important;        /* Black Text */
-    border: 1px solid #DFD0B8 !important;
-    font-weight: 900 !important;
-    opacity: 1 !important;
-    text-shadow: none !important;
-    box-shadow: none !important;
-    filter: none !important;
-    padding: 15px 30px;
-    border-radius: 6px;
-    cursor: pointer;
+    transition: all 0.3s ease;
     text-transform: uppercase;
+}
+
+/* The primary 'LOGIN' button */
+.confirm-btn {
+    background: var(--accent);
+    color: var(--bg-primary);
+    border: 1px solid var(--accent);
+}
+
+.confirm-btn:hover {
+    background: transparent;
+    color: var(--accent);
+    box-shadow: 0 0 15px rgba(223, 208, 184, 0.4);
+}
+
+/* The secondary 'CANCEL' button */
+.cancel-btn {
+    background: transparent;
+    color: var(--text-muted);
+    border: 1px solid var(--text-muted);
+}
+
+.cancel-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(223, 208, 184, 0.05);
+}
+
+/* =========================================
+   ADMIN PANEL MAIN BUTTONS
+   ========================================= */
+.admin-actions {
+    display: flex;
+    gap: 15px;
+}
+
+.admin-add-btn,
+.admin-analytics-btn,
+.admin-logout-btn {
+    padding: 12px 20px;
+    border-radius: 6px;
+    font-family: 'Cinzel', serif;
+    font-size: 0.8rem;
     letter-spacing: 1px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    border: none;
+    white-space: nowrap; /* Prevents text from wrapping */
 }
 
-/* Hover Effect for Buttons */
-html body #view-add-btn:hover,
-html body .modal-box button:hover {
-    background: #ffffff !important;
-    color: #000000 !important;
-    transform: scale(1.02);
+/* '+ ADD NEW ITEM' Button */
+.admin-add-btn {
+    background: var(--accent);
+    color: var(--bg-primary);
 }
 
-/* 3. FIX TEXT VISIBILITY IN PRODUCT VIEW */
-/* This makes the description white so you can read it on dark backgrounds */
-.product-view p,
-.product-view h3,
-.product-view .ingredients-text,
-.prod-info-col p {
-    color: #ffffff !important;
-    opacity: 1 !important;
-    text-shadow: none !important;
+.admin-add-btn:hover {
+    background: #c5b39b; /* Slightly darker gold */
+    box-shadow: 0 0 10px rgba(223, 208, 184, 0.4);
 }
 
-.product-view h2 {
-    color: #DFD0B8 !important; /* Gold Title */
+/* 'LIVE DASHBOARD' Button */
+.admin-analytics-btn {
+    background: var(--success); /* Use the success green variable */
+    color: white;
 }
 
-/* --- SEARCH HIGHLIGHT ANIMATION (Glow Only - No Bounce) --- */
-@keyframes flash-focus {
-    0% { 
-        box-shadow: 0 0 0 transparent; 
-        border-color: transparent; 
+.admin-analytics-btn:hover {
+    background: #27ae60; /* Slightly darker green */
+    box-shadow: 0 0 10px rgba(46, 204, 113, 0.4);
+}
+
+/* 'LOGOUT' Button */
+.admin-logout-btn {
+    background: var(--error); /* Use the error red variable */
+    color: white;
+}
+
+.admin-logout-btn:hover {
+    background: #c0392b; /* Slightly darker red */
+    box-shadow: 0 0 10px rgba(231, 76, 60, 0.4);
+}
+
+/* Responsive adjustments for admin panel on smaller screens */
+@media (max-width: 768px) {
+    .admin-panel {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
     }
-    50% { 
-        box-shadow: 0 0 30px var(--accent); 
-        border-color: var(--accent); 
+    
+    .admin-actions {
+        flex-direction: column;
+        width: 100%;
     }
-    100% { 
-        box-shadow: 0 0 0 transparent; 
-        border-color: transparent; 
+
+    .admin-add-btn,
+    .admin-analytics-btn,
+    .admin-logout-btn {
+        width: 100%;
     }
 }
 
-.search-highlight {
-    animation: flash-focus 2s ease-in-out infinite; /* Slower, smoother glow */
-    z-index: 100;
+/* =========================================
+   IMAGE PARALLAX EFFECT (New)
+   ========================================= */
+
+/* Ensure the image doesn't spill outside the rounded card corners */
+.tilt-card {
+    overflow: hidden; 
+}
+
+/* Target the image inside the card */
+.tilt-card img {
+    /* Smooth transition for resetting position */
+    transition: transform 0.3s ease-out;
+    /* Performance optimization for moving elements */
+    will-change: transform;
+    /* Ensure it scales from the center */
+    transform-origin: center center;
+    /* Optional: Start slightly zoomed out to allow movement space */
+     transform: scale(1);
+}
+
+/* ------------- new code ------------------------------------ /*
+/* =========================================
+   ARTIST IMAGE "VIDEO EFFECT" SETUP
+   ========================================= */
+
+/* 1. Container Setup */
+.artist-img-box {
+    overflow: hidden; /* Hide the edges when image moves */
+    border-radius: 4px;
+    perspective: 1000px; /* Enable 3D effect */
+    cursor: pointer;
+}
+
+/* 2. Image Setup (B&W to Color + Zoom) */
+.artist-img {
+    width: 100%;
+    /* Start Black & White */
+    filter: grayscale(100%); 
+    /* Start zoomed in (1.1) so it has room to move without gaps */
+    transform: scale(1.1); 
+    /* Smooth transitions for color and movement reset */
+    transition: filter 0.5s ease, transform 0.6s ease-out;
+    will-change: transform, filter;
+}
+
+/* 3. Hover State: Turn to Color */
+.artist-img-box:hover .artist-img {
+    filter: grayscale(0%); /* Full Color */
+}
+
+/* 4. Hide the floating frame on hover to keep it clean (Optional) */
+.artist-img-box:hover .floating-frame {
+    opacity: 0.5;
+    transform: scale(1.05);
+}
+
+/* =========================================
+   THE "SLIDING BOX" TOGGLE (Noir vs Color)
+   ========================================= */
+
+/* 1. Wrapper Layout */
+.color-toggle-wrapper {
+    display: inline-flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    border: 1px solid var(--glass-border);
+    padding: 10px 20px;
+    border-radius: 50px;
+    background: rgba(0, 0, 0, 0.3);
+    transition: 0.3s;
+}
+
+.color-toggle-wrapper:hover {
+    border-color: var(--accent);
+}
+
+/* 2. Text Labels */
+.toggle-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    color: var(--text-muted);
+    transition: 0.3s;
+}
+
+/* 3. The Track (The "Road") */
+.toggle-track {
+    width: 50px;
+    height: 24px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
     position: relative;
-    border: 2px solid var(--accent) !important;
-    transform: none !important; /* Forces it to stay still */
+    transition: 0.3s;
+    border: 1px solid var(--text-muted);
 }
 
-/* =========================================
-   MOBILE INSTAGRAM ICON FIX
-   ========================================= */
-
-/* 1. Default State (Desktop): Hide the icon, Show the text button */
-.mobile-insta-icon {
-    display: none; /* Hidden on laptop */
+/* 4. The Slider (The "Box" that moves) */
+.toggle-slider {
+    width: 18px;
+    height: 18px;
+    background: var(--text-muted); /* Default Gray */
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    /* START POSITION: RIGHT (As you requested for B&W) */
+    right: 3px; 
+    left: auto;
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* Bouncy Slide */
 }
 
-.desktop-only {
-    display: inline-block; /* Visible on laptop */
-}
-
-/* 2. Mobile State: Switch them! */
-@media (max-width: 768px) {
-    
-    /* Hide the big text button at the bottom */
-    .desktop-only {
-        display: none !important;
-    }
-
-    /* Show the Icon next to the logo */
-    .mobile-insta-icon {
-        display: flex !important;
-        align-items: center;
-        justify-content: center;
-        margin-left: 15px; /* Space between "BROWNIE" text and Icon */
-        color: var(--accent); /* Gold color */
-        transition: transform 0.3s ease;
-        padding: 5px;
-        border: 1px solid var(--glass-border);
-        border-radius: 8px;
-        background: rgba(255,255,255,0.05);
-    }
-
-    .mobile-insta-icon:active {
-        transform: scale(0.9);
-        color: #fff;
-    }
-
-    /* =========================================
-   MOBILE INSTAGRAM ICON FIX (FINAL)
-   ========================================= */
-
-/* 1. Default State (Desktop): Hide the icon */
-.mobile-insta-icon {
-    display: none;
-}
-
-/* 2. Mobile State (Phones Only) */
-@media (max-width: 768px) {
-    
-    /* Hide the big "INSTAGRAM ↗" text button */
-    .desktop-only {
-        display: none !important;
-    }
-
-    /* Show the new Icon next to the logo */
-    .mobile-insta-icon {
-        display: flex !important;
-        align-items: center;
-        justify-content: center;
-        margin-left: 12px; /* Space from logo text */
-        color: var(--accent); /* Gold color */
-        padding: 5px;
-        border: 1px solid var(--glass-border);
-        border-radius: 8px;
-        background: rgba(255, 255, 255, 0.05);
-    }
-
-    /* Adjust layout to let them sit side-by-side */
-    .nav-logo-area {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        margin-bottom: 10px;
-    }
-}
-
-/* =========================================
-   MOBILE CENTER NAVIGATION (Gap Fix)
-   ========================================= */
-
-/* 1. Hide the new links on Desktop */
-.mobile-center-nav {
-    display: none;
-}
-
-/* 2. Style for Mobile View (Max-width 768px) */
-@media (max-width: 768px) {
-    .mobile-center-nav {
-        display: flex !important; /* Visible only on mobile */
-        justify-content: center;
-        gap: 25px;
-        width: 100%;
-        margin-top: 15px; /* Spacing below search bar */
-        margin-bottom: 5px;
-    }
-
-    .mobile-nav-item {
-        text-decoration: none;
-        color: var(--text-muted);
-        font-family: 'Cinzel', serif;
-        font-size: 0.75rem;
-        letter-spacing: 2px;
-        font-weight: bold;
-        transition: 0.3s;
-        border-bottom: 1px solid transparent;
-        padding-bottom: 2px;
-    }
-
-    .mobile-nav-item:active {
-        color: var(--accent);
-        border-bottom: 1px solid var(--accent);
-    }
-}
-
-/* =========================================
-   HIDE CUSTOM CURSOR ON MOBILE
-   ========================================= */
-
-@media (max-width: 768px) {
-    .cursor-dot,
-    .cursor-ring {
-        display: none !important; /* Forces it to vanish */
-        visibility: hidden !important;
-        opacity: 0 !important;
-    }
-    
-    /* Reset default system cursor just in case */
-    * {
-        cursor: auto !important;
-    }
-}
-
-/* =========================================
-   FIX: HIDE MOBILE MENU ON DESKTOP
-   ========================================= */
-
-/* 1. Force hide the mobile center links on big screens */
-@media (min-width: 769px) {
-    .mobile-center-nav {
-        display: none !important;
-    }
-}
-
-/* 2. Fix the Custom Cursor (Hide until moved) */
+/* --------------------------------------------------------------------------
+   5. CUSTOM CURSOR (NEGATIVE / DIFFERENCE BLEND MODE)
+   -------------------------------------------------------------------------- */
 .cursor-dot, 
 .cursor-ring {
-    opacity: 0; /* Invisible by default */
-    transition: opacity 0.3s ease; /* Fade in smoothly */
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    z-index: 9999;
+    pointer-events: none;
+    
+    /* THE KEY: This creates the "Negative" effect */
+    mix-blend-mode: difference; 
 }
 
-/* This class will be added by JavaScript when you move your mouse */
-body.mouse-moving .cursor-dot,
-body.mouse-moving .cursor-ring {
-    opacity: 1; /* Become visible */
+.cursor-dot {
+    width: 8px;
+    height: 8px;
+    background-color: white; /* Must be WHITE for the math to work */
 }
 
-/* Custom Cursor Visibility Logic */
-.cursor-dot, 
 .cursor-ring {
-    opacity: 0; /* Starts hidden */
-    transition: opacity 0.3s ease;
+    width: 40px;
+    height: 40px;
+    background-color: transparent;
+    border: 1px solid white; /* Must be WHITE */
+    transition: width 0.2s, height 0.2s, background-color 0.2s;
 }
 
-body.mouse-moving .cursor-dot,
-body.mouse-moving .cursor-ring {
-    opacity: 1; /* Appears when mouse moves */
+/* Hover State: Fill the ring */
+body.hovering .cursor-ring {
+    width: 60px;
+    height: 60px;
+    background-color: white; 
+    border-color: transparent;
+    mix-blend-mode: difference;
 }
 
-/* --- FIX: HIDE MOBILE MENU ON DESKTOP --- */
-@media (min-width: 769px) {
-    .mobile-center-nav {
-        display: none !important; /* Force hide on laptops/PC */
-    }
+/* =========================================
+   PARALLAX IMAGE SETUP
+   ========================================= */
+
+/* 1. Hide edges for both cards and artist box */
+.tilt-card, .artist-img-box {
+    overflow: hidden !important; 
 }
 
-/* Keep cursor hidden until the first touch */
-.cursor-dot, 
-.cursor-ring {
-    opacity: 0; 
-    transition: opacity 0.2s ease;
-}
-
-/* Only show it when JS says the user is moving/touching */
-body.mouse-moving .cursor-dot,
-body.mouse-moving .cursor-ring {
-    opacity: 1;
+/* 2. Default state for images (Zoomed In) */
+.card-visual, .artist-img {
+    transform: scale(1.1); 
+    transition: transform 0.6s ease-out;
+    will-change: transform;
 }

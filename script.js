@@ -364,6 +364,7 @@ function setTheme(theme) {
 
 /**
  * Handles Custom Cursor for BOTH Desktop (Mouse) and Mobile (Touch).
+ * Prevents "stuck cursor" by waiting for first movement.
  */
 function setupCursor() {
     const dot = document.querySelector('.cursor-dot');
@@ -437,8 +438,9 @@ function setupCursor() {
         }
     };
     
+    // Listen for both mouse and touch interactions
     document.body.addEventListener('mouseover', handleHover);
-    document.body.addEventListener('touchstart', handleHover); // Enable hover effect on touch
+    document.body.addEventListener('touchstart', handleHover); 
 }
 
 
@@ -843,33 +845,58 @@ function submitReview() {
     }
 }
 
-// --- 3D TILT EFFECT ---
+// --- 3D TILT & PARALLAX IMAGE EFFECT ---
+// --- 3D TILT & PARALLAX IMAGE EFFECT ---
 function applyTiltEffect() {
-    // Only apply on Desktop to save mobile battery and avoid weird touch interactions
+    // 1. Only run on Desktop to save battery
     if (window.innerWidth < 768) return; 
-    
-    document.querySelectorAll('.tilt-card').forEach(card => {
-        card.onmousemove = (e) => {
-            const rect = card.getBoundingClientRect();
+
+    // 2. Target both Product Cards AND the Artist Image
+    const elements = document.querySelectorAll('.tilt-card, .artist-img-box');
+
+    elements.forEach(el => {
+        // Find the image inside (handles both product and artist images)
+        const visual = el.querySelector('.card-visual, .artist-img');
+
+        el.onmousemove = (e) => {
+            const rect = el.getBoundingClientRect();
             const x = e.clientX - rect.left; 
             const y = e.clientY - rect.top;
             
-            const centerX = rect.width / 2; 
+            const centerX = rect.width / 2;
             const centerY = rect.height / 2;
+
+            // A. TILT THE CONTAINER (The Box)
+            const rotateX = ((y - centerY) / centerY) * -10; 
+            const rotateY = ((x - centerX) / centerX) * 10;
             
-            // Calculate rotation (Limit max rotation to 8 degrees)
-            const rotateX = ((y - centerY) / centerY) * -8;
-            const rotateY = ((x - centerX) / centerX) * 8;
-            
-            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+            // Apply rotation
+            el.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+
+            // B. MOVE THE IMAGE (The Parallax)
+            if (visual) {
+                // Calculate movement (opposite direction for depth)
+                const moveX = (centerX - x) / 12; 
+                const moveY = (centerY - y) / 12;
+                
+                // Scale 1.1 ensures no empty space shows when moving
+                visual.style.transform = `scale(1.1) translate(${moveX}px, ${moveY}px)`;
+                visual.style.transition = 'none'; // Instant movement (no lag)
+            }
         };
-        
-        // Reset on mouse leave
-        card.onmouseleave = () => {
-            card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
+
+        // Reset when mouse leaves
+        el.onmouseleave = () => {
+            el.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
+            
+            if (visual) {
+                visual.style.transition = 'transform 0.6s ease-out'; // Smooth reset
+                visual.style.transform = 'scale(1.1) translate(0, 0)';
+            }
         };
     });
 }
+
 /* --------------------------------------------------------------------------
    SECTION 9: VISITOR TRACKING (The Bridge to Backend)
    -------------------------------------------------------------------------- */
@@ -897,3 +924,4 @@ async function trackVisitor() {
         console.warn("Tracking skipped (Server Offline)."); 
     }
 }
+
