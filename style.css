@@ -154,6 +154,7 @@ body.hovering .cursor-ring { transform: scale(1.5); background: rgba(255, 255, 2
     box-shadow: 0 0 10px rgba(223, 208, 184, 0.4);
 }
 
+
 /* 6. "Shine" Animation Effect */
 .action-btn::after {
     content: '';
@@ -339,6 +340,26 @@ footer { padding: 80px 5%; background: var(--bg-secondary); border-top: 1px soli
     .palette-dock .theme-btn {
         width: 25px !important;
         height: 25px !important;
+    }
+
+    /* --- FIX: MOOD BAR POSITION (Low & Non-Intrusive) --- */
+    .palette-dock {
+        position: fixed !important;
+        
+        /* 1. Move it all the way DOWN to the footer area */
+        bottom: 20px !important;       
+        
+        /* 2. Keep it on the LEFT side */
+        left: 20px !important;         
+        
+        /* 3. Reset any centering code */
+        transform: none !important;    
+        right: auto !important;
+        
+        /* 4. Ensure it fits cleanly */
+        width: max-content !important;
+        display: flex !important;
+        z-index: 1100 !important;
     }
 }
 
